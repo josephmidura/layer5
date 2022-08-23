@@ -42,7 +42,7 @@
     "gatsby": "^4.20.0",
     "gatsby-awesome-pagination": "^0.3.8",
     "gatsby-background-image": "^1.6.0",
-    "gatsby-cli": "^4.19.0",
+    "gatsby-cli": "^4.21.0",
     "gatsby-plugin-anchor-links": "^1.2.1",
     "gatsby-plugin-feed": "^4.19.0",
     "gatsby-plugin-google-gtag": "^4.19.0",
