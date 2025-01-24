@@ -9,7 +9,6 @@ const path = require("path");
 const slugify = require("./src/utils/slugify");
 const { paginate } = require("gatsby-awesome-pagination");
 const { createFilePath } = require("gatsby-source-filesystem");
-const FilterWarningsPlugin = require("webpack-filter-warnings-plugin");
 const config = require("./gatsby-config");
 const {
   componentsData,
@@ -733,7 +732,6 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
   });
 
   const components = componentsData.map((component) => component.src.replace("/", ""));
-
   const createComponentPages = (createPage, components) => {
     const pageTypes = [
       { suffix: "", file: "index.js" },
@@ -992,14 +990,6 @@ exports.onCreateWebpackConfig = ({ actions, stage, getConfig }) => {
         url: require.resolve("url/"),
       },
     },
-  });
-  actions.setWebpackConfig({
-    plugins: [
-      new FilterWarningsPlugin({
-        exclude:
-          /mini-css-extract-plugin[^]*Conflicting order. Following module has been added:/,
-      }),
-    ],
   });
 
   if (stage === "build-javascript") {
