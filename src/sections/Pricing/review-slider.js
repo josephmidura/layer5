@@ -17,6 +17,8 @@ import Alex from "./reviews/alex-hokanson.jpeg";
 import Patrick from "./reviews/patrick-steinig.jpeg";
 import Hein from "./reviews/hein.webp";
 import Anusha from "./reviews/anusha.png";
+import Louie from "./reviews/louie-corbo.jpeg";
+import Abdechakour from "./reviews/abdechakour-h.jpeg";
 
 const settings = {
   dots: false,
@@ -140,7 +142,13 @@ const Reviews = () => {
             title="Software Architect at Entigo"
             image={Kaur}
           />
-
+          <Customers
+            type="2"
+            quote="Kanvas is what the next-generation Operations tooling will look like."
+            person="Louie Corbo"
+            title="Staff Cloud Infratructure Engineer at SADA"
+            image={Louie}
+          />
           <Customers
             type="1"
             quote="It was an intuitive experience to visually place and configure various components saving the time of going through 10 different YAML files."
@@ -178,7 +186,7 @@ const Reviews = () => {
           />
           <Customers
             type="2"
-            quote="Do we like Kanvas? ABSOLUTELY! It addresses our primary concern of having a service mesh!"
+            quote="Do we like Kanvas? ABSOLUTELY!"
             person="Alex"
             title="Infrastructure Engineering at Docker, Inc."
             image={Alex}
@@ -202,6 +210,13 @@ const Reviews = () => {
             person="Anusha Sridharan"
             title="Lead Software Engineer at Fidelity Investments"
             image={Anusha}
+          />
+          <Customers
+            type="2"
+            quote="Wow, just tried Kanvas and it's exactly what I needed! Dragging that Helm chart was so smooth, and the smart features really caught my attention. Definitely sharing this with my dev team before everyone else discovers it!"
+            person="Abdechakour Hrouchan"
+            title="Software Engineer at Atlas Cloud Services"
+            image={Abdechakour}
           />
         </Slider>
       </div>

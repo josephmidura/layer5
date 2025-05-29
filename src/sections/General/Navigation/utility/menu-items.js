@@ -32,6 +32,11 @@ const Data = {
           path: "/solutions/gitops",
           sepLine: true,
         },
+        {
+          name: "Kubernetes & Cloud Native DevRel",
+          path: "/solutions/devrel-platform-for-kubernetes-and-cloud-native-content",
+          sepLine: true,
+        },
       ],
       actionItems: [
         {
@@ -272,6 +277,18 @@ const Data = {
         {
           name: "Docs",
           path: "https://docs.layer5.io",
+          sepLine: true,
+          externalLink: true,
+        },
+        {
+          name: "Academy",
+          path: "https://cloud.layer5.io/academy/overview",
+          sepLine: true,
+          externalLink: true,
+        },
+        {
+          name: "Videos",
+          path: "https://docs.layer5.io/videos",
           sepLine: true,
           externalLink: true,
         },
