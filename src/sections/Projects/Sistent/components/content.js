@@ -179,7 +179,22 @@ const componentsData = [
     description: "A badge is a small component that displays a number or status indicator, often used to show notifications or messages.",
     url: "/projects/sistent/components/badge",
     src: "/badge",
-  }
+  },
+  {
+    id: 24,
+    name: "Toolbar",
+    description:
+    "The toolbar is a horizontal container for grouping interactive elements like buttons, filters, or navigation controls, typically placed at the top of a UI section.",
+    url: "/projects/sistent/components/toolbar",
+    src: "/toolbar",
+  },
+  {
+    "id": 25,
+    "name": "RadioGroup",
+    "description": "Sistent offers a well-structured RadioGroup component that allows users to select one option from a set.",
+    "url": "/projects/sistent/components/radiogroup",
+    "src": "/radiogroup"
+  },
 ];
 
 module.exports = { componentsData };
