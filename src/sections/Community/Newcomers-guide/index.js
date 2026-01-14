@@ -4,16 +4,16 @@ import Button from "../../../reusecore/Button";
 import { Col, Container, Row } from "../../../reusecore/Layout";
 import PageHeader from "../../../reusecore/PageHeader";
 import { NewcomersGuideWrapper } from "./NewcomersPageWrapper.style";
-import CommunityImage4 from "../Community-pictures/community.png";
+import CommunityImage4 from "../Community-pictures/community.webp";
 import TutorialsTable from "./Tutorials-table";
 import NewcomersMap from "./newcomers-map";
 import JoinCommunity from "../Join-community";
 import longArrow from "./long-arrow.svg";
 import { StaticImage } from "gatsby-plugin-image";
 
-const CommunityImage2 = "../Community-pictures/five-finding-issue.png";
+const CommunityImage2 = "../Community-pictures/five-finding-issue.webp";
 const CommunityImage3 = "../../../assets/images/newcomers-page-images/community-collage.webp";
-const FiveWorking = "../Community-pictures/five-working.png";
+const FiveWorking = "../Community-pictures/five-working.webp";
 const CommunityHandbook = "../Community-pictures/community-handbook.webp";
 
 const NewcomersGuide = () => {
@@ -30,12 +30,15 @@ const NewcomersGuide = () => {
             development of projects at Layer5. Here are some instructions to get
             you started and if you haven’t joined yet, join the{" "}
             <a href="https://slack.layer5.io/" target="_blank" rel="noreferrer">
-              Slack workspace</a>{" "}
+              Slack workspace
+            </a>{" "}
             to collaborate with the community and the <a href="https://discuss.layer5.io" target="">discussion forum</a> for questions. Also, you can check the
-            quick-links below for jumping straight into things.</p>
+            quick-links below for jumping straight into things.
+          </p>
           <Row style={{
             flexWrap: "wrap"
-          }} className="newcomers-journey">
+          }} className="newcomers-journey"
+          >
             <Col
               className="heading"
               $sm={12}
@@ -67,7 +70,8 @@ const NewcomersGuide = () => {
                 target="_blank"
                 rel="noreferrer"
               >
-                community forum</a>{""}.
+                community forum
+              </a>{""}.
               Our{" "}
               <Link to="/community/meshmates">MeshMates</Link> and community
               members are here to help!
@@ -77,7 +81,8 @@ const NewcomersGuide = () => {
         <div className="instructions">
           <Row style={{
             flexWrap: "wrap"
-          }} className="step">
+          }} className="step"
+          >
             <Col $sm={12} $lg={6}>
               <h3>Fill in the Community Member Form</h3>
               <p>Help us get to know you, so that we can highlight projects and initiatives that align with your interests. Fill-in a community member form. Gain access to community resources.</p>
@@ -142,7 +147,8 @@ const NewcomersGuide = () => {
           </Row>
           <Row style={{
             flexWrap: "wrap"
-          }} className="step">
+          }} className="step"
+          >
             <Col $sm={12} $lg={6}>
               <h3>Working on Your Issue</h3>
               <ol type="i">
