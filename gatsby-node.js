@@ -46,7 +46,9 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
   };
 
   const blogPostTemplate = path.resolve("src/templates/blog-single.js");
-  const blogCategoryListTemplate = path.resolve("src/templates/blog-category-list.js");
+  const blogCategoryListTemplate = path.resolve(
+    "src/templates/blog-category-list.js",
+  );
   const blogTagListTemplate = path.resolve("src/templates/blog-tag-list.js");
 
   const EventsTemplate = path.resolve("src/templates/events.js");
@@ -59,7 +61,9 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
 
   const ProgramPostTemplate = path.resolve("src/templates/program-single.js");
 
-  const MultiProgramPostTemplate = path.resolve("src/templates/program-multiple.js");
+  const MultiProgramPostTemplate = path.resolve(
+    "src/templates/program-multiple.js",
+  );
 
   const CareerPostTemplate = path.resolve("src/templates/career-single.js");
 
@@ -73,7 +77,9 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
 
   const resourcePostTemplate = path.resolve("src/templates/resource-single.js");
   const integrationTemplate = path.resolve("src/templates/integrations.js");
-  const LitePlaceholderTemplate = path.resolve("src/templates/lite-placeholder.js");
+  const LitePlaceholderTemplate = path.resolve(
+    "src/templates/lite-placeholder.js",
+  );
 
   const memberBioQuery = isFullSiteBuild
     ? `
@@ -665,7 +671,7 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
         case "resources":
           if (node.frontmatter.published)
             slug = `/${collection}/${slugify(
-              node.frontmatter.category
+              node.frontmatter.category,
             )}/${slugify(node.frontmatter.title)}`;
           break;
         case "members":
@@ -825,7 +831,12 @@ exports.onCreateWebpackConfig = ({ actions, stage, getConfig }) => {
   });
 
   // Reduce memory pressure by disabling sourcemaps in dev and build
-  if (stage === "develop" || stage === "develop-html" || stage === "build-javascript" || stage === "build-html") {
+  if (
+    stage === "develop" ||
+    stage === "develop-html" ||
+    stage === "build-javascript" ||
+    stage === "build-html"
+  ) {
     const config = getConfig();
     config.devtool = false;
     const miniCssExtractPlugin = config.plugins.find(
