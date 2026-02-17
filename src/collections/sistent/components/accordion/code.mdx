@@ -9,7 +9,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { Accordion, AccordionSummary, AccordionDetails, Typography } from "@sistent/sistent";
 
 export const ControlledAccordion = () => {
-  const [expanded, setExpanded] = useState("panel1");
+  const [expanded, setExpanded] = useState(false);
 
   const handleChange = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
@@ -47,26 +47,12 @@ export const ControlledAccordion = () => {
           </Typography>
         </AccordionDetails>
       </Accordion>
-      <Accordion expanded={expanded === "panel3"} onChange={handleChange("panel3")}>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel3bh-content"
-          id="panel3bh-header"
-        >
-          <Typography>
-            Advanced settings
-          </Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <Typography>
-             Accordions help organize complex information into digestible sections. They reduce cognitive load by hiding content until users actively choose to reveal it, making interfaces feel less overwhelming and more navigable.
-          </Typography>
-        </AccordionDetails>
-      </Accordion>
     </div>
   );
 };
   
+The Accordion component provides a consistent way to create expandable and collapsible content sections throughout your application.
+
 <a id="Basic Accordion">
   <h2>Basic Accordion</h2>
 </a>

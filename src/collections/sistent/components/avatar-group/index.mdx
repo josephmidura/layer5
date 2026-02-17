@@ -20,7 +20,7 @@ The simplest use case: showing multiple avatars grouped horizontally.
 
 <Row className="image-container">
   <ThemeWrapper>
-    <div style={{ display: 'flex', justifyContent: 'center' }}>
+    <div style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
       <AvatarGroup>
         <Avatar alt="User 1" src={user1} />
         <Avatar alt="User 2" src={user2} />
@@ -36,7 +36,7 @@ You can limit the number of avatars shown using the `max` prop. Additional avata
 
 <Row className="image-container">
   <ThemeWrapper>
-    <div style={{ display: 'flex', justifyContent: 'center' }}>
+    <div style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
       <AvatarGroup max={3}>
         <Avatar alt="User 1" src={user1} />
         <Avatar alt="User 2" src={user2} />
@@ -53,7 +53,7 @@ Customize the gap between avatars using the `spacing` prop.
 
 <Row className="image-container">
   <ThemeWrapper>
-    <div style={{ display: 'flex', justifyContent: 'center' }}>
+    <div style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
       <AvatarGroup spacing="medium">
         <Avatar alt="User 1" src={user1} />
         <Avatar alt="User 2" src={user2} />
@@ -69,7 +69,7 @@ You can combine avatar shape variants like `rounded` and `square` inside the gro
 
 <Row className="image-container">
   <ThemeWrapper>
-    <div style={{ display: 'flex', justifyContent: 'center' }}>
+    <div style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
       <AvatarGroup>
         <Avatar variant="rounded" src={user1} alt="Rounded" />
         <Avatar variant="square" src={user2} alt="Square" />
@@ -85,7 +85,7 @@ Customize the overflow display using the `renderSurplus` prop for more control o
 
 <Row className="image-container">
   <ThemeWrapper>
-    <div style={{ display: 'flex', justifyContent: 'center' }}>
+    <div style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
       <AvatarGroup
         max={3}
         renderSurplus={(surplus) => (

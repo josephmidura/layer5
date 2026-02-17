@@ -1,12 +1,9 @@
 ---
 title: AvatarGroup Guidance
 component: avatar-group
-description: The AvatarGroup component is used to visually represent a collection of users or entities in a compact and organized layout. It's ideal for showcasing team members, collaborators, or participants, and is often used in dashboards, cards, and collaborative tools. AvatarGroup handles overlapping, spacing, and overflow logic to ensure clarity even with limited space.
+description: The AvatarGroup component displays a compact collection of avatar elements that represent a group of users or entities. It’s useful in collaborative spaces, team-based features, or user listings.
+
 ---
-
-<h2>Avatar Group</h2>
-
-The <strong>AvatarGroup</strong> component displays a compact collection of avatar elements that represent a group of users or entities. It’s useful in collaborative spaces, team-based features, or user listings.
 
 <h3>Design Guidelines and Best Practices</h3>
 
@@ -26,7 +23,7 @@ When implementing `AvatarGroup`, it's important to consider how it enhances coll
     <strong>Provide accessible <code>alt</code> text:</strong> Each avatar should have meaningful alternative text for screen readers. Avoid empty or redundant `alt` values.
   </li>
   <li>
-    <strong>Avoid interactive behavior within AvatarGroup:</strong> The component is for display only. If avatars must be clickable, wrap each `&lt;Avatar&gt;` individually in buttons or links outside the group context.
+    <strong>Avoid interactive behavior within AvatarGroup:</strong> The component is for display only. If avatars must be clickable, wrap each `<Avatar>` individually in buttons or links outside the group context.
   </li>
   <li>
     <strong>Keep it compact:</strong> AvatarGroup is not meant for long lists. For large user sets, link to a full view or show summary avatars only.
