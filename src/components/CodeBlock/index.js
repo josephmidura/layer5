@@ -49,7 +49,11 @@ const Code = ({ codeString, language = "jsx" }) => {
     setTimeout(() => setCopyText("Copy"), 1000);
   };
   return (
-    <Highlight code={codeString} language={language} theme={themes.nightOwl}>
+    <Highlight
+      code={codeString}
+      language={language}
+      theme={themes.nightOwl}
+    >
       {({ className, style, tokens, getLineProps, getTokenProps }) => (
         <Pre>
           <CopyCode onClick={handleClick}>{copyText}</CopyCode>
