@@ -94,7 +94,7 @@ A simple accordion with multiple independent panels. Each panel can be expanded 
       </div>
     </ThemeWrapper>
   </div>
-  <CodeBlock name="basic-accordion" code={`<SistentThemeProvider initialMode={isDark ? "dark" : "light"}>
+  <CodeBlock name="basic-accordion" collapsible code={`<SistentThemeProvider initialMode={isDark ? "dark" : "light"}>
   <Accordion>
     <AccordionSummary
       expandIcon={<ExpandMoreIcon />}
@@ -138,7 +138,7 @@ A controlled accordion where the expanded state is managed by React state. This 
       <ControlledAccordion />
     </ThemeWrapper>
   </div>
-  <CodeBlock name="controlled-accordion" code={`const [expanded, setExpanded] = useState(false);
+  <CodeBlock name="controlled-accordion" collapsible code={`const [expanded, setExpanded] = useState(false);
 
 const handleChange = (panel) => (event, isExpanded) => {
   setExpanded(isExpanded ? panel : false);
@@ -209,7 +209,7 @@ Use the <code>defaultExpanded</code> prop to have an accordion panel expanded by
       </div>
     </ThemeWrapper>
   </div>
-  <CodeBlock name="default-expanded" code={`<SistentThemeProvider initialMode={isDark ? "dark" : "light"}>
+  <CodeBlock name="default-expanded" collapsible code={`<SistentThemeProvider initialMode={isDark ? "dark" : "light"}>
   <Accordion defaultExpanded>
     <AccordionSummary
       expandIcon={<ExpandMoreIcon />}
@@ -255,7 +255,7 @@ Use the <code>disabled</code> prop to prevent users from interacting with an acc
       </div>
     </ThemeWrapper>
   </div>
-  <CodeBlock name="disabled-accordion" code={`<SistentThemeProvider initialMode={isDark ? "dark" : "light"}>
+  <CodeBlock name="disabled-accordion" collapsible code={`<SistentThemeProvider initialMode={isDark ? "dark" : "light"}>
   <Accordion disabled>
     <AccordionSummary
       expandIcon={<ExpandMoreIcon />}

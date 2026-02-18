@@ -5,7 +5,7 @@ import TOC from "../../../../../components/SistentNavigation";
 import IntraPage from "../../../../../components/handbook-navigation/intra-page";
 import SistentPagination from "../../../../../components/SistentNavigation/pagination";
 import { useStyledDarkMode } from "../../../../../theme/app/useStyledDarkMode";
-import { CodeBlock } from "../../components/button/code-block";
+import CodeBlock from "../../../../../components/CodeBlock";
 import { SistentThemeProvider } from "@sistent/sistent";
 import { Box, Typography, Card, Alert } from "@sistent/sistent";
 

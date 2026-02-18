@@ -30,7 +30,7 @@ Display a horizontal group of avatars with default overlap.
       </div>
     </ThemeWrapper>
   </div>
-  <CodeBlock name="basic-group" code={`<AvatarGroup>
+  <CodeBlock name="basic-group" collapsible code={`<AvatarGroup>
   <Avatar src="/user1.jpg" alt="User 1" />
   <Avatar src="/user2.jpg" alt="User 2" />
   <Avatar src="/user3.jpg" alt="User 3" />
@@ -53,7 +53,7 @@ Limit the number of visible avatars using the `max` prop.
       </div>
     </ThemeWrapper>
   </div>
-  <CodeBlock name="max-group" code={`<AvatarGroup max={3}>
+  <CodeBlock name="max-group" collapsible code={`<AvatarGroup max={3}>
   <Avatar src="/user1.jpg" />
   <Avatar src="/user2.jpg" />
   <Avatar src="/user3.jpg" />
@@ -76,7 +76,7 @@ Control the spacing between avatars.
       </div>
     </ThemeWrapper>
   </div>
-  <CodeBlock name="spacing-group" code={`<AvatarGroup spacing="medium">
+  <CodeBlock name="spacing-group" collapsible code={`<AvatarGroup spacing="medium">
   <Avatar src="/user1.jpg" />
   <Avatar src="/user2.jpg" />
   <Avatar src="/user3.jpg" />
@@ -98,7 +98,7 @@ Mix avatar shape variants like square and rounded.
       </div>
     </ThemeWrapper>
   </div>
-  <CodeBlock name="variant-group" code={`<AvatarGroup>
+  <CodeBlock name="variant-group" collapsible code={`<AvatarGroup>
   <Avatar variant="rounded" src="/user1.jpg" />
   <Avatar variant="square" src="/user2.jpg" />
   <Avatar src="/user3.jpg" />
@@ -120,7 +120,7 @@ You can indicate the total number of avatars using the `total` prop, even if not
       </div>
     </ThemeWrapper>
   </div>
-  <CodeBlock name="total-avatars" code={`<AvatarGroup total={7}>
+  <CodeBlock name="total-avatars" collapsible code={`<AvatarGroup total={7}>
   <Avatar src="/user1.jpg" />
   <Avatar src="/user2.jpg" />
   <Avatar src="/user3.jpg" />
@@ -149,7 +149,7 @@ Customize the overflow display using the `renderSurplus` prop for more control o
       </div>
     </ThemeWrapper>
   </div>
-  <CodeBlock name="custom-surplus" code={`<AvatarGroup
+  <CodeBlock name="custom-surplus" collapsible code={`<AvatarGroup
   max={2}
   renderSurplus={(surplus) => (
     <Avatar sx={{ bgcolor: 'secondary.main' }}>{\`+\${surplus} more\`}</Avatar>
