@@ -7,7 +7,7 @@ import SistentPagination from "../../../../../components/SistentNavigation/pagin
 
 import { Link } from "gatsby";
 import { useStyledDarkMode } from "../../../../../theme/app/useStyledDarkMode";
-// CodeBlock replaced by Code from components/CodeBlock
+import { CodeBlock } from "../../components/button/code-block";
 import Code from "../../../../../components/CodeBlock";
 import { SistentThemeProvider, Button } from "@sistent/sistent";
 
@@ -41,11 +41,11 @@ const SistentAbout = () => {
               <h2>About Sistent</h2>
             </a>
             <p>
-              Sistent an open source design system
-              that offers building blocks to create consistent, accessible, and
-              user-friendly interfaces. It's aimed at developers who want to
-              design applications aligned with the same brand and ensure a
-              uniform user experience across different products.
+              Sistent an open source design system that offers building blocks
+              to create consistent, accessible, and user-friendly interfaces.
+              It's aimed at developers who want to design applications aligned
+              with the same brand and ensure a uniform user experience across
+              different products.
             </p>
             <p>
               Sistent leverages Material UI libraries and provides a custom
@@ -57,8 +57,8 @@ const SistentAbout = () => {
             </p>
             <p>
               <b>
-                Sistent provides a consistent user experience across any frontend
-                software projects that choose to use it.
+                Sistent provides a consistent user experience across any
+                frontend software projects that choose to use it.
               </b>
             </p>
             <p>
@@ -79,15 +79,19 @@ const SistentAbout = () => {
             </p>
             <h3>Layer5 Brand Resources</h3>
             <ul>
-              <li><Link to="/brand/brand-guide.pdf">Brand Guide</Link></li>
-              <li><Link to="/brand">Logos and Brand Kits</Link></li>
+              <li>
+                <Link to="/brand/brand-guide.pdf">Brand Guide</Link>
+              </li>
+              <li>
+                <Link to="/brand">Logos and Brand Kits</Link>
+              </li>
             </ul>
             <a id="Installation">
               <h2>Installation and Quickstart</h2>
             </a>
             <p>To install the Sistent NPM package, run:</p>
             <div className="showcase">
-              <Code codeString={codes[0]} />
+              <CodeBlock name="installation" code={codes[0]} />
             </div>
             <p>
               After installation, you can import Sistent theme and any Sistent
@@ -103,7 +107,7 @@ const SistentAbout = () => {
                   <Button variant="text">Text</Button>
                 </SistentThemeProvider>
               </div>
-              <Code codeString={codes[1]} />
+              <CodeBlock name="checkbox" code={codes[1]} />
             </div>
 
             <a id="Using local Sistent">
@@ -120,75 +124,113 @@ const SistentAbout = () => {
                   <Code codeString="npm install &lt;path-to-sistent-on-local-machine&gt;" />
                   <p>Example:</p>
                   <Code
-                    codeString={"# relative path\n npm install ../../sistent\n\n# absolute path\n npm install /home/five/code/sistent"}
+                    codeString={
+                      "# relative path\n npm install ../../sistent\n\n# absolute path\n npm install /home/five/code/sistent"
+                    }
                   />
                   <p>This will update your Sistent dependency to:</p>
-                  <Code codeString={"\"@sistent/sistent\" : \"file:../../sistent\""} />
+                  <Code
+                    codeString={'"@sistent/sistent" : "file:../../sistent"'}
+                  />
                 </li>
                 <li>
                   <b>Build your local Sistent fork</b>
                   <p>
-                    After making changes to your fork, run this command in your local Sistent package.
+                    After making changes to your fork, run this command in your
+                    local Sistent package.
                   </p>
                   <Code codeString="make build" />
                 </li>
                 <li>
                   <b>
-                    Run the build command in the project where your local Sistent fork is installed
+                    Run the build command in the project where your local
+                    Sistent fork is installed
                   </b>
                   <p>Example for Meshery UI:</p>
                   <Code codeString="make ui-build" />
                 </li>
               </ol>
               <p>
-                Now, your project should reflect changes from your local Sistent fork.
+                Now, your project should reflect changes from your local Sistent
+                fork.
               </p>
               <p>
-                If you want to remove the local Sistent fork from your project, run:
+                If you want to remove the local Sistent fork from your project,
+                run:
               </p>
               <Code codeString="npm uninstall @sistent/sistent" />
               <p>
-                This will remove the local Sistent package from your project. You will have to install the standard package again after running this command:
+                This will remove the local Sistent package from your project.
+                You will have to install the standard package again after
+                running this command:
               </p>
               <Code codeString="npm install @sistent/sistent" />
-
 
               <li>
                 <h3>Method 2: Using npm link</h3>
                 <p>
-                  This method allows you to link your local Sistent fork globally for easier development. Follow these steps:
+                  This method allows you to link your local Sistent fork
+                  globally for easier development. Follow these steps:
                 </p>
                 <ol>
                   <li>
                     <b>Link your local Sistent package globally</b>
-                    <p>In your local Sistent repo, run the following command:</p>
-                    <Code codeString={"cd <path-to-sistent-on-local-machine>\n npm link"} />
+                    <p>
+                      In your local Sistent repo, run the following command:
+                    </p>
+                    <Code
+                      codeString={
+                        "cd <path-to-sistent-on-local-machine>\n npm link"
+                      }
+                    />
                   </li>
                   <li>
                     <b>Link Sistent in your project</b>
-                    <p>In the project where you want to use your local Sistent fork, run:</p>
+                    <p>
+                      In the project where you want to use your local Sistent
+                      fork, run:
+                    </p>
                     <Code codeString="npm link @sistent/sistent" />
-                    <p>This will create a symlink in your project's node_modules, pointing to your local Sistent package.</p>
+                    <p>
+                      This will create a symlink in your project's node_modules,
+                      pointing to your local Sistent package.
+                    </p>
                   </li>
                   <li>
                     <b>Build your local Sistent fork</b>
-                    <p>After making changes to your fork, run this command in your local Sistent package.</p>
+                    <p>
+                      After making changes to your fork, run this command in
+                      your local Sistent package.
+                    </p>
                     <Code codeString="make build" />
                   </li>
                   <li>
-                    <b>Run the build command in the project where your local Sistent fork is installed</b>
+                    <b>
+                      Run the build command in the project where your local
+                      Sistent fork is installed
+                    </b>
                     <p>Example for Meshery-UI:</p>
                     <Code codeString="make ui-build" />
                   </li>
                   <li>
                     <p>
-                      Verify that your local fork is correctly linked by running:
+                      Verify that your local fork is correctly linked by
+                      running:
                     </p>
-                    <Code codeString={"npm ls -g\n\n# expected output:\n├── @sistent/sistent@0.14.11 -> ./../../../../<path-to-local-sistent-fork>"} />
+                    <Code
+                      codeString={
+                        "npm ls -g\n\n# expected output:\n├── @sistent/sistent@0.14.11 -> ./../../../../<path-to-local-sistent-fork>"
+                      }
+                    />
                     <p>
-                      You can also try this command to verify that your fork is correctly linked:
+                      You can also try this command to verify that your fork is
+                      correctly linked:
                     </p>
-                    <Code codeString={"ls -l node_modules/@sistent/sistent\n\n# expected output:\nnode_modules/@sistent/sistent -> ../../../../../sistent"} />
+                    <Code
+                      codeString={
+                        "ls -l node_modules/@sistent/sistent\n\n# expected output:\nnode_modules/@sistent/sistent -> ../../../../../sistent"
+                      }
+                    />
                   </li>
                   <li>
                     <p>
@@ -209,11 +251,16 @@ const SistentAbout = () => {
               <a href="https://github.com/meshery/meshery/issues?q=is%3Aissue%20state%3Aopen%20label%3Acomponent%2Fui">
                 meshery-ui
               </a>{" "}
-              and others, you can refer to the {" "}
+              and others, you can refer to the{" "}
               <a href="https://github.com/layer5io/sistent?tab=readme-ov-file#installation">
                 Sistent set-up guide
-              </a>, {" "}
-              <a href="https://discuss.layer5.io/t/hands-on-training-session-migrating-components-to-mui-v5-and-sistent/6589">Hands-on Training Session: Migrating Components to MUI v5 and Sistent</a>, {" "}
+              </a>
+              ,{" "}
+              <a href="https://discuss.layer5.io/t/hands-on-training-session-migrating-components-to-mui-v5-and-sistent/6589">
+                Hands-on Training Session: Migrating Components to MUI v5 and
+                Sistent
+              </a>
+              ,{" "}
               <a href="https://www.youtube.com/live/lsw9KA__iu4?si=o8gpZdSHcqO2OKxE">
                 Training: contributing to Sistent,
               </a>{" "}
@@ -221,7 +268,8 @@ const SistentAbout = () => {
               <a href="https://www.youtube.com/live/yiXkxbibLUU?si=Dybj5qr0VLhLWEpl">
                 Websites call
               </a>{" "}
-              , where experienced contributors demonstrate how to use Sistent in various projects.
+              , where experienced contributors demonstrate how to use Sistent in
+              various projects.
             </p>
           </div>
           <SistentPagination />

@@ -41,53 +41,31 @@ const CopyCode = styled.button`
   }
 `;
 
-const Code = ({ codeString, code, language = "jsx", name }) => {
-  const finalCode = codeString || code || "";
+const Code = ({ codeString, language = "jsx" }) => {
   const [copyText, setCopyText] = useState("Copy");
-  const [showCode, setShowCode] = useState(false);
-
   const handleClick = () => {
-    copyToClipboard(finalCode);
+    copyToClipboard(codeString);
     setCopyText("Copied!");
     setTimeout(() => setCopyText("Copy"), 1000);
   };
-
   return (
-    <div className="show-code">
-      {/* Checkbox toggle styled in sistent.style.js */}
-      <input 
-        type="checkbox" 
-        id={`show-code-${name}`} 
-        className="show-code-check"
-        checked={showCode}
-        onChange={() => setShowCode(!showCode)}
-      />
-      <label htmlFor={`show-code-${name}`}>Show Code</label>
-      
-      {showCode && (
-        <Highlight
-          code={finalCode}
-          language={language}
-          theme={themes.nightOwl}
-        >
-          {({ className, style, tokens, getLineProps, getTokenProps }) => (
-            <Pre>
-              <CopyCode onClick={handleClick}>{copyText}</CopyCode>
-              <Pre className={className} style={style}>
-                {tokens.map((line, i) => (
-                  <div {...getLineProps({ line, key: i })} key={i}>
-                    <LineNo>{i + 1}</LineNo>
-                    {line.map((token, key) => (
-                      <span {...getTokenProps({ token, key })} key={key} />
-                    ))}
-                  </div>
+    <Highlight code={codeString} language={language} theme={themes.nightOwl}>
+      {({ className, style, tokens, getLineProps, getTokenProps }) => (
+        <Pre>
+          <CopyCode onClick={handleClick}>{copyText}</CopyCode>
+          <Pre className={className} style={style}>
+            {tokens.map((line, i) => (
+              <div {...getLineProps({ line, key: i })} key={i}>
+                <LineNo>{i + 1}</LineNo>
+                {line.map((token, key) => (
+                  <span {...getTokenProps({ token, key })} key={key} />
                 ))}
-              </Pre>
-            </Pre>
-          )}
-        </Highlight>
+              </div>
+            ))}
+          </Pre>
+        </Pre>
       )}
-    </div>
+    </Highlight>
   );
 };
 

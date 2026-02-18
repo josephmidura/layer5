@@ -5,16 +5,23 @@ import TOC from "../../../../../components/SistentNavigation";
 import IntraPage from "../../../../../components/handbook-navigation/intra-page";
 import SistentPagination from "../../../../../components/SistentNavigation/pagination";
 import { useStyledDarkMode } from "../../../../../theme/app/useStyledDarkMode";
-import CodeBlock from "../../../../../components/CodeBlock";
+import { CodeBlock } from "../../components/button/code-block";
 import { SistentThemeProvider } from "@sistent/sistent";
-import { Button, TextField, Card, CardContent, Typography, Alert } from "@sistent/sistent";
+import {
+  Button,
+  TextField,
+  Card,
+  CardContent,
+  Typography,
+  Alert,
+} from "@sistent/sistent";
 
 const contents = [
   { id: 0, link: "#overview", text: "Overview" },
   { id: 1, link: "#theme-provider", text: "Theme Provider" },
   { id: 2, link: "#component-examples", text: "Component Examples" },
   { id: 3, link: "#advanced-usage", text: "Advanced Usage" },
-  { id: 4, link: "#best-practices", text: "Best Practices" }
+  { id: 4, link: "#best-practices", text: "Best Practices" },
 ];
 
 const codeExamples = {
@@ -204,6 +211,7 @@ function App() {
     </SistentThemeProvider>
   );
 }`,
+
   importStrategies: `// ✅ Recommended: Individual component imports
 import { Button } from "@sistent/sistent";
 import { TextField } from "@sistent/sistent";
@@ -271,7 +279,7 @@ function IconExamples() {
   responsiveUsage: `import { 
   Card, 
   CardContent, 
-  Typography, 
+  Typography,
   Box
 } from "@sistent/sistent";
 
@@ -329,7 +337,7 @@ function ResponsiveGrid() {
       </div>
     </Box>
   );
-}`
+}`,
 };
 
 const SistentUsage = () => {
@@ -350,21 +358,23 @@ const SistentUsage = () => {
             </a>
             <section>
               <p>
-                After installing Sistent, you can immediately start using components in your React application.
-                The most important step is wrapping your application with the
+                After installing Sistent, you can immediately start using
+                components in your React application. The most important step is
+                wrapping your application with the
                 <code> SistentThemeProvider </code>
-                 to ensure all components have access to the theme context.
+                to ensure all components have access to the theme context.
               </p>
 
               <Alert severity="info" sx={{ my: 2 }}>
-                <strong>Prerequisites:</strong> Ensure you have React 16.8+ and have installed Sistent using
-                <code style={{ margin: "0 4px" }}>npm install @sistent/sistent</code>
+                <strong>Prerequisites:</strong> Ensure you have React 16.8+ and
+                have installed Sistent using
+                <code style={{ margin: "0 4px" }}>
+                  npm install @sistent/sistent
+                </code>
               </Alert>
 
               <h3>Quick Start Example</h3>
-              <p>
-                Here's the minimal setup to get started with Sistent:
-              </p>
+              <p>Here's the minimal setup to get started with Sistent:</p>
 
               <div className="showcase">
                 <div className="items">
@@ -374,7 +384,7 @@ const SistentUsage = () => {
                     </Button>
                   </SistentThemeProvider>
                 </div>
-                <CodeBlock codeString={codeExamples.basicUsage} />
+                <CodeBlock name="basic-usage" code={codeExamples.basicUsage} />
               </div>
             </section>
 
@@ -382,17 +392,19 @@ const SistentUsage = () => {
             <h2>Theme Provider Setup</h2>
             <section id="theme-provider">
               <p>
-                The <code>SistentThemeProvider</code> is the foundation of your Sistent application.
-                It provides theme context, manages color modes, and ensures consistent styling across all components.
+                The <code>SistentThemeProvider</code> is the foundation of your
+                Sistent application. It provides theme context, manages color
+                modes, and ensures consistent styling across all components.
               </p>
 
               <h3>Theme Configuration</h3>
-              <p>
-                Configure your theme provider with various options:
-              </p>
+              <p>Configure your theme provider with various options:</p>
 
               <div className="showcase">
-                <CodeBlock codeString={codeExamples.themeProvider} />
+                <CodeBlock
+                  name="Theme-provider"
+                  code={codeExamples.themeProvider}
+                />
               </div>
 
               <div className="parameter-table">
@@ -408,20 +420,34 @@ const SistentUsage = () => {
                   </thead>
                   <tbody>
                     <tr>
-                      <td><code>initialMode</code></td>
-                      <td><code>"light" | "dark" | "system"</code></td>
-                      <td><code>"system"</code></td>
+                      <td>
+                        <code>initialMode</code>
+                      </td>
+                      <td>
+                        <code>"light" | "dark" | "system"</code>
+                      </td>
+                      <td>
+                        <code>"system"</code>
+                      </td>
                       <td>Sets the initial color mode</td>
                     </tr>
                     <tr>
-                      <td><code>theme</code></td>
-                      <td><code>Theme</code></td>
+                      <td>
+                        <code>theme</code>
+                      </td>
+                      <td>
+                        <code>Theme</code>
+                      </td>
                       <td>Default theme</td>
                       <td>Custom theme object</td>
                     </tr>
                     <tr>
-                      <td><code>children</code></td>
-                      <td><code>ReactNode</code></td>
+                      <td>
+                        <code>children</code>
+                      </td>
+                      <td>
+                        <code>ReactNode</code>
+                      </td>
                       <td>-</td>
                       <td>Your application components</td>
                     </tr>
@@ -430,8 +456,10 @@ const SistentUsage = () => {
               </div>
 
               <Alert severity="warning" sx={{ my: 3 }}>
-                <strong>Important:</strong> Place the <code>SistentThemeProvider</code> at the root of your
-                component tree, typically in your <code>App.js</code> or <code>index.js</code> file.
+                <strong>Important:</strong> Place the{" "}
+                <code>SistentThemeProvider</code> at the root of your component
+                tree, typically in your <code>App.js</code> or{" "}
+                <code>index.js</code> file.
               </Alert>
             </section>
 
@@ -439,31 +467,50 @@ const SistentUsage = () => {
             <section id="component-examples">
               <h2>Component Examples</h2>
               <p>
-                Explore practical examples of Sistent components with different configurations and use cases.
+                Explore practical examples of Sistent components with different
+                configurations and use cases.
               </p>
 
               <h3>Button Variations</h3>
               <p>
-                Sistent provides multiple button variants, colors, and sizes to fit different design needs:
+                Sistent provides multiple button variants, colors, and sizes to
+                fit different design needs:
               </p>
 
               <div className="showcase">
                 <div className="items">
                   <SistentThemeProvider initialMode={isDark ? "dark" : "light"}>
-                    <div style={{ display: "flex", gap: "12px", flexWrap: "wrap", alignItems: "center" }}>
-                      <Button variant="contained" color="primary">Contained</Button>
-                      <Button variant="outlined" color="secondary">Outlined</Button>
+                    <div
+                      style={{
+                        display: "flex",
+                        gap: "12px",
+                        flexWrap: "wrap",
+                        alignItems: "center",
+                      }}
+                    >
+                      <Button variant="contained" color="primary">
+                        Contained
+                      </Button>
+                      <Button variant="outlined" color="secondary">
+                        Outlined
+                      </Button>
                       <Button variant="text">Text Button</Button>
-                      <Button variant="contained" disabled>Disabled</Button>
+                      <Button variant="contained" disabled>
+                        Disabled
+                      </Button>
                     </div>
                   </SistentThemeProvider>
                 </div>
-                <CodeBlock codeString={codeExamples.buttonVariants} />
+                <CodeBlock
+                  name="button-variants"
+                  code={codeExamples.buttonVariants}
+                />
               </div>
 
               <h3>Interactive Form Example</h3>
               <p>
-                A complete form example showcasing multiple components working together:
+                A complete form example showcasing multiple components working
+                together:
               </p>
 
               <div className="showcase">
@@ -474,10 +521,21 @@ const SistentUsage = () => {
                         <Typography variant="h5" component="h2" gutterBottom>
                           Get in Touch
                         </Typography>
-                        <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
-                          Fill out the form below and we'll get back to you soon.
+                        <Typography
+                          variant="body2"
+                          color="text.secondary"
+                          sx={{ mb: 3 }}
+                        >
+                          Fill out the form below and we'll get back to you
+                          soon.
                         </Typography>
-                        <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+                        <div
+                          style={{
+                            display: "flex",
+                            flexDirection: "column",
+                            gap: "16px",
+                          }}
+                        >
                           <TextField
                             label="Full Name"
                             variant="outlined"
@@ -512,67 +570,100 @@ const SistentUsage = () => {
                     </Card>
                   </SistentThemeProvider>
                 </div>
-                <CodeBlock codeString={codeExamples.formExample} />
+                <CodeBlock
+                  name="form-example"
+                  code={codeExamples.formExample}
+                />
               </div>
             </section>
 
             {/* Advanced Usage Section */}
             <h2>Advanced Usage</h2>
             <section id="advanced-usage">
-
               <h3>Theme Customization</h3>
               <p>
-                Create custom themes and use the theme hook for advanced styling:
+                Create custom themes and use the theme hook for advanced
+                styling:
               </p>
 
               <div className="showcase">
-                <CodeBlock codeString={codeExamples.themeCustomization} />
+                <CodeBlock
+                  name="theme-customization"
+                  code={codeExamples.themeCustomization}
+                />
               </div>
 
               <h3>Import Strategies</h3>
-              <p>
-                Optimize your bundle size with smart import strategies:
-              </p>
+              <p>Optimize your bundle size with smart import strategies:</p>
 
               <div className="showcase">
-                <CodeBlock codeString={codeExamples.importStrategies} />
+                <CodeBlock
+                  name="import-strategies"
+                  code={codeExamples.importStrategies}
+                />
               </div>
 
               <h3>Working with Icons</h3>
-              <p>
-                Integrate Sistent's comprehensive icon library:
-              </p>
+              <p>Integrate Sistent's comprehensive icon library:</p>
 
               <div className="showcase">
                 <div className="items">
                   <SistentThemeProvider initialMode={isDark ? "dark" : "light"}>
-                    <div style={{ display: "flex", gap: "12px", alignItems: "center", flexWrap: "wrap" }}>
-                      <Button startIcon="🔍" variant="contained">Search</Button>
-                      <Button endIcon="📥" variant="outlined">Download</Button>
+                    <div
+                      style={{
+                        display: "flex",
+                        gap: "12px",
+                        alignItems: "center",
+                        flexWrap: "wrap",
+                      }}
+                    >
+                      <Button startIcon="🔍" variant="contained">
+                        Search
+                      </Button>
+                      <Button endIcon="📥" variant="outlined">
+                        Download
+                      </Button>
                       <Button variant="text">Menu ☰</Button>
-                      <Button variant="contained" color="secondary">❤️</Button>
+                      <Button variant="contained" color="secondary">
+                        ❤️
+                      </Button>
                     </div>
                   </SistentThemeProvider>
                 </div>
-                <CodeBlock codeString={codeExamples.iconUsage} />
+                <CodeBlock name="icon-usage" code={codeExamples.iconUsage} />
               </div>
 
               <h3>Responsive Design</h3>
               <p>
-                Build responsive layouts with Sistent's grid system and breakpoint utilities:
+                Build responsive layouts with Sistent's grid system and
+                breakpoint utilities:
               </p>
               <div className="showcase">
                 <div className="items">
                   <SistentThemeProvider initialMode={isDark ? "dark" : "light"}>
-                    <div style={{ padding: "16px", backgroundColor: isDark ? "#1a1a1a" : "#f5f5f5", borderRadius: "8px" }}>
-                      <div style={{ display: "grid", gap: "16px", gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))" }}>
+                    <div
+                      style={{
+                        padding: "16px",
+                        backgroundColor: isDark ? "#1a1a1a" : "#f5f5f5",
+                        borderRadius: "8px",
+                      }}
+                    >
+                      <div
+                        style={{
+                          display: "grid",
+                          gap: "16px",
+                          gridTemplateColumns:
+                            "repeat(auto-fit, minmax(150px, 1fr))",
+                        }}
+                      >
                         <Card>
                           <CardContent>
                             <Typography variant="h6" gutterBottom>
                               Responsive Card 1
                             </Typography>
                             <Typography variant="body2" color="text.secondary">
-                              This card adapts to different screen sizes automatically.
+                              This card adapts to different screen sizes
+                              automatically.
                             </Typography>
                           </CardContent>
                         </Card>
@@ -582,7 +673,8 @@ const SistentUsage = () => {
                               Responsive Card 2
                             </Typography>
                             <Typography variant="body2" color="text.secondary">
-                              On mobile, cards stack vertically for better readability.
+                              On mobile, cards stack vertically for better
+                              readability.
                             </Typography>
                           </CardContent>
                         </Card>
@@ -592,7 +684,8 @@ const SistentUsage = () => {
                               Responsive Card 3
                             </Typography>
                             <Typography variant="body2" color="text.secondary">
-                              Grid system provides flexible layouts across all devices.
+                              Grid system provides flexible layouts across all
+                              devices.
                             </Typography>
                           </CardContent>
                         </Card>
@@ -610,7 +703,10 @@ const SistentUsage = () => {
                     </div>
                   </SistentThemeProvider>
                 </div>
-                <CodeBlock codeString={codeExamples.responsiveUsage} />
+                <CodeBlock
+                  name="responsive-usage"
+                  code={codeExamples.responsiveUsage}
+                />
               </div>
             </section>
             {/* Best Practices Section */}
@@ -618,41 +714,48 @@ const SistentUsage = () => {
             <section id="best-practices">
               <ul>
                 <li>
-                  <strong>Theme Provider:</strong> Always wrap your application root with <code>SistentThemeProvider</code>.
-                  Place it as high as possible in your component tree to ensure all components
+                  <strong>Theme Provider:</strong> Always wrap your application
+                  root with <code>SistentThemeProvider</code>. Place it as high
+                  as possible in your component tree to ensure all components
                   have access to the theme context.
                 </li>
 
                 <li>
-                  <strong>Import Optimization:</strong> Import only the components you need to keep your bundle size minimal.
-                  Use individual imports or group related components together rather than
-                  importing everything.
+                  <strong>Import Optimization:</strong> Import only the
+                  components you need to keep your bundle size minimal. Use
+                  individual imports or group related components together rather
+                  than importing everything.
                 </li>
 
                 <li>
-                  <strong>Consistent Design:</strong> Use consistent component variants, colors, and sizing throughout your application.
+                  <strong>Consistent Design:</strong> Use consistent component
+                  variants, colors, and sizing throughout your application.
                   Create reusable component wrappers for commonly used patterns.
                 </li>
 
                 <li>
-                  <strong>Mobile-First:</strong> Leverage Sistent's responsive utilities and breakpoints to create mobile-first
-                  designs. Test your components across different screen sizes.
+                  <strong>Mobile-First:</strong> Leverage Sistent's responsive
+                  utilities and breakpoints to create mobile-first designs. Test
+                  your components across different screen sizes.
                 </li>
 
                 <li>
-                  <strong>Accessibility:</strong> Take advantage of Sistent's built-in accessibility features. Always provide
-                  proper labels, ARIA attributes, and ensure adequate color contrast.
+                  <strong>Accessibility:</strong> Take advantage of Sistent's
+                  built-in accessibility features. Always provide proper labels,
+                  ARIA attributes, and ensure adequate color contrast.
                 </li>
 
                 <li>
-                  <strong>Theme Customization:</strong> Use design tokens and theme customization for styling rather than overriding
-                  CSS directly. This ensures consistency and easier maintenance.
+                  <strong>Theme Customization:</strong> Use design tokens and
+                  theme customization for styling rather than overriding CSS
+                  directly. This ensures consistency and easier maintenance.
                 </li>
               </ul>
 
               <Alert severity="success" sx={{ my: 3 }}>
-                <strong>Pro Tip:</strong> Create a custom hook to manage commonly used theme values
-                and component configurations across your application.
+                <strong>Pro Tip:</strong> Create a custom hook to manage
+                commonly used theme values and component configurations across
+                your application.
               </Alert>
             </section>
           </div>
