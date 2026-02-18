@@ -86,7 +86,7 @@ const SistentAbout = () => {
             </a>
             <p>To install the Sistent NPM package, run:</p>
             <div className="showcase">
-              <CodeBlock name="installation" code={codes[0]} />
+              <CodeBlock name="installation" collapsible code={codes[0]} />
             </div>
             <p>
               After installation, you can import Sistent theme and any Sistent
@@ -102,7 +102,7 @@ const SistentAbout = () => {
                   <Button variant="text">Text</Button>
                 </SistentThemeProvider>
               </div>
-              <CodeBlock name="checkbox" code={codes[1]} />
+              <CodeBlock name="checkbox" collapsible code={codes[1]} />
             </div>
 
             <a id="Using local Sistent">

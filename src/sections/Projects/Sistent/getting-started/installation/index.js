@@ -71,7 +71,6 @@ const SistentInstallation = () => {
             <CodeBlock
               codeString={codeExamples.prerequisites}
               language="javascript"
-              collapsible
             />
             <a id="installation">
               <h2>Installation</h2>
@@ -81,13 +80,11 @@ const SistentInstallation = () => {
             <CodeBlock
               codeString={codeExamples.npmInstall}
               language="javascript"
-              collapsible
             />
             <h3>Using yarn</h3>
             <CodeBlock
               codeString={codeExamples.yarnInstall}
               language="javascript"
-              collapsible
             />
             <a id="quick-start">
               <h2>Quick Start</h2>
@@ -101,7 +98,6 @@ const SistentInstallation = () => {
             <CodeBlock
               codeString={codeExamples.quickStart}
               language="javascript"
-              collapsible
             />
             <p>
               <strong>That's it!</strong> Your Sistent components will
