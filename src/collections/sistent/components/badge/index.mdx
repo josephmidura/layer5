@@ -23,7 +23,7 @@ Standard badges display a small circular notification indicator. They are common
 
 <Row className="image-container">
   <ThemeWrapper>
-    <div style={{ display: 'flex', justifyContent: 'center' }}>
+    <div style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
       <Badge badgeContent={4} color="primary">
         <MailIcon />
       </Badge>
@@ -37,7 +37,7 @@ Dot badges are minimalist indicators that show a small dot rather than a number.
 
 <Row className="image-container">
   <ThemeWrapper>
-    <div style={{ display: 'flex', justifyContent: 'center' }}>
+    <div style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
       <Badge variant="dot" color="secondary">
         <MailIcon />
       </Badge>
@@ -51,17 +51,15 @@ Status badges can be used to indicate the state of an item or component. They ty
 
 <Row className="image-container">
   <ThemeWrapper>
-    <div style={{ display: 'flex', justifyContent: 'center' }}>
-      <Avatar>
-        <Badge
-          overlap="circular"
-          anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
-          variant="dot"
-          color="success"
-        >
-          U
-        </Badge>
-      </Avatar>
+    <div style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
+      <Badge
+        overlap="circular"
+        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+        variant="dot"
+        color="success"
+      >
+        <Avatar>U</Avatar>
+      </Badge>
     </div>
   </ThemeWrapper>
 </Row>
@@ -74,7 +72,7 @@ Badges come in different colors to help convey specific meanings. The color choi
 
 <Row className="image-container">
   <ThemeWrapper>
-    <div style={{ display: 'flex', justifyContent: 'center', gap: '20px' }}>
+    <div style={{ display: 'flex', justifyContent: 'center', gap: '20px', width: '100%' }}>
       <Badge badgeContent={4} color="primary">
         <MailIcon />
       </Badge>
@@ -102,7 +100,7 @@ Badges can be positioned in different locations around their parent element. The
 
 <Row className="image-container">
   <ThemeWrapper>
-    <div style={{ display: 'flex', justifyContent: 'center', gap: '20px' }}>
+    <div style={{ display: 'flex', justifyContent: 'center', gap: '20px', width: '100%' }}>
       <Badge
         badgeContent={4}
         color="primary"
@@ -155,7 +153,7 @@ Badges can be shown or hidden based on their content or specific conditions. For
 
 <Row className="image-container">
   <ThemeWrapper>
-    <div style={{ display: 'flex', justifyContent: 'center' }}>
+    <div style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
       <Badge badgeContent={0} color="primary" showZero>
         <MailIcon />
       </Badge>

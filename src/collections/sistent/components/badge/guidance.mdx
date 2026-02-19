@@ -8,7 +8,6 @@ import { Badge, Avatar } from "@sistent/sistent";
 import MailIcon from "@mui/icons-material/Mail";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 
-A badge is a small piece of information that is used to convey a specific message or status. It is often used to provide additional context or information about an item, such as a notification count, status indicator, or label.
 
 For proper application, badges should be used consistently throughout the user interface to maintain clarity and user understanding.
 
@@ -24,7 +23,7 @@ Notification badges are commonly used to display counts of unread messages, aler
 
 <Row className="image-container">
   <ThemeWrapper>
-    <div style={{ display: 'flex', justifyContent: 'center' }}>
+    <div style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
       <Badge badgeContent={4} color="primary">
         <NotificationsIcon />
       </Badge>
@@ -38,17 +37,15 @@ Status badges indicate the current state of an item or user. They can show wheth
 
 <Row className="image-container">
   <ThemeWrapper>
-    <div style={{ display: 'flex', justifyContent: 'center' }}>
-      <Avatar>
-        <Badge
-          overlap="circular"
-          anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
-          variant="dot"
-          color="success"
-        >
-          U
-        </Badge>
-      </Avatar>
+    <div style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
+      <Badge
+        overlap="circular"
+        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+        variant="dot"
+        color="success"
+      >
+        <Avatar>U</Avatar>
+      </Badge>
     </div>
   </ThemeWrapper>
 </Row>
@@ -59,7 +56,7 @@ Label badges categorize or tag elements in the interface. They might indicate fe
 
 <Row className="image-container">
   <ThemeWrapper>
-    <div style={{ display: 'flex', justifyContent: 'center' }}>
+    <div style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
       <div
         style={{
           position: "relative",
@@ -94,7 +91,7 @@ Primary color badges are typically used for standard notifications or counts tha
 
 <Row className="image-container">
   <ThemeWrapper>
-    <div style={{ display: 'flex', justifyContent: 'center' }}>
+    <div style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
         <Badge badgeContent={4} color="primary">
         <MailIcon />
         </Badge>
@@ -107,7 +104,7 @@ Secondary color badges can be used to differentiate between different types of n
 
 <Row className="image-container">
   <ThemeWrapper>
-    <div style={{ display: 'flex', justifyContent: 'center' }}>
+    <div style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
         <Badge badgeContent={4} color="secondary">
         <MailIcon />
         </Badge>
@@ -120,7 +117,7 @@ Error color badges (typically red) indicate important notifications that require
 
 <Row className="image-container">
   <ThemeWrapper>
-    <div style={{ display: 'flex', justifyContent: 'center' }}>
+    <div style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
         <Badge badgeContent={4} color="error">
         <MailIcon />
         </Badge>
@@ -133,7 +130,7 @@ Warning color badges (typically yellow/orange) indicate notifications or status 
 
 <Row className="image-container">
   <ThemeWrapper>
-    <div style={{ display: 'flex', justifyContent: 'center' }}>
+    <div style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
         <Badge badgeContent={4} color="warning">
         <MailIcon />
         </Badge>
@@ -146,7 +143,7 @@ Success color badges (typically green) indicate positive status or completed act
 
 <Row className="image-container">
   <ThemeWrapper>
-    <div style={{ display: 'flex', justifyContent: 'center' }}>
+    <div style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
         <Badge badgeContent={4} color="success">
         <MailIcon />
         </Badge>

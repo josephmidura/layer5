@@ -7,7 +7,6 @@ description: A badge is a small piece of information that is used to convey a sp
 import { Badge, Avatar } from "@sistent/sistent";
 import MailIcon from "@mui/icons-material/Mail";
 
-A badge is a small piece of information that is used to convey a specific message or status. It is often used to provide additional context or information about an item, such as a notification count, status indicator, or label.
 
 Badges display counts, small information indicators, or status markers that are attached to other interface elements.
 
@@ -25,7 +24,7 @@ Examples of badges containing text, primarily using the badgeContent prop.
       </Badge>
     </ThemeWrapper>
   </div>
-  <CodeBlock name="basic-badge" code={`<Badge badgeContent={4} color="primary">
+  <CodeBlock name="basic-badge" collapsible code={`<Badge badgeContent={4} color="primary">
   <MailIcon />
 </Badge>`} />
 </div>
@@ -41,7 +40,7 @@ The dot badge shows a small dot indicator without any content.
       </Badge>
     </ThemeWrapper>
   </div>
-  <CodeBlock name="dot-badge" code={`<Badge variant="dot" color="secondary">
+  <CodeBlock name="dot-badge" collapsible code={`<Badge variant="dot" color="secondary">
   <MailIcon />
 </Badge>`} />
 </div>
@@ -71,7 +70,7 @@ Use the color prop to apply theme palette colors to badges.
       </div>
     </ThemeWrapper>
   </div>
-  <CodeBlock name="badge-colors" code={`<Badge badgeContent={4} color="primary" />
+  <CodeBlock name="badge-colors" collapsible code={`<Badge badgeContent={4} color="primary" />
 <Badge badgeContent={4} color="secondary" />
 <Badge badgeContent={4} color="error" />
 <Badge badgeContent={4} color="warning" />
@@ -131,7 +130,7 @@ Use the anchorOrigin prop to change the position of the badge.
       </div>
     </ThemeWrapper>
   </div>
-  <CodeBlock name="badge-position" code={`<Badge 
+  <CodeBlock name="badge-position" collapsible code={`<Badge 
   badgeContent={4} 
   color="primary"
   anchorOrigin={{
@@ -152,26 +151,22 @@ Badges can be used with avatars to show user status.
 <div className="showcase">
   <div className="items">
     <ThemeWrapper>
-      <Avatar>
         <Badge
           overlap="circular"
           anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
           variant="dot"
           color="success"
         >
-          U
+          <Avatar>U</Avatar>
         </Badge>
-      </Avatar>
     </ThemeWrapper>
   </div>
-  <CodeBlock name="badge-avatar" code={`<Avatar>
-  <Badge
+  <CodeBlock name="badge-avatar" collapsible code={`<Badge
     overlap="circular"
     anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
     variant="dot"
     color="success"
   >
-    U
-  </Badge>
-</Avatar>`} />
+    <Avatar>U</Avatar>
+  </Badge>`} />
 </div>

@@ -1,12 +1,10 @@
 ---
 title: Box Guidance
 component: box
-description: The Box component is a versatile, theme-aware container in Sistent, ideal for styling and layout customization. It supports the sx prop for easy, responsive styling and can render as any HTML element.
+description: The Box component is a flexible, theme-aware container that adapts seamlessly across various layouts. It provides a convenient way to apply styles, positioning, and responsive adjustments to content, making it ideal for any layout needs.
 ---
 
 import { Box } from "@sistent/sistent";
-
-The Box component is a flexible, theme-aware container that adapts seamlessly across various layouts. It provides a convenient way to apply styles, positioning, and responsive adjustments to content, making it ideal for any layout needs.
 
 The Box component is a highly versatile tool that can be used for layout management, spacing, styling, and more. With full support for responsive design, Box is an essential part of any well-structured application, allowing developers to customize and style elements while keeping the theme consistent.
 
@@ -22,7 +20,7 @@ The `sx` prop makes it easy to apply responsive styles directly within the compo
 
 <Row className="image-container">
   <ThemeWrapper>
-    <div style={{ display: 'flex', justifyContent: 'center' }}>
+    <div style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
       <Box
         sx={{
           bgcolor: "primary.main",
@@ -49,7 +47,7 @@ The Box component’s customization options allow you to adjust colors, borders,
 
 <Row className="image-container">
   <ThemeWrapper>
-    <div style={{ display: 'flex', justifyContent: 'center' }}>
+    <div style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
       <Box
         sx={{
           bgcolor: "secondary.main",
@@ -76,7 +74,7 @@ Use Box to create nested layouts by embedding one Box within another, each with 
 
 <Row className="image-container">
   <ThemeWrapper>
-    <div style={{ display: 'flex', justifyContent: 'center' }}>
+    <div style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
       <Box
         sx={{
           padding: 3,
