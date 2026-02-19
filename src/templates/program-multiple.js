@@ -23,10 +23,12 @@ export const query = graphql`query ProgramByName($program: String!) {
   }
 }`;
 
-const ProgramsPage = ({ data, children }) => {
-  const [activeOption] = useState(0);
+const ProgramsPage = ({ data, children, pageContext }) => {
   const programs = data.allMdx.nodes;
   const { navigate } = require("gatsby");
+
+  const initialIndex = programs.findIndex((program) => program.fields.slug === pageContext.slug);
+  const [activeOption] = useState(initialIndex !== -1 ? initialIndex : 0);
 
   const options = programs.map((program) => {
     let optionItem = new Object();
