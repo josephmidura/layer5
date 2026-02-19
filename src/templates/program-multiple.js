@@ -27,8 +27,10 @@ const ProgramsPage = ({ data, children, pageContext }) => {
   const programs = data.allMdx.nodes;
   const { navigate } = require("gatsby");
 
-  const initialIndex = programs.findIndex((program) => program.fields.slug === pageContext.slug);
-  const [activeOption] = useState(initialIndex !== -1 ? initialIndex : 0);
+  const [activeOption] = useState(() => {
+    const initialIndex = programs.findIndex((program) => program.fields.slug === pageContext.slug);
+    return initialIndex !== -1 ? initialIndex : 0;
+  });
 
   const options = programs.map((program) => {
     let optionItem = new Object();
