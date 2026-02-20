@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useMemo } from "react";
 import { graphql } from "gatsby";
 
 import SEO from "../components/seo";
@@ -27,17 +27,17 @@ const ProgramsPage = ({ data, children, pageContext }) => {
   const programs = data.allMdx.nodes;
   const { navigate } = require("gatsby");
 
-  const [activeOption] = useState(() => {
+  const activeOption = useMemo(() => {
     const initialIndex = programs.findIndex((program) => program.fields.slug === pageContext.slug);
     return initialIndex !== -1 ? initialIndex : 0;
-  });
+  }, [programs, pageContext.slug]);
 
-  const options = programs.map((program) => {
+  const options = useMemo(() => programs.map((program) => {
     let optionItem = new Object();
     optionItem.label = program.frontmatter.title;
     optionItem.value = program.fields.slug;
     return optionItem;
-  });
+  }), [programs]);
   return (
 
     <>
