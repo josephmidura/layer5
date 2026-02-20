@@ -1,7 +1,7 @@
 ---
 title: Container Code
 component: container
-description: Containers are fundamental layout elements, used to center and structure content horizontally. They can be fluid or fixed, helping maintain alignment across different screen sizes and improving readability.
+description: 
 ---
 
 import { Container, Box } from "@sistent/sistent";
@@ -22,7 +22,7 @@ By default, the Container is fluid, meaning it adjusts its width based on the vi
       </Container>
     </ThemeWrapper>
   </div>
-  <CodeBlock name="container-fluid-sm" code={`<Container maxWidth="sm">
+  <CodeBlock name="container-fluid-sm" collapsible code={`<Container maxWidth="sm">
   <Box sx={{ bgcolor: '#cfe8fc', height: '50vh' }} />
 </Container>`} />
 </div>
@@ -66,7 +66,7 @@ By default, the Container is fluid, meaning it adjusts its width based on the vi
         </Container>
       </ThemeWrapper>
     </div>
-    <CodeBlock name="container-fluid-md" code={`<Container maxWidth="md">
+    <CodeBlock name="container-fluid-md" collapsible code={`<Container maxWidth="md">
   <Box sx={{ bgcolor: '#cfe8fc', height: '50vh' }} />
 </Container>`} />
   </div>
@@ -86,7 +86,7 @@ If you prefer a fixed width, you can use the fixed prop. This aligns the contain
       </Container>
     </ThemeWrapper>
   </div>
-  <CodeBlock name="container-fixed" code={`<Container fixed>
+  <CodeBlock name="container-fixed" collapsible code={`<Container fixed>
   <Box sx={{ bgcolor: '#cfe8fc', height: '50vh' }} />
 </Container>`} />
 </div>
@@ -104,20 +104,14 @@ If you prefer a fixed width, you can use the fixed prop. This aligns the contain
       <Container>
         <Container maxWidth="sm">
           <Box sx={{ bgcolor: "#cfe8fc", height: "50vh" }}>
-             <p style={{ color: "black", padding: "1rem" }}>
-              This is a nested container example.
-            </p>
           </Box>
         </Container>
       </Container>
     </ThemeWrapper>
   </div>
-  <CodeBlock name="nested-container-fluid" code={`<Container>
+  <CodeBlock name="nested-container-fluid" collapsible code={`<Container>
   <Container maxWidth="sm">
     <Box sx={{ bgcolor: "#cfe8fc", height: "50vh" }}>
-      <p style={{ color: "black" }}>
-        This is a nested container example.
-      </p>
     </Box>
   </Container>
 </Container>`} />

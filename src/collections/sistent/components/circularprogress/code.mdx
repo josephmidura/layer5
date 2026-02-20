@@ -1,13 +1,28 @@
 ---
 title: Circular Progress Code
 component: circularprogress
-description: The Circular Progress component displays a circular loading indicator that represents either determinate or indeterminate progress in your application. It's commonly used to show loading states, progress of operations, or completion percentages.
+description: Circular progress indicators provide visual feedback about ongoing processes, helping users understand that their request is being processed. They can show either determinate progress (specific completion percentage) or indeterminate progress (unknown duration).
 ---
 
 import { CircularProgress } from "@sistent/sistent";
-import CircularProgressDemo from "./CircularProgressDemo";
+import { useState, useEffect } from "react";
 
-Circular progress indicators provide visual feedback about ongoing processes, helping users understand that their request is being processed. They can show either determinate progress (specific completion percentage) or indeterminate progress (unknown duration).
+export const CircularProgressDemo = () => {
+  const [progress, setProgress] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setProgress((prevProgress) => (prevProgress >= 100 ? 0 : prevProgress + 10));
+    }, 800);
+
+    return () => {
+      clearInterval(timer);
+    };
+  }, []);
+
+  return <CircularProgress variant="determinate" value={progress} />;
+};
+
 
 The `CircularProgress` component is essential for communicating system status to users. It provides immediate feedback during loading states, file uploads, data processing, and other time-consuming operations.
 
@@ -20,10 +35,12 @@ A simple indeterminate circular progress indicator that shows continuous loading
 <div className="showcase">
   <div className="items">
     <ThemeWrapper>
-      <CircularProgress />
+      <div style={{ display: "flex", justifyContent: "center", width: "100%" }}>
+        <CircularProgress />
+      </div>
     </ThemeWrapper>
   </div>
-  <CodeBlock name="circular-progress-basic" code={`<CircularProgress />`} />
+  <CodeBlock name="circular-progress-basic" collapsible code={`<CircularProgress />`} />
 </div>
 
 <a id="Determinate Progress">
@@ -35,10 +52,12 @@ The determinate variant shows specific progress completion using the value prop 
 <div className="showcase">
   <div className="items">
     <ThemeWrapper>
-      <CircularProgressDemo />
+      <div style={{ display: "flex", justifyContent: "center", width: "100%" }}>
+        <CircularProgressDemo />
+      </div>
     </ThemeWrapper>
   </div>
-  <CodeBlock name="circular-progress-determinate" code={`<CircularProgress variant="determinate" value={75} />`} />
+  <CodeBlock name="circular-progress-determinate" collapsible code={`<CircularProgress variant="determinate" value={75} />`} />
 </div>
 
 <a id="Different Sizes">
@@ -50,14 +69,14 @@ Circular progress indicators can be scaled to different sizes using the size pro
 <div className="showcase">
   <div className="items">
     <ThemeWrapper>
-      <div style={{ display: "flex", gap: "40px", alignItems: "center" }}>
+      <div style={{ display: "flex", gap: "40px", justifyContent: "center", alignItems: "center", width: "100%" }}>
         <CircularProgress size={24} variant="determinate" value={75} />
         <CircularProgress size={40} variant="determinate" value={75} />
         <CircularProgress size={56} variant="determinate" value={75} />
       </div>
     </ThemeWrapper>
   </div>
-  <CodeBlock name="circular-progress-sizes" code={`<CircularProgress size={24} variant="determinate" value={75} />
+  <CodeBlock name="circular-progress-sizes" collapsible code={`<CircularProgress size={24} variant="determinate" value={75} />
 <CircularProgress size={40} variant="determinate" value={75} />
 <CircularProgress size={56} variant="determinate" value={75} />`} />
 </div>
@@ -71,14 +90,14 @@ The thickness prop controls the width of the progress arc, allowing you to creat
 <div className="showcase">
   <div className="items">
     <ThemeWrapper>
-      <div style={{ display: "flex", gap: "40px", alignItems: "center" }}>
+      <div style={{ display: "flex", gap: "40px", justifyContent: "center", alignItems: "center", width: "100%" }}>
         <CircularProgress thickness={2} variant="determinate" value={85} />
         <CircularProgress thickness={4} variant="determinate" value={85} />
         <CircularProgress thickness={6} variant="determinate" value={85} />
       </div>
     </ThemeWrapper>
   </div>
-  <CodeBlock name="circular-progress-thickness" code={`<CircularProgress thickness={2} variant="determinate" value={85} />
+  <CodeBlock name="circular-progress-thickness" collapsible code={`<CircularProgress thickness={2} variant="determinate" value={85} />
 <CircularProgress thickness={4} variant="determinate" value={85} />
 <CircularProgress thickness={6} variant="determinate" value={85} />`} />
 </div>
@@ -92,14 +111,14 @@ Circular progress indicators support various color themes to match your applicat
 <div className="showcase">
   <div className="items">
     <ThemeWrapper>
-      <div style={{ display: "flex", gap: "40px", alignItems: "center" }}>
+      <div style={{ display: "flex", gap: "40px", justifyContent: "center", alignItems: "center", width: "100%" }}>
         <CircularProgress color="primary" />
         <CircularProgress color="secondary" />
         <CircularProgress color="success" />
       </div>
     </ThemeWrapper>
   </div>
-  <CodeBlock name="circular-progress-colors" code={`<CircularProgress color="primary" />
+  <CodeBlock name="circular-progress-colors" collapsible code={`<CircularProgress color="primary" />
 <CircularProgress color="secondary" />
 <CircularProgress color="success" />`} />
 </div>

@@ -1,7 +1,8 @@
 ---
 title: Button Code
 component: button
-description: Buttons are crucial and integral elements in an interface. They are mostly used to trigger actions and in so doing, take users to where they need to be in any step of a flow. Buttons can be used in tandem with other elements to piece designs together and convey digital experiences.
+description: A button is an interactive element that triggers a specific action, takes users where they need to go, and points out what happens next in a given flow.
+
 ---
 
 Buttons communicate actions to users and they can be placed at several places throughout the user interface.
@@ -19,10 +20,12 @@ Mostly used for high-emphasis actions and are primarily distinguished by their f
 <div className="showcase">
   <div className="items">
     <ThemeWrapper>
-      <Button variant="contained">Filled</Button>
+      <div style={{ display: 'flex', justifyContent: 'center' }}>
+        <Button variant="contained">Filled</Button>
+      </div>
     </ThemeWrapper>
   </div>
-  <CodeBlock name="filled-button" code={`  <SistentThemeProvider>
+  <CodeBlock name="filled-button" collapsible code={`  <SistentThemeProvider>
        <Button variant="contained">Filled</Button>
   </SistentThemeProvider>`} />
 </div>
@@ -34,10 +37,12 @@ Can be used for both medium and sometimes high-emphasis actions.
 <div className="showcase">
   <div className="items">
     <ThemeWrapper>
-      <Button variant="outlined">Outlined</Button>
+      <div style={{ display: 'flex', justifyContent: 'center' }}>
+        <Button variant="outlined">Outlined</Button>
+      </div>
     </ThemeWrapper>
   </div>
-  <CodeBlock name="outlined-button" code={`  <SistentThemeProvider>
+  <CodeBlock name="outlined-button" collapsible code={`  <SistentThemeProvider>
        <Button variant="outlined">Outlined</Button>
   </SistentThemeProvider>`} />
 </div>
@@ -49,10 +54,12 @@ Mostly used for less pronounced and very low emphasis actions. Can also be used 
 <div className="showcase">
   <div className="items">
     <ThemeWrapper>
-      <Button variant="text">Text</Button>
+      <div style={{ display: 'flex', justifyContent: 'center' }}>
+        <Button variant="text">Text</Button>
+      </div>
     </ThemeWrapper>
   </div>
-  <CodeBlock name="text-button" code={`  <SistentThemeProvider>
+  <CodeBlock name="text-button" collapsible code={`  <SistentThemeProvider>
        <Button variant="text">Text</Button>
   </SistentThemeProvider>`} />
 </div>
@@ -66,15 +73,17 @@ For now, two different sizes of buttons exist: 56px height and 48px height.
 <div className="showcase">
   <div className="items">
     <ThemeWrapper>
-      <Button variant="contained" size="medium">
-        48px Height
-      </Button>
-      <Button variant="contained" size="large">
-        56px Height
-      </Button>
+      <div style={{ display: 'flex', justifyContent: 'center', gap: '8px', alignItems: 'center' }}>
+        <Button variant="contained" size="medium">
+          48px Height
+        </Button>
+        <Button variant="contained" size="large">
+          56px Height
+        </Button>
+      </div>
     </ThemeWrapper>
   </div>
-  <CodeBlock name="button-sizes" code={`  <SistentThemeProvider>
+  <CodeBlock name="button-sizes" collapsible  code={`  <SistentThemeProvider>
        <Button variant="contained">48px Height</Button>
        <Button variant="contained">56px Height</Button>
   </SistentThemeProvider>`} />
@@ -89,16 +98,18 @@ Icons are mostly added to filled and outlined buttons and they are used to bette
 <div className="showcase">
   <div className="items">
     <ThemeWrapper>
-      <Button
-        variant="contained"
-        size="medium"
-        endIcon={<FaArrowRight size={12} />}
-      >
-        Next
-      </Button>
+      <div style={{ display: 'flex', justifyContent: 'center' }}>
+        <Button
+          variant="contained"
+          size="medium"
+          endIcon={<FaArrowRight size={12} />}
+        >
+          Next
+        </Button>
+      </div>
     </ThemeWrapper>
   </div>
-  <CodeBlock name="adding-icons" code={`  <SistentThemeProvider>
+  <CodeBlock name="adding-icons" collapsible code={`  <SistentThemeProvider>
       <Button
         variant="contained"
         size="medium"

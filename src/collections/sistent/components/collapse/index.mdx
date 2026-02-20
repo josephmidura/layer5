@@ -7,7 +7,39 @@ description: The Collapse component allows you to create collapsible content are
 ---
 
 import { Collapse, Button } from "@sistent/sistent";
-import CollapseDemo from "./CollapseDemo";
+import { useState } from "react";
+
+export const BasicCollapseDemo = () => {
+  const [expanded, setExpanded] = useState(false);
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%' }}>
+      <Button variant="contained" onClick={() => setExpanded(!expanded)}>
+        {expanded ? "Collapse" : "Expand"}
+      </Button>
+      <Collapse in={expanded}>
+        <div className="collapse-content" style={{ textAlign: "center", marginTop: "1rem" }}>
+          This content will be collapsed/expanded with a smooth animation. You can put any content here, including other React components.
+        </div>
+      </Collapse>
+    </div>
+  );
+};
+
+export const DefaultExpandedCollapseDemo = () => {
+  const [expanded, setExpanded] = useState(true);
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%' }}>
+      <Button variant="outlined" onClick={() => setExpanded(!expanded)}>
+        {expanded ? "Collapse" : "Expand"}
+      </Button>
+      <Collapse in={expanded}>
+        <div className="collapse-content" style={{ textAlign: "center", marginTop: "1rem" }}>
+          This content is expanded by default. Click the button to collapse it.
+        </div>
+      </Collapse>
+    </div>
+  );
+};
 
 The Collapse component provides a smooth, animated way to show and hide content. It's particularly useful for creating space-efficient interfaces and progressive disclosure of information.
 
@@ -19,8 +51,8 @@ A simple collapsible section that can be toggled with a button click.
 
 <Row className="image-container">
   <ThemeWrapper>
-    <div style={{ display: 'flex', justifyContent: 'center' }}>
-      <CollapseDemo />
+    <div style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
+      <BasicCollapseDemo />
     </div>
   </ThemeWrapper>
 </Row>
@@ -33,8 +65,8 @@ A collapsible section that starts expanded by default.
 
 <Row className="image-container">
   <ThemeWrapper>
-    <div style={{ display: 'flex', justifyContent: 'center' }}>
-      <CollapseDemo defaultExpanded={true} />
+    <div style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
+      <DefaultExpandedCollapseDemo />
     </div>
   </ThemeWrapper>
 </Row>

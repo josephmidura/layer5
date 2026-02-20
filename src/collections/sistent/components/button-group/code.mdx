@@ -14,8 +14,6 @@ export const buttons = [
 
 The ButtonGroup component can be used to group related buttons together. It is a container for multiple buttons that can be used to group buttons together and apply styles to them. This component is useful when you have a group of buttons that need to be styled in a similar way.
 
-The ButtonGroup component can be used to group related buttons together. It is a container for multiple buttons that can be used to group buttons together and apply styles to them. This component is useful when you have a group of buttons that need to be styled in a similar way.
-
 <a id="Basic Usage">
   <h2>Basic Usage</h2>
 </a>
@@ -30,7 +28,7 @@ The buttons can be grouped by wrapping them with the ButtonGroup component. They
       </ButtonGroup>
     </ThemeWrapper>
   </div>
-  <CodeBlock name="basic-usage" code={`<ButtonGroup variant="contained" aria-label="Basic bgroup">
+  <CodeBlock name="basic-usage" collapsible code={`<ButtonGroup variant="contained" aria-label="Basic bgroup">
   <Button>One</Button>
   <Button>Two</Button>
   <Button>Three</Button>
@@ -59,7 +57,7 @@ The ButtonGroup component supports three variants: Filled, Outlined, and Text.
       </div>
     </ThemeWrapper>
   </div>
-  <CodeBlock name="button-variant" code={`<ButtonGroup
+  <CodeBlock name="button-variant" collapsible code={`<ButtonGroup
     variant="contained"
     aria-label="Basic button group"
   >
@@ -113,7 +111,7 @@ The ButtonGroup component can be used to create a vertical group of buttons by s
       </div>
     </ThemeWrapper>
   </div>
-  <CodeBlock name="vertical-group" code={`<ButtonGroup
+  <CodeBlock name="vertical-group" collapsible code={`<ButtonGroup
     orientation="vertical"
     variant="contained"
     aria-label="Basic button group"
@@ -160,7 +158,7 @@ The ButtonGroup component can be used to create a group of buttons with no eleva
       </ButtonGroup>
     </ThemeWrapper>
   </div>
-  <CodeBlock name="disable-elevation" code={`<ButtonGroup
+  <CodeBlock name="disable-elevation" collapsible code={`<ButtonGroup
   disableElevation
   variant="contained"
   aria-label="Basic button group"
@@ -205,7 +203,7 @@ For now, two different sizes of buttons exist: 56px height and 48px height.
       </div>
     </ThemeWrapper>
   </div>
-  <CodeBlock name="sizes" code={`<ButtonGroup
+  <CodeBlock name="sizes" collapsible code={`<ButtonGroup
     size="small"
     variant="contained"
     aria-label="Basic button group"
@@ -252,7 +250,7 @@ The ButtonGroup component can be used to create a group of buttons that take up 
       </ButtonGroup>
     </ThemeWrapper>
   </div>
-  <CodeBlock name="full-width" code={`<ButtonGroup
+  <CodeBlock name="full-width" collapsible code={`<ButtonGroup
   fullWidth
   variant="contained"
   aria-label="Basic button group"
