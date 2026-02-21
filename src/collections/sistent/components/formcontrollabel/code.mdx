@@ -1,74 +1,76 @@
 ---
 title: Form Control Label Code
 component: formcontrollabel
-description: FormControlLabel is a wrapper component that pairs a label with a control such as a checkbox or a radio button. It enhances accessibility by allowing users to click the label to toggle the control.
+description: The `FormControlLabel` component wraps controls like checkboxes, radios, and switches, adding a label to the right side by default. It improves accessibility and user experience by combining form elements with clear labeling.
 ---
 
+import { useState } from "react";
 import { FormControlLabel, Checkbox, Radio, Switch } from "@sistent/sistent";
-import FormControlLabelDemo from "./FormControlLabelDemo";
 
-The `FormControlLabel` component wraps controls like checkboxes, radios, and switches, adding a label to the right side by default. It improves accessibility and user experience by combining form elements with clear labeling.
+export const CheckboxDemo = () => {
+  const [checked, setChecked] = useState(true);
+  return (
+    <FormControlLabel
+      control={<Checkbox checked={checked} onChange={() => setChecked(!checked)} />}
+      label="Accept Terms"
+    />
+  );
+};
 
-<a id="Checkbox Usage">
-  <h3>With Checkbox</h3>
-</a>
+
+
+<h3>With Checkbox</h3>
 
 <div className="showcase">
   <div className="items">
     <ThemeWrapper>
-      <FormControlLabelDemo type="checkbox" />
+      <CheckboxDemo />
     </ThemeWrapper>
   </div>
-  <CodeBlock name="formcontrollabel-checkbox" code={`<FormControlLabel
+  <CodeBlock name="formcontrollabel-checkbox" collapsible code={`<FormControlLabel
   control={<Checkbox />}
   label="Accept Terms"
 />`} />
 </div>
 
-<a id="Disabled Example">
-  <h3>Disabled Example</h3>
-</a>
+<h3>Disabled Example</h3>
 
 <div className="showcase">
   <div className="items">
     <ThemeWrapper>
-      <FormControlLabelDemo type="disabled" />
+      <FormControlLabel control={<Checkbox disabled />} label="Disabled Option" disabled />
     </ThemeWrapper>
   </div>
-  <CodeBlock name="formcontrollabel-disabled" code={`<FormControlLabel
+  <CodeBlock name="formcontrollabel-disabled" collapsible code={`<FormControlLabel
   control={<Checkbox disabled />}
   label="Disabled Option"
   disabled
 />`} />
 </div>
 
-<a id="Radio Usage">
-  <h3>With Radio Button</h3>
-</a>
+<h3>With Radio Button</h3>
 
 <div className="showcase">
   <div className="items">
     <ThemeWrapper>
-      <FormControlLabelDemo type="radio" />
+      <FormControlLabel control={<Radio />} label="Option A" />
     </ThemeWrapper>
   </div>
-  <CodeBlock name="formcontrollabel-radio" code={`<FormControlLabel
+  <CodeBlock name="formcontrollabel-radio" collapsible code={`<FormControlLabel
   control={<Radio />}
   label="Option A"
 />`} />
 </div>
 
-<a id="Switch Usage">
-  <h3>With Switch</h3>
-</a>
+<h3>With Switch</h3>
 
 <div className="showcase">
   <div className="items">
     <ThemeWrapper>
-      <FormControlLabelDemo type="switch" />
+      <FormControlLabel control={<Switch />} label="Enable Notifications" />
     </ThemeWrapper>
   </div>
-  <CodeBlock name="formcontrollabel-switch" code={`<FormControlLabel
+  <CodeBlock name="formcontrollabel-switch" collapsible code={`<FormControlLabel
   control={<Switch />}
   label="Enable Notifications"
 />`} />

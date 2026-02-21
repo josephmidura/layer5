@@ -1,12 +1,11 @@
 ---
 title: Divider Code
 component: divider
-description: The Divider component renders a thin line that separates content within lists, layouts, and sections, providing a subtle way to reinforce visual hierarchy and improve scannability.
+description: The `Divider` component renders a thin line that separates content within lists, layouts, and sections, providing a subtle way to reinforce visual hierarchy.
 ---
 
 import { Divider, Box, List, ListItem, ListItemText, Chip, Stack } from "@sistent/sistent";
 
-The `Divider` component renders a thin line that separates content within lists, layouts, and sections, providing a subtle way to reinforce visual hierarchy.
 
 The Divider component is a thin, subtle line for separating content in your interface.
 
@@ -24,7 +23,7 @@ By default, the Divider renders as a full-width horizontal line.
       </Box>
     </ThemeWrapper>
   </div>
-  <CodeBlock name="basic-divider" code={`<Box sx={{ width: "100%", maxWidth: 360 }}>
+  <CodeBlock name="basic-divider" collapsible code={`<Box sx={{ width: "100%", maxWidth: 360 }}>
   <Divider />
 </Box>`} />
 </div>
@@ -48,7 +47,7 @@ The Divider supports three variants: `fullWidth` (default), `inset`, and `middle
       </Box>
     </ThemeWrapper>
   </div>
-  <CodeBlock name="divider-variants" code={`<Box sx={{ width: "100%", maxWidth: 360 }}>
+  <CodeBlock name="divider-variants" collapsible code={`<Box sx={{ width: "100%", maxWidth: 360 }}>
   <Divider variant="fullWidth" />
   <Divider variant="inset" />
   <Divider variant="middle" />
@@ -73,7 +72,7 @@ Use `orientation="vertical"` to render a vertical divider. The `flexItem` prop e
       </Box>
     </ThemeWrapper>
   </div>
-  <CodeBlock name="vertical-divider" code={`<Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+  <CodeBlock name="vertical-divider" collapsible code={`<Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
   <span>Left</span>
   <Divider orientation="vertical" flexItem />
   <span>Center</span>
@@ -104,7 +103,7 @@ You can render text or other elements within the divider using children. Use `te
       </Box>
     </ThemeWrapper>
   </div>
-  <CodeBlock name="divider-with-text" code={`<Box sx={{ width: "100%", maxWidth: 360 }}>
+  <CodeBlock name="divider-with-text" collapsible code={`<Box sx={{ width: "100%", maxWidth: 360 }}>
   <Divider>CENTER</Divider>
   <Divider textAlign="left">LEFT</Divider>
   <Divider textAlign="right">RIGHT</Divider>
@@ -138,7 +137,7 @@ When using dividers in lists, set `component="li"` to ensure valid HTML structur
       </List>
     </ThemeWrapper>
   </div>
-  <CodeBlock name="list-divider" code={`<List sx={{ width: "100%", maxWidth: 360 }}>
+  <CodeBlock name="list-divider" collapsible code={`<List sx={{ width: "100%", maxWidth: 360 }}>
   <ListItem>
     <ListItemText primary="Inbox" />
   </ListItem>
@@ -171,7 +170,7 @@ Use dividers to separate distinct sections in a layout, combined with proper spa
       </Stack>
     </ThemeWrapper>
   </div>
-  <CodeBlock name="section-dividers" code={`<Stack spacing={2} sx={{ width: "100%", maxWidth: 360 }}>
+  <CodeBlock name="section-dividers" collapsible code={`<Stack spacing={2} sx={{ width: "100%", maxWidth: 360 }}>
   <Box sx={{ p: 2 }}>Section 1</Box>
   <Divider />
   <Box sx={{ p: 2 }}>Section 2</Box>
@@ -199,7 +198,7 @@ Use vertical dividers with the `middle` variant to group related actions in tool
       </Box>
     </ThemeWrapper>
   </div>
-  <CodeBlock name="icon-grouping" code={`<Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+  <CodeBlock name="icon-grouping" collapsible code={`<Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
   <Box sx={{ p: 1 }}>Bold</Box>
   <Box sx={{ p: 1 }}>Italic</Box>
   <Divider orientation="vertical" variant="middle" flexItem />

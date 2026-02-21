@@ -1,7 +1,7 @@
 ---
 title: Link Code
 component: link
-description: A link component is a navigational element that directs users to another page or section within an application.
+description:
 ---
 
 import { Link } from "@sistent/sistent";
@@ -29,23 +29,25 @@ The link can be presented in a simple format, primarily as underlined text that 
       </Link>
     </ThemeWrapper>
   </div>
-  <CodeBlock name="simple-link" code={`<Link
-  href="Your Link"
-  style={{
-    textDecoration: "none",
-    padding: "6px",
-    marginLeft: "10px",
-  }}
->
-  Simple Link
-</Link>`} />
+  <CodeBlock name="simple-link" collapsible code={`<SistentThemeProvider initialMode={isDark ? "dark" : "light"}>
+  <Link
+    href="Your Link"
+    style={{
+      textDecoration: "none",
+      padding: "6px",
+      marginLeft: "10px",
+    }}
+  >
+    Simple Link
+  </Link>
+</SistentThemeProvider>`} />
 </div>
 
 <a id="Customized Links">
   <h2>Customized Links</h2>
 </a>
 
-Customized Links enhance user experience by adapting their design and behavior to match the app’s theme. They can include personalized styles, hover effects, or icons, ensuring both visual consistency and improved usability across the website.
+Customized Links enhance user experience by adapting their design and behavior to match the app's theme. They can include personalized styles, hover effects, or icons, ensuring both visual consistency and improved usability across the website.
 
 <h3>Colored Link</h3>
 
@@ -67,16 +69,18 @@ Colored Links can help draw attention to key areas of a page. They are styled wi
       </Link>
     </ThemeWrapper>
   </div>
-  <CodeBlock name="Colored-link" code={`<Link href="Your Path"
-  style={{
-    textDecoration: "none",
-    color: "blue",
-    padding: "6px",
-    marginLeft: "10px",
-  }}
->
-  Colored Link
-</Link>`} />
+  <CodeBlock name="Colored-link" collapsible code={`<SistentThemeProvider initialMode={isDark ? "dark" : "light"}>
+  <Link href="Your Path"
+    style={{
+      textDecoration: "none",
+      color: "blue",
+      padding: "6px",
+      marginLeft: "10px",
+    }}
+  >
+    Colored Link
+  </Link>
+</SistentThemeProvider>`} />
 </div>
 
 <h3>Underlined Link</h3>
@@ -98,16 +102,18 @@ Underlined Links, often referred to as ghost buttons, are styled primarily with 
       </Link>
     </ThemeWrapper>
   </div>
-  <CodeBlock name="underlined-link" code={`<Link
-  href="Your Path"
-  style={{
-    textDecoration: "underline",
-    padding: "6px",
-    marginLeft: "10px",
-  }}
->
-  Underlined Link 
-</Link>`} />
+  <CodeBlock name="underlined-link" collapsible code={`<SistentThemeProvider initialMode={isDark ? "dark" : "light"}>
+  <Link
+    href="Your Path"
+    style={{
+      textDecoration: "underline",
+      padding: "6px",
+      marginLeft: "10px",
+    }}
+  >
+    Underlined Link
+  </Link>
+</SistentThemeProvider>`} />
 </div>
 
 <h3>Customized Link</h3>
@@ -133,20 +139,22 @@ Customized Links allow for distinct text styles and presentations that can enhan
       </Link>
     </ThemeWrapper>
   </div>
-  <CodeBlock name="customized-link" code={`<Link
-  href="Your Path"
-  style={{
-    textDecoration: "none",
-    color: "blue",
-    fontWeight: "bold",
-    fontSize: "16px",
-    padding: "6px",
-    marginLeft: "10px",
-    borderBottom: "2px dashed blue",
-  }}
->
-  Customized Link
-</Link>`} />
+  <CodeBlock name="customized-link" collapsible code={`<SistentThemeProvider initialMode={isDark ? "dark" : "light"}>
+  <Link
+    href="Your Path"
+    style={{
+      textDecoration: "none",
+      color: "blue",
+      fontWeight: "bold",
+      fontSize: "16px",
+      padding: "6px",
+      marginLeft: "10px",
+      borderBottom: "2px dashed blue",
+    }}
+  >
+    Customized Link
+  </Link>
+</SistentThemeProvider>`} />
 </div>
 
 <a id="Security Considerations">
@@ -172,16 +180,18 @@ When utilizing links we should use them with the `target="_blank"` attribute, it
       </Link>
     </ThemeWrapper>
   </div>
-  <CodeBlock name="secure_links" code={`<Link
-  href="https://your-link.com" 
-  target="_blank"
-  rel="noopener noreferrer"
-  style={{
-    textDecoration: "underline",
-    padding: "6px",
-    marginLeft: "10px",
-  }}
->
-  Visit Secure Link
-</Link>`} />
+  <CodeBlock name="secure_links" collapsible code={`<SistentThemeProvider initialMode={isDark ? "dark" : "light"}>
+  <Link
+    href="https://your-link.com"
+    target="_blank"
+    rel="noopener noreferrer"
+    style={{
+      textDecoration: "underline",
+      padding: "6px",
+      marginLeft: "10px",
+    }}
+  >
+    Visit Secure Link
+  </Link>
+</SistentThemeProvider>`} />
 </div>

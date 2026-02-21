@@ -5,9 +5,22 @@ description: The responsive layout grid adapts to screen size and orientation, e
 ---
 
 import { Grid2, Box, Avatar } from "@sistent/sistent";
-import GridItem from "./GridItem";
 
-The responsive layout grid adapts to screen size and orientation, ensuring consistency across layouts. It uses CSS Flexbox for high flexibility and provides a 12-column system with customizable breakpoints.
+export const Item = ({ children, sx = {} }) => (
+  <Box
+    sx={{
+      p: 1,
+      backgroundColor: "primary.main",
+      color: "primary.contrastText",
+      textAlign: "center",
+      borderRadius: 1,
+      ...sx,
+    }}
+  >
+    {children}
+  </Box>
+);
+
 
 For effective use of the Grid system, it's important to understand responsive design principles and how to structure layouts that adapt gracefully across different screen sizes.
 
@@ -23,17 +36,19 @@ Every grid layout consists of a container (parent) and items (children). The con
 
 <Row className="image-container">
   <ThemeWrapper>
-    <Grid2 container spacing={2} sx={{ width: "100%", maxWidth: 600, border: "2px dashed", borderColor: "grey.400", p: 1 }}>
-      <Grid2 size={4}>
-        <GridItem>Item 1</GridItem>
+    <div style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
+      <Grid2 container spacing={2} sx={{ width: "100%", maxWidth: 600, border: "2px dashed", borderColor: "grey.400", p: 1 }}>
+        <Grid2 size={4}>
+          <Item>Item 1</Item>
+        </Grid2>
+        <Grid2 size={4}>
+          <Item>Item 2</Item>
+        </Grid2>
+        <Grid2 size={4}>
+          <Item>Item 3</Item>
+        </Grid2>
       </Grid2>
-      <Grid2 size={4}>
-        <GridItem>Item 2</GridItem>
-      </Grid2>
-      <Grid2 size={4}>
-        <GridItem>Item 3</GridItem>
-      </Grid2>
-    </Grid2>
+    </div>
   </ThemeWrapper>
 </Row>
 
@@ -43,17 +58,19 @@ Design layouts that work across all screen sizes by using responsive breakpoints
 
 <Row className="image-container">
   <ThemeWrapper>
-    <Grid2 container spacing={2} sx={{ width: "100%", maxWidth: 600 }}>
-      <Grid2 size={{ xs: 12, sm: 6, md: 4 }}>
-        <GridItem>Responsive</GridItem>
+    <div style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
+      <Grid2 container spacing={2} sx={{ width: "100%", maxWidth: 600 }}>
+        <Grid2 size={{ xs: 12, sm: 6, md: 4 }}>
+          <Item>Responsive</Item>
+        </Grid2>
+        <Grid2 size={{ xs: 12, sm: 6, md: 4 }}>
+          <Item>Grid</Item>
+        </Grid2>
+        <Grid2 size={{ xs: 12, sm: 12, md: 4 }}>
+          <Item>Items</Item>
+        </Grid2>
       </Grid2>
-      <Grid2 size={{ xs: 12, sm: 6, md: 4 }}>
-        <GridItem>Grid</GridItem>
-      </Grid2>
-      <Grid2 size={{ xs: 12, sm: 12, md: 4 }}>
-        <GridItem>Items</GridItem>
-      </Grid2>
-    </Grid2>
+    </div>
   </ThemeWrapper>
 </Row>
 
@@ -69,24 +86,26 @@ Use consistent spacing values throughout your layout. The spacing prop accepts v
 
 <Row className="image-container">
   <ThemeWrapper>
-    <Box sx={{ width: "100%", maxWidth: 600 }}>
-      <Box sx={{ mb: 2 }}>
-        <Grid2 container spacing={1}>
-          <Grid2 size={6}><GridItem>Spacing: 1</GridItem></Grid2>
-          <Grid2 size={6}><GridItem>Spacing: 1</GridItem></Grid2>
+    <div style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
+      <Box sx={{ width: "100%", maxWidth: 600 }}>
+        <Box sx={{ mb: 2 }}>
+          <Grid2 container spacing={1}>
+            <Grid2 size={6}><Item>Spacing: 1</Item></Grid2>
+            <Grid2 size={6}><Item>Spacing: 1</Item></Grid2>
+          </Grid2>
+        </Box>
+        <Box sx={{ mb: 2 }}>
+          <Grid2 container spacing={2}>
+            <Grid2 size={6}><Item>Spacing: 2</Item></Grid2>
+            <Grid2 size={6}><Item>Spacing: 2</Item></Grid2>
+          </Grid2>
+        </Box>
+        <Grid2 container spacing={3}>
+          <Grid2 size={6}><Item>Spacing: 3</Item></Grid2>
+          <Grid2 size={6}><Item>Spacing: 3</Item></Grid2>
         </Grid2>
       </Box>
-      <Box sx={{ mb: 2 }}>
-        <Grid2 container spacing={2}>
-          <Grid2 size={6}><GridItem>Spacing: 2</GridItem></Grid2>
-          <Grid2 size={6}><GridItem>Spacing: 2</GridItem></Grid2>
-        </Grid2>
-      </Box>
-      <Grid2 container spacing={3}>
-        <Grid2 size={6}><GridItem>Spacing: 3</GridItem></Grid2>
-        <Grid2 size={6}><GridItem>Spacing: 3</GridItem></Grid2>
-      </Grid2>
-    </Box>
+    </div>
   </ThemeWrapper>
 </Row>
 
@@ -96,20 +115,22 @@ For more control, use rowSpacing and columnSpacing to set different spacing valu
 
 <Row className="image-container">
   <ThemeWrapper>
-    <Grid2 container rowSpacing={1} columnSpacing={3} sx={{ width: "100%", maxWidth: 600 }}>
-      <Grid2 size={6}>
-        <GridItem>Item 1</GridItem>
+    <div style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
+      <Grid2 container rowSpacing={1} columnSpacing={3} sx={{ width: "100%", maxWidth: 600 }}>
+        <Grid2 size={6}>
+          <Item>Item 1</Item>
+        </Grid2>
+        <Grid2 size={6}>
+          <Item>Item 2</Item>
+        </Grid2>
+        <Grid2 size={6}>
+          <Item>Item 3</Item>
+        </Grid2>
+        <Grid2 size={6}>
+          <Item>Item 4</Item>
+        </Grid2>
       </Grid2>
-      <Grid2 size={6}>
-        <GridItem>Item 2</GridItem>
-      </Grid2>
-      <Grid2 size={6}>
-        <GridItem>Item 3</GridItem>
-      </Grid2>
-      <Grid2 size={6}>
-        <GridItem>Item 4</GridItem>
-      </Grid2>
-    </Grid2>
+    </div>
   </ThemeWrapper>
 </Row>
 
@@ -125,35 +146,19 @@ To center content within grid items, specify `display="flex"` on the item and us
 
 <Row className="image-container">
   <ThemeWrapper>
-    <Grid2 container spacing={2} sx={{ width: "100%", maxWidth: 600 }} minHeight={120}>
-      <Grid2
-        display="flex"
-        justifyContent="center"
-        alignItems="center"
-        size="grow"
-        sx={{ border: "1px dashed", borderColor: "grey.400" }}
-      >
-        <Avatar sx={{ bgcolor: "primary.main" }}>A</Avatar>
+    <div style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
+      <Grid2 container spacing={2} sx={{ width: "100%", maxWidth: 600 }} minHeight={120}>
+        <Grid2 display="flex" justifyContent="center" alignItems="center" size="grow" sx={{ border: "1px dashed", borderColor: "grey.400" }}>
+          <Avatar sx={{ bgcolor: "primary.main" }}>A</Avatar>
+        </Grid2>
+        <Grid2 display="flex" justifyContent="center" alignItems="center" size="grow" sx={{ border: "1px dashed", borderColor: "grey.400" }}>
+          <Avatar sx={{ bgcolor: "secondary.main" }}>B</Avatar>
+        </Grid2>
+        <Grid2 display="flex" justifyContent="center" alignItems="center" size="grow" sx={{ border: "1px dashed", borderColor: "grey.400" }}>
+          <Avatar sx={{ bgcolor: "error.main" }}>C</Avatar>
+        </Grid2>
       </Grid2>
-      <Grid2
-        display="flex"
-        justifyContent="center"
-        alignItems="center"
-        size="grow"
-        sx={{ border: "1px dashed", borderColor: "grey.400" }}
-      >
-        <Avatar sx={{ bgcolor: "secondary.main" }}>B</Avatar>
-      </Grid2>
-      <Grid2
-        display="flex"
-        justifyContent="center"
-        alignItems="center"
-        size="grow"
-        sx={{ border: "1px dashed", borderColor: "grey.400" }}
-      >
-        <Avatar sx={{ bgcolor: "error.main" }}>C</Avatar>
-      </Grid2>
-    </Grid2>
+    </div>
   </ThemeWrapper>
 </Row>
 
@@ -169,20 +174,14 @@ The default direction is 'row', which arranges items horizontally from left to r
 
 <Row className="image-container">
   <ThemeWrapper>
-    <Grid2 container spacing={2} direction="row" sx={{ width: "100%", maxWidth: 600 }}>
-      <Grid2 size={3}>
-        <GridItem>1</GridItem>
+    <div style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
+      <Grid2 container spacing={2} direction="row" sx={{ width: "100%", maxWidth: 600 }}>
+        <Grid2 size={3}><Item>1</Item></Grid2>
+        <Grid2 size={3}><Item>2</Item></Grid2>
+        <Grid2 size={3}><Item>3</Item></Grid2>
+        <Grid2 size={3}><Item>4</Item></Grid2>
       </Grid2>
-      <Grid2 size={3}>
-        <GridItem>2</GridItem>
-      </Grid2>
-      <Grid2 size={3}>
-        <GridItem>3</GridItem>
-      </Grid2>
-      <Grid2 size={3}>
-        <GridItem>4</GridItem>
-      </Grid2>
-    </Grid2>
+    </div>
   </ThemeWrapper>
 </Row>
 
@@ -192,20 +191,14 @@ Use `direction="column"` to arrange items vertically. This is useful for sidebar
 
 <Row className="image-container">
   <ThemeWrapper>
-    <Grid2 container spacing={2} direction="column" sx={{ width: "100%", maxWidth: 200, height: 300 }}>
-      <Grid2 size="grow">
-        <GridItem>1</GridItem>
+    <div style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
+      <Grid2 container spacing={2} direction="column" sx={{ width: "100%", maxWidth: 200, height: 300 }}>
+        <Grid2 size="grow"><Item>1</Item></Grid2>
+        <Grid2 size="grow"><Item>2</Item></Grid2>
+        <Grid2 size="grow"><Item>3</Item></Grid2>
+        <Grid2 size="grow"><Item>4</Item></Grid2>
       </Grid2>
-      <Grid2 size="grow">
-        <GridItem>2</GridItem>
-      </Grid2>
-      <Grid2 size="grow">
-        <GridItem>3</GridItem>
-      </Grid2>
-      <Grid2 size="grow">
-        <GridItem>4</GridItem>
-      </Grid2>
-    </Grid2>
+    </div>
   </ThemeWrapper>
 </Row>
 
@@ -221,20 +214,14 @@ The default `wrap="wrap"` behavior allows items to wrap to new lines when the co
 
 <Row className="image-container">
   <ThemeWrapper>
-    <Grid2 container spacing={2} wrap="wrap" sx={{ width: "100%", maxWidth: 300 }}>
-      <Grid2 size={4}>
-        <GridItem>Item 1</GridItem>
+    <div style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
+      <Grid2 container spacing={2} wrap="wrap" sx={{ width: "100%", maxWidth: 300 }}>
+        <Grid2 size={4}><Item>Item 1</Item></Grid2>
+        <Grid2 size={4}><Item>Item 2</Item></Grid2>
+        <Grid2 size={4}><Item>Item 3</Item></Grid2>
+        <Grid2 size={4}><Item>Item 4</Item></Grid2>
       </Grid2>
-      <Grid2 size={4}>
-        <GridItem>Item 2</GridItem>
-      </Grid2>
-      <Grid2 size={4}>
-        <GridItem>Item 3</GridItem>
-      </Grid2>
-      <Grid2 size={4}>
-        <GridItem>Item 4</GridItem>
-      </Grid2>
-    </Grid2>
+    </div>
   </ThemeWrapper>
 </Row>
 
@@ -244,20 +231,14 @@ Use `wrap="nowrap"` to prevent items from wrapping. This keeps all items on a si
 
 <Row className="image-container">
   <ThemeWrapper>
-    <Grid2 container spacing={2} wrap="nowrap" sx={{ width: "100%", maxWidth: 300, overflow: "auto" }}>
-      <Grid2 size={4}>
-        <GridItem>Item 1</GridItem>
+    <div style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
+      <Grid2 container spacing={2} wrap="nowrap" sx={{ width: "100%", maxWidth: 300, overflow: "auto" }}>
+        <Grid2 size={4}><Item>Item 1</Item></Grid2>
+        <Grid2 size={4}><Item>Item 2</Item></Grid2>
+        <Grid2 size={4}><Item>Item 3</Item></Grid2>
+        <Grid2 size={4}><Item>Item 4</Item></Grid2>
       </Grid2>
-      <Grid2 size={4}>
-        <GridItem>Item 2</GridItem>
-      </Grid2>
-      <Grid2 size={4}>
-        <GridItem>Item 3</GridItem>
-      </Grid2>
-      <Grid2 size={4}>
-        <GridItem>Item 4</GridItem>
-      </Grid2>
-    </Grid2>
+    </div>
   </ThemeWrapper>
 </Row>
 

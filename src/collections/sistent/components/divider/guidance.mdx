@@ -6,7 +6,6 @@ description: The Divider component renders a thin line that separates content wi
 
 import { Divider, Box, Stack } from "@sistent/sistent";
 
-The `Divider` component renders a thin line that separates content within lists, layouts, and sections, providing a subtle way to reinforce visual hierarchy and improve scannability.
 
 <a id="Best-Practices">
   <h2>Best Practices</h2>
@@ -18,13 +17,15 @@ Dividers work best when separating distinct groups of content in lists, menus, o
 
 <Row className="image-container">
   <ThemeWrapper>
-    <Stack spacing={2} sx={{ width: "100%", maxWidth: 360 }}>
-      <Box sx={{ p: 2, bgcolor: "background.paper" }}>Section 1</Box>
-      <Divider />
-      <Box sx={{ p: 2, bgcolor: "background.paper" }}>Section 2</Box>
-      <Divider />
-      <Box sx={{ p: 2, bgcolor: "background.paper" }}>Section 3</Box>
-    </Stack>
+    <div style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
+      <Stack spacing={2} sx={{ width: "100%", maxWidth: 360 }}>
+        <Box sx={{ p: 2, bgcolor: "background.paper" }}>Section 1</Box>
+        <Divider />
+        <Box sx={{ p: 2, bgcolor: "background.paper" }}>Section 2</Box>
+        <Divider />
+        <Box sx={{ p: 2, bgcolor: "background.paper" }}>Section 3</Box>
+      </Stack>
+    </div>
   </ThemeWrapper>
 </Row>
 
@@ -38,13 +39,15 @@ Use vertical dividers to separate groups of actions in toolbars or icon groups. 
 
 <Row className="image-container">
   <ThemeWrapper>
-    <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-      <Box sx={{ p: 1 }}>Action A</Box>
-      <Box sx={{ p: 1 }}>Action B</Box>
-      <Divider orientation="vertical" flexItem />
-      <Box sx={{ p: 1 }}>Action C</Box>
-      <Box sx={{ p: 1 }}>Action D</Box>
-    </Box>
+    <div style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
+      <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+        <Box sx={{ p: 1 }}>Action A</Box>
+        <Box sx={{ p: 1 }}>Action B</Box>
+        <Divider orientation="vertical" flexItem />
+        <Box sx={{ p: 1 }}>Action C</Box>
+        <Box sx={{ p: 1 }}>Action D</Box>
+      </Box>
+    </div>
   </ThemeWrapper>
 </Row>
 
@@ -76,12 +79,14 @@ Use dividers with text to create subtle section headers:
 
 <Row className="image-container">
   <ThemeWrapper>
-    <Box sx={{ width: "100%", maxWidth: 360 }}>
-      <Divider textAlign="left">Personal Information</Divider>
-      <Box sx={{ p: 2 }}>Content here...</Box>
-      <Divider textAlign="left">Contact Details</Divider>
-      <Box sx={{ p: 2 }}>Content here...</Box>
-    </Box>
+    <div style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
+      <Box sx={{ width: "100%", maxWidth: 360 }}>
+        <Divider textAlign="left">Personal Information</Divider>
+        <Box sx={{ p: 2 }}>Content here...</Box>
+        <Divider textAlign="left">Contact Details</Divider>
+        <Box sx={{ p: 2 }}>Content here...</Box>
+      </Box>
+    </div>
   </ThemeWrapper>
 </Row>
 

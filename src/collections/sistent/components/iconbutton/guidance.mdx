@@ -5,9 +5,11 @@ description: IconButton provides an interactive button component that displays o
 ---
 
 import { IconButton } from "@sistent/sistent";
-import IconButtonDemo from "./IconButtonDemo";
+import { FaHeart } from "@react-icons/all-files/fa/FaHeart";
+import { FaShare } from "@react-icons/all-files/fa/FaShare";
+import { FaCheck } from "@react-icons/all-files/fa/FaCheck";
+import { FaTimes } from "@react-icons/all-files/fa/FaTimes";
 
-IconButton provides an interactive button component that displays only an icon, ideal for compact UIs where space is limited and actions are easily recognizable through iconography.
 
 <a id="Usage Guidelines">
   <h2>Usage Guidelines</h2>
@@ -21,13 +23,18 @@ IconButtons should be used when the action can be clearly communicated through i
 *   **Secondary actions:** Edit, delete, share, or favorite actions
 *   **Universal actions:** Widely recognized actions like play, pause, or close
 
-<div className="showcase">
-  <div className="items">
-    <ThemeWrapper>
-      <IconButtonDemo type="colors" />
-    </ThemeWrapper>
-  </div>
-</div>
+<Row className="image-container">
+  <ThemeWrapper>
+    <div style={{ display: 'flex', justifyContent: 'center', gap: '8px', width: '100%' }}>
+      <IconButton aria-label="favorite" color="error">
+        <FaHeart />
+      </IconButton>
+      <IconButton aria-label="share" color="primary">
+        <FaShare />
+      </IconButton>
+    </div>
+  </ThemeWrapper>
+</Row>
 
 <h3>When to Avoid IconButtons</h3>
 
@@ -61,13 +68,26 @@ IconButtons should be used when the action can be clearly communicated through i
 
 Maintain minimum 8px spacing between IconButtons and group related actions together with logical order.
 
-<div className="showcase">
-  <div className="items">
-    <ThemeWrapper>
-      <IconButtonDemo type="spacing" />
-    </ThemeWrapper>
-  </div>
-</div>
+<Row className="image-container">
+  <ThemeWrapper>
+    <div style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
+      <div style={{ display: "flex", gap: "16px", alignItems: "center" }}>
+        <IconButton aria-label="approve" color="success">
+          <FaCheck />
+        </IconButton>
+        <IconButton aria-label="reject" color="error">
+          <FaTimes />
+        </IconButton>
+      </div>
+    </div>
+  </ThemeWrapper>
+</Row>
+
+<a id="Common Patterns">
+  <h2>Common Patterns</h2>
+</a>
+
+**Toolbar Actions:** Edit, share, delete actions in toolbars. **List Item Actions:** Quick actions for items in lists or tables. **Media Controls:** Play, pause, skip controls. **Navigation:** Back, forward, close, menu toggles.
 
 <a id="Props">
   <h2>Props</h2>
@@ -75,15 +95,62 @@ Maintain minimum 8px spacing between IconButtons and group related actions toget
 
 The IconButton component accepts all standard button props plus additional customization options:
 
-| Prop | Type | Default | Description |
-| :--- | :--- | :--- | :--- |
-| children | node | - | The icon element to display inside the button |
-| size | 'small' \| 'medium' \| 'large' | 'medium' | The size of the IconButton |
-| color | 'inherit' \| 'primary' \| 'secondary' \| 'error' \| 'info' \| 'success' \| 'warning' | 'inherit' | The color of the IconButton |
-| disabled | bool | false | If true, the IconButton is disabled |
-| onClick | func | - | Callback fired when the IconButton is clicked |
-| aria-label | string | - | Accessibility label for screen readers (required) |
-| sx | object | - | System prop for custom styling |
+<div className="table-container">
+  <table className="props-table">
+    <thead>
+      <tr>
+        <th>Prop</th>
+        <th>Type</th>
+        <th>Default</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>children</td>
+        <td>node</td>
+        <td>-</td>
+        <td>The icon element to display inside the button</td>
+      </tr>
+      <tr>
+        <td>size</td>
+        <td>'small' | 'medium' | 'large'</td>
+        <td>'medium'</td>
+        <td>The size of the IconButton</td>
+      </tr>
+      <tr>
+        <td>color</td>
+        <td>'inherit' | 'primary' | 'secondary' | 'error' | 'info' | 'success' | 'warning'</td>
+        <td>'inherit'</td>
+        <td>The color of the IconButton</td>
+      </tr>
+      <tr>
+        <td>disabled</td>
+        <td>bool</td>
+        <td>false</td>
+        <td>If true, the IconButton is disabled</td>
+      </tr>
+      <tr>
+        <td>onClick</td>
+        <td>func</td>
+        <td>-</td>
+        <td>Callback fired when the IconButton is clicked</td>
+      </tr>
+      <tr>
+        <td>aria-label</td>
+        <td>string</td>
+        <td>-</td>
+        <td>Accessibility label for screen readers (required)</td>
+      </tr>
+      <tr>
+        <td>sx</td>
+        <td>object</td>
+        <td>-</td>
+        <td>System prop for custom styling</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
 <a id="Best Practices">
   <h2>Best Practices</h2>

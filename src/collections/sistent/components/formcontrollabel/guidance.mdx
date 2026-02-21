@@ -1,13 +1,22 @@
 ---
 title: Form Control Label Guidance
 component: formcontrollabel
-description: FormControlLabel is a wrapper component that pairs a label with a control such as a checkbox or a radio button. It enhances accessibility by allowing users to click the label to toggle the control.
+description: The `FormControlLabel` component combines a form control (such as a checkbox, radio button, or switch) with a label. It improves accessibility and consistency by ensuring that the form control and its label are semantically and visually connected.
 ---
 
+import { useState } from "react";
 import { FormControlLabel, Checkbox, Radio, Switch } from "@sistent/sistent";
-import FormControlLabelDemo from "./FormControlLabelDemo";
 
-The `FormControlLabel` component combines a form control (such as a checkbox, radio button, or switch) with a label. It improves accessibility and consistency by ensuring that the form control and its label are semantically and visually connected.
+export const CheckboxDemo = () => {
+  const [checked, setChecked] = useState(true);
+  return (
+    <FormControlLabel
+      control={<Checkbox checked={checked} onChange={() => setChecked(!checked)} />}
+      label="Accept Terms and Conditions"
+    />
+  );
+};
+
 
 <a id="Usage">
   <h2>Usage</h2>
@@ -19,55 +28,69 @@ Use `FormControlLabel` when you need to pair a form control with a descriptive l
 *   Automatically positions the label to the right of the control by default.
 *   Can be customized with positioning via `labelPlacement` prop.
 
-<h3>With Checkbox</h3>
+<a id="Checkbox Usage">
+  <h3>With Checkbox</h3>
+</a>
 
-<div className="showcase">
-  <div className="items">
-    <ThemeWrapper>
-      <FormControlLabelDemo type="checkbox" />
-    </ThemeWrapper>
-  </div>
-</div>
+<Row className="image-container">
+  <ThemeWrapper>
+    <div style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
+      <CheckboxDemo />
+    </div>
+  </ThemeWrapper>
+</Row>
 
-<h3>With Disabled Checkbox</h3>
+<a id="Disabled Checkbox">
+  <h3>With Disabled Checkbox</h3>
+</a>
 
-<div className="showcase">
-  <div className="items">
-    <ThemeWrapper>
-      <FormControlLabelDemo type="disabled" />
-    </ThemeWrapper>
-  </div>
-</div>
+<Row className="image-container">
+  <ThemeWrapper>
+    <div style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
+      <FormControlLabel
+        control={<Checkbox disabled />}
+        label="I agree to receive marketing emails"
+        disabled
+      />
+    </div>
+  </ThemeWrapper>
+</Row>
 
-<h3>With Radio Button</h3>
+<a id="Radio Usage">
+  <h3>With Radio Button</h3>
+</a>
 
-<div className="showcase">
-  <div className="items">
-    <ThemeWrapper>
-      <FormControlLabelDemo type="radio" />
-    </ThemeWrapper>
-  </div>
-</div>
+<Row className="image-container">
+  <ThemeWrapper>
+    <div style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
+      <FormControlLabel control={<Radio />} label="Option A" />
+    </div>
+  </ThemeWrapper>
+</Row>
 
-<h3>With Radio Button (Label on Left)</h3>
+<a id="Radio Label Start">
+  <h3>With Radio Button (Label on Left)</h3>
+</a>
 
-<div className="showcase">
-  <div className="items">
-    <ThemeWrapper>
-      <FormControlLabelDemo type="placement-start" />
-    </ThemeWrapper>
-  </div>
-</div>
+<Row className="image-container">
+  <ThemeWrapper>
+    <div style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
+      <FormControlLabel control={<Radio />} label="Choose Plan" labelPlacement="start" />
+    </div>
+  </ThemeWrapper>
+</Row>
 
-<h3>With Switch</h3>
+<a id="Switch Usage">
+  <h3>With Switch</h3>
+</a>
 
-<div className="showcase">
-  <div className="items">
-    <ThemeWrapper>
-      <FormControlLabelDemo type="switch" />
-    </ThemeWrapper>
-  </div>
-</div>
+<Row className="image-container">
+  <ThemeWrapper>
+    <div style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
+      <FormControlLabel control={<Switch />} label="Enable Notifications" />
+    </div>
+  </ThemeWrapper>
+</Row>
 
 <a id="Best Practices">
   <h2>Best Practices</h2>

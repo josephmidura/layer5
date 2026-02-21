@@ -6,7 +6,32 @@ component: dialog
 description: The Dialog component is a modal window that appears on top of the main content to focus user attention on specific tasks or information. It provides a controlled way to present confirmations, forms, alerts, and detailed content without navigating away from the current context.
 ---
 
-import DialogDemo from "./DialogDemo";
+import { useState } from "react";
+import { Dialog, DialogTitle, DialogContent, DialogActions, Button } from "@sistent/sistent";
+
+export const BasicDialogDemo = () => {
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
+  return (
+    <>
+      <Button variant="contained" onClick={handleOpen}>Open Dialog</Button>
+      <Dialog open={open} onClose={handleClose}>
+        <DialogTitle>Confirm Action</DialogTitle>
+        <DialogContent>
+          Do you want to proceed with this action?
+        </DialogContent>
+        <DialogActions>
+          <Button variant="contained" onClick={handleClose}>Cancel</Button>
+          <Button variant="contained" color="primary" onClick={handleClose}>
+            Confirm
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </>
+  );
+};
 
 Dialog components provide modal windows that focus user attention on specific tasks or information. They overlay the main content and require user interaction before returning to the underlying interface.
 
@@ -18,8 +43,8 @@ Below is a simple example of how to use the Dialog component.
 
 <Row className="image-container">
   <ThemeWrapper>
-    <div style={{ display: 'flex', justifyContent: 'center' }}>
-      <DialogDemo />
+    <div style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
+      <BasicDialogDemo />
     </div>
   </ThemeWrapper>
 </Row>

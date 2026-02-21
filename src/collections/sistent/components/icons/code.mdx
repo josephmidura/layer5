@@ -1,12 +1,11 @@
 ---
 title: Icons Code
 component: icons
-description: Sistent provides a comprehensive collection of icons that can be used across your projects. These icons are designed to be consistent with the overall design language of the Sistent design system, ensuring a cohesive user experience.
+description: Icons are visual symbols used to represent ideas, objects, or actions.
 ---
 
-import IconsDemo from "./IconsDemo";
+import { KubernetesIcon, DesignIcon } from "@sistent/sistent";
 
-Icons are visual symbols used to represent ideas, objects, or actions.
 
 <a id="Default Icon">
   <h2>Default Icon</h2>
@@ -15,12 +14,10 @@ Icons are visual symbols used to represent ideas, objects, or actions.
 <div className="showcase">
   <div className="items">
     <ThemeWrapper>
-      <IconsDemo type="basic" />
+      <KubernetesIcon />
     </ThemeWrapper>
   </div>
-  <CodeBlock name="basic-icon" code={`import { KubernetesIcon } from "@sistent/sistent";
-
-<KubernetesIcon />`} />
+  <CodeBlock name="basic-icon" collapsible code={`<KubernetesIcon />`} />
 </div>
 
 <a id="Custom Size">
@@ -30,13 +27,8 @@ Icons are visual symbols used to represent ideas, objects, or actions.
 <div className="showcase">
   <div className="items">
     <ThemeWrapper>
-      <IconsDemo type="size" />
+      <DesignIcon width={40} height={40} />
     </ThemeWrapper>
   </div>
-  <CodeBlock name="sized-icon" code={`import { DesignIcon } from "@sistent/sistent";
-
-<DesignIcon
-  width={40}
-  height={40}
-/>`} />
+  <CodeBlock name="sized-icon" collapsible code={`<DesignIcon width={40} height={40} />`} />
 </div>

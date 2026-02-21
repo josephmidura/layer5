@@ -6,7 +6,7 @@ component: divider
 description: The Divider component renders a thin line that separates content within lists, layouts, and sections, providing a subtle way to reinforce visual hierarchy and improve scannability.
 ---
 
-import { Divider, Box, Chip } from "@sistent/sistent";
+import { Divider, Box, Chip, List, ListItem, ListItemText } from "@sistent/sistent";
 
 Dividers help organize content and improve scannability by separating groups of related elements. Use them sparingly to maintain visual clarity without creating unnecessary noise.
 
@@ -22,9 +22,11 @@ The default variant spans the full width of its container.
 
 <Row className="image-container">
   <ThemeWrapper>
-    <Box sx={{ width: "100%", maxWidth: 360 }}>
-      <Divider />
-    </Box>
+    <div style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
+      <Box sx={{ width: "100%", maxWidth: 360 }}>
+        <Divider />
+      </Box>
+    </div>
   </ThemeWrapper>
 </Row>
 
@@ -34,9 +36,11 @@ The `inset` variant adds left padding, useful when aligning with indented list i
 
 <Row className="image-container">
   <ThemeWrapper>
-    <Box sx={{ width: "100%", maxWidth: 360 }}>
-      <Divider variant="inset" />
-    </Box>
+    <div style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
+      <Box sx={{ width: "100%", maxWidth: 360 }}>
+        <Divider variant="inset" />
+      </Box>
+    </div>
   </ThemeWrapper>
 </Row>
 
@@ -46,9 +50,11 @@ The `middle` variant shortens the divider on both sides.
 
 <Row className="image-container">
   <ThemeWrapper>
-    <Box sx={{ width: "100%", maxWidth: 360 }}>
-      <Divider variant="middle" />
-    </Box>
+    <div style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
+      <Box sx={{ width: "100%", maxWidth: 360 }}>
+        <Divider variant="middle" />
+      </Box>
+    </div>
   </ThemeWrapper>
 </Row>
 
@@ -60,13 +66,15 @@ Use the `orientation` prop to render vertical dividers. Vertical dividers are us
 
 <Row className="image-container">
   <ThemeWrapper>
-    <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-      <span>Left</span>
-      <Divider orientation="vertical" flexItem />
-      <span>Center</span>
-      <Divider orientation="vertical" flexItem />
-      <span>Right</span>
-    </Box>
+    <div style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
+      <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+        <span>Left</span>
+        <Divider orientation="vertical" flexItem />
+        <span>Center</span>
+        <Divider orientation="vertical" flexItem />
+        <span>Right</span>
+      </Box>
+    </div>
   </ThemeWrapper>
 </Row>
 
@@ -78,13 +86,40 @@ You can center an element between divider lines using children. Use the `textAli
 
 <Row className="image-container">
   <ThemeWrapper>
-    <Box sx={{ width: "100%", maxWidth: 360 }}>
-      <Divider>CENTER</Divider>
-      <Divider textAlign="left">LEFT</Divider>
-      <Divider textAlign="right">RIGHT</Divider>
-      <Divider>
-        <Chip label="Chip" size="small" />
-      </Divider>
-    </Box>
+    <div style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
+      <Box sx={{ width: "100%", maxWidth: 360 }}>
+        <Divider>CENTER</Divider>
+        <Divider textAlign="left">LEFT</Divider>
+        <Divider textAlign="right">RIGHT</Divider>
+        <Divider>
+          <Chip label="Chip" size="small" />
+        </Divider>
+      </Box>
+    </div>
+  </ThemeWrapper>
+</Row>
+<a id="List-Divider">
+  <h2>List Divider</h2>
+</a>
+
+When using the Divider to separate items in a list, render it as an `<li>` using the `component` prop.
+
+<Row className="image-container">
+  <ThemeWrapper>
+    <div style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
+      <List sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>
+        <ListItem>
+          <ListItemText primary="Inbox" />
+        </ListItem>
+        <Divider component="li" />
+        <ListItem>
+          <ListItemText primary="Drafts" />
+        </ListItem>
+        <Divider component="li" />
+        <ListItem>
+          <ListItemText primary="Trash" />
+        </ListItem>
+      </List>
+    </div>
   </ThemeWrapper>
 </Row>
