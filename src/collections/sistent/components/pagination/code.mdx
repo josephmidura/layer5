@@ -4,10 +4,16 @@ component: pagination
 description: The Pagination component helps users navigate through multiple pages of content. It provides a clear interface for moving between pages and understanding the current position within a larger dataset.
 ---
 
+import { useState } from "react";
 import { Pagination } from "@sistent/sistent";
-import PaginationDemo from "./PaginationDemo";
 
-The Pagination component helps users navigate through multiple pages of content. It provides a clear interface for moving between pages and understanding the current position within a larger dataset.
+export const BasicPaginationCodeDemo = () => {
+  const [currentPage, setCurrentPage] = useState(1);
+  const handlePageChange = (event, value) => setCurrentPage(value);
+  return (
+    <Pagination count={10} page={currentPage} onChange={handlePageChange} />
+  );
+};
 
 <a id="Basic Pagination">
   <h3>Basic Pagination</h3>
@@ -16,14 +22,16 @@ The Pagination component helps users navigate through multiple pages of content.
 <div className="showcase">
   <div className="items">
     <ThemeWrapper>
-      <PaginationDemo type="basic" />
+      <BasicPaginationCodeDemo />
     </ThemeWrapper>
   </div>
-  <CodeBlock name="basic-pagination" code={`<Pagination 
-  count={10} 
-  page={page} 
-  onChange={handleChange} 
-/>`} />
+  <CodeBlock name="basic-pagination" collapsible code={`
+    <Pagination 
+      count={10} 
+      page={1} 
+      onChange={(event, page) => handleChange(page)} 
+    />
+  `} />
 </div>
 
 <a id="Sizes">
@@ -33,12 +41,18 @@ The Pagination component helps users navigate through multiple pages of content.
 <div className="showcase">
   <div className="items">
     <ThemeWrapper>
-      <PaginationDemo type="sizes" />
+      <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+        <Pagination size="small" count={10} />
+        <Pagination size="medium" count={10} />
+        <Pagination size="large" count={10} />
+      </div>
     </ThemeWrapper>
   </div>
-  <CodeBlock name="pagination-sizes" code={`<Pagination size="small" count={10} />
-<Pagination size="medium" count={10} />
-<Pagination size="large" count={10} />`} />
+  <CodeBlock name="pagination-sizes" collapsible code={`
+    <Pagination size="small" count={10} />
+    <Pagination size="medium" count={10} />
+    <Pagination size="large" count={10} />
+  `} />
 </div>
 
 <a id="Styling">
@@ -48,15 +62,17 @@ The Pagination component helps users navigate through multiple pages of content.
 <div className="showcase">
   <div className="items">
     <ThemeWrapper>
-      <PaginationDemo type="styling" />
+      <Pagination count={10} color="primary" variant="outlined" shape="rounded" />
     </ThemeWrapper>
   </div>
-  <CodeBlock name="styled-pagination" code={`<Pagination
-  count={10}
-  color="primary"
-  variant="outlined"
-  shape="rounded"
-/>`} />
+  <CodeBlock name="styled-pagination" collapsible code={`
+    <Pagination
+      count={10}
+      color="primary"
+      variant="outlined"
+      shape="rounded"
+    />
+  `} />
 </div>
 
 <a id="Outline">
@@ -66,12 +82,14 @@ The Pagination component helps users navigate through multiple pages of content.
 <div className="showcase">
   <div className="items">
     <ThemeWrapper>
-      <PaginationDemo type="outline" />
+      <Pagination count={10} variant="outlined" color="secondary" />
     </ThemeWrapper>
   </div>
-  <CodeBlock name="pagination-outline" code={`<Pagination
-  count={10}
-  variant="outlined"
-  color="secondary"
-/>`} />
+  <CodeBlock name="pagination-outline" collapsible code={`
+    <Pagination
+      count={10}
+      variant="outlined"
+      color="secondary"
+    />
+  `} />
 </div>
