@@ -6,8 +6,6 @@ description: The Stack component is a layout utility that manages one-dimensiona
 
 import { Stack, Box, Button } from "@sistent/sistent";
 
-The `Stack` component is a layout utility that manages one-dimensional layouts with flexible spacing and alignment. Built on Flexbox, it provides an efficient way to arrange elements vertically or horizontally with consistent spacing.
-
 The `Stack` component arranges children in one-dimensional flow, either vertically or horizontally, with consistent spacing and no manual margin adjustments.
 
 <a id="Vertical Stack">
@@ -32,7 +30,7 @@ The default Stack orientation is vertical. Use the `spacing` prop to control the
       </Stack>
     </ThemeWrapper>
   </div>
-  <CodeBlock name="stack-vertical" code={`<Stack spacing={2}>
+  <CodeBlock name="stack-vertical" collapsible code={`<Stack spacing={2}>
   <Box sx={{ p: 2, bgcolor: "primary.main", color: "white" }}>
     Header
   </Box>
@@ -67,7 +65,7 @@ Set `direction="row"` to arrange children horizontally. Useful for button groups
       </Stack>
     </ThemeWrapper>
   </div>
-  <CodeBlock name="stack-horizontal" code={`<Stack direction="row" spacing={2}>
+  <CodeBlock name="stack-horizontal" collapsible code={`<Stack direction="row" spacing={2}>
   <Box sx={{ p: 2, bgcolor: "primary.main", color: "white" }}>
     Home
   </Box>
@@ -117,7 +115,7 @@ Use responsive values for the `direction` prop to create adaptive layouts that s
       </Stack>
     </ThemeWrapper>
   </div>
-  <CodeBlock name="stack-responsive" code={`<Stack
+  <CodeBlock name="stack-responsive" collapsible code={`<Stack
   direction={{ xs: "column", sm: "row" }}
   spacing={2}
   sx={{ width: "100%" }}
@@ -157,7 +155,7 @@ Add visual separation between children using the `divider` prop.
       </Stack>
     </ThemeWrapper>
   </div>
-  <CodeBlock name="stack-divider" code={`<Stack
+  <CodeBlock name="stack-divider" collapsible code={`<Stack
   spacing={2}
   divider={
     <Box
@@ -193,7 +191,7 @@ Use larger spacing values to create wider gaps. Common values range from 1 (8px)
       </Stack>
     </ThemeWrapper>
   </div>
-  <CodeBlock name="stack-spacing" code={`<Stack spacing={4}>
+  <CodeBlock name="stack-spacing" collapsible code={`<Stack spacing={4}>
   <Box sx={{ p: 2, bgcolor: "primary.main", color: "white" }}>
     Title
   </Box>
@@ -219,7 +217,7 @@ Use `direction="row"` to stack horizontal button groups with consistent spacing.
       </Stack>
     </ThemeWrapper>
   </div>
-  <CodeBlock name="stack-buttons" code={`<Stack direction="row" spacing={2}>
+  <CodeBlock name="stack-buttons" collapsible code={`<Stack direction="row" spacing={2}>
   <Button variant="contained">Save</Button>
   <Button variant="outlined">Cancel</Button>
   <Button variant="text">Reset</Button>
