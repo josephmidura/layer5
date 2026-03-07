@@ -222,7 +222,7 @@ const TOC = () => {
               {expandComponent && (
                 <ul className="components-sublinks">
                   {sortedComponentArray.map((component) => (
-                    <li key={component.id}>
+                    <li key={component.url}>
                       <Link
                         to={component.url}
                         className={`toc-sub-heading toc-sub-inline components-item ${
