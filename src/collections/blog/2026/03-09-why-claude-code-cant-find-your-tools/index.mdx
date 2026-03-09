@@ -22,37 +22,25 @@ resource: true
 import { BlogWrapper } from "../../Blog.style.js";
 import { Link } from "gatsby";
 import Blockquote from "../../../../reusecore/Blockquote";
-import CTA_FullWidth from "../../../../components/Call-To-Actions/CTA_FullWidth";
-import CTAImg from "../../../../assets/images/layer5/5 icon/png/light/5-light-no-trim.webp";
+import KanvasCTA from "../../../../sections/Kanvas/kanvas-cta";
 
 <BlogWrapper>
 
-<div class="intro">
+<div className="intro">
   <p>
-    You type <code>gh pr list</code> in your terminal and it works perfectly. You ask Claude Code to
-    do the same, and it replies: <em>"command not found: gh"</em>. Your Go toolchain, nvm, pyenv,
-    Homebrew binaries — all invisible to the agent. This is not a bug in Claude Code. It is a
-    fundamental property of how Unix shells start up, and once you understand it, the fix is a
-    one-time five-minute change.
+    You type <code>gh pr list</code> in your terminal and it works perfectly. You ask Claude Code to do the same, and it replies: <em>"command not found: gh"</em>. Your Go toolchain, nvm, pyenv, Homebrew binaries — all invisible to the agent. This is not a bug in Claude Code. It is a fundamental property of how Unix shells start up, and once you understand it, the fix is a one-time, five-minute change.
   </p>
 </div>
 
 ## The Surprise
 
-AI coding assistants like Claude Code, Cline, Aider, and similar tools spawn child shell processes
-to run commands on your behalf. From where you sit, the terminal looks identical to the one you use
-every day. But the shell those tools launch is fundamentally different from the one you interact
-with — and that difference determines which startup files are read, which means it determines what
-is on your PATH.
+AI coding assistants like Claude Code, Cline, Aider, and similar tools spawn child shell processes to run commands on your behalf. From where you sit, the terminal looks identical to the one you use every day. But the shell those tools launch is fundamentally different from the one you interact with — and that difference determines which startup files are read, which means it determines what is on your PATH.
 
-The result is a confusing experience: tools you have used for years are suddenly invisible to the
-agent trying to help you. The culprit is not your installation. It is the shell startup file
-hierarchy.
+The result is a confusing experience: tools you have used for years are suddenly invisible to the agent trying to help you. The culprit is not your installation. It is the shell startup file hierarchy.
 
 ## Zsh Startup Files and When They Are Sourced
 
-Zsh loads different configuration files depending on how it was launched. There are four main files,
-and they are read in this order:
+Zsh loads different configuration files depending on how it was launched. There are four main files, and they are read in this order:
 
 | File | Login shell | Interactive shell | Non-interactive shell |
 |---|---|---|---|
@@ -61,25 +49,16 @@ and they are read in this order:
 | `~/.zshrc` | No | Yes | No |
 | `~/.zlogin` | Yes | No | No |
 
-The key column is the last one. A **non-interactive, non-login shell** — the kind that Claude Code
-spawns — sources **only** `~/.zshenv`. Everything else is skipped entirely.
+The key column is the last one. A *non-interactive, non-login shell* — the kind that Claude Code spawns — sources **only** `~/.zshenv`. Everything else is skipped entirely.
 
-- **`~/.zshenv`** is sourced for every zsh invocation, no matter what. It is the right place for
-  environment variables that must be available universally: `PATH`, `GOPATH`, `JAVA_HOME`, and
-  similar exports.
-- **`~/.zprofile`** is sourced for login shells (e.g., when you open a new terminal window or SSH
-  into a machine). Homebrew places its environment setup here on Apple Silicon Macs
-  (`/opt/homebrew/bin/brew shellenv`), which is why Homebrew tools can also go missing.
-- **`~/.zshrc`** is sourced only for interactive shells — sessions where you type commands. This is
-  where most developers put everything: aliases, prompt configuration, `nvm`, `pyenv`, `rbenv`,
+- **`~/.zshenv`** is sourced for every zsh invocation, no matter what. It is the right place for environment variables that must be available universally: `PATH`, `GOPATH`, `JAVA_HOME`, and similar exports.
+- **`~/.zprofile`** is sourced for login shells (e.g., when you open a new terminal window or SSH into a machine). Homebrew places its environment setup here on Apple Silicon Macs (`/opt/homebrew/bin/brew shellenv`), which is why Homebrew tools can also go missing.
+- **`~/.zshrc`** is sourced only for interactive shells — sessions where you type commands. This is where most developers put everything: aliases, prompt configuration, `nvm`, `pyenv`, `rbenv`,
   completions, and — critically — PATH customizations.
-- **`~/.zlogin`** is sourced after `~/.zshrc` for login shells. It is rarely used by developers
-  directly.
+- **`~/.zlogin`** is sourced after `~/.zshrc` for login shells. It is rarely used by developers directly.
 
 <Blockquote
   quote="A non-interactive, non-login shell sources only ~/.zshenv. Everything in ~/.zshrc is invisible to it — including every PATH export most developers have ever written."
-  person="Zsh Documentation"
-  title="Shell Startup File Hierarchy"
 />
 
 ## What PATH a Non-Interactive Shell Actually Sees
@@ -130,16 +109,13 @@ The `-i` flag forces an interactive shell, which sources `~/.zshrc`. If `zsh -c 
 `gh not found` but `zsh -i -c 'which gh'` prints the correct path, your PATH export is in
 `~/.zshrc` and you have confirmed the root cause.
 
-<div class="note">
-  <strong>Quick diagnosis:</strong> Run <code>zsh -c 'which gh'</code> (no <code>-i</code> flag).
-  If this fails but <code>which gh</code> in your normal terminal works, your PATH is only set in
-  <code>~/.zshrc</code>. Move the relevant exports to <code>~/.zshenv</code> to fix it.
+<div className="note">
+  <strong>Quick diagnosis:</strong> Run <code>zsh -c 'which gh'</code> (no <code>-i</code> flag). If this fails but <code>which gh</code> in your normal terminal works, your PATH is only set in <code>{"~/.zshrc"}</code>. Move the relevant exports to <code>{"~/.zshenv"}</code> to fix it.
 </div>
 
 ## The Fix: Move PATH Exports to ~/.zshenv
 
-The solution is straightforward: any environment variable that must be visible to all processes —
-including non-interactive subshells — belongs in `~/.zshenv`, not `~/.zshrc`.
+The solution is straightforward: any environment variable that must be visible to all processes — including non-interactive subshells — belongs in `~/.zshenv`, not `~/.zshrc`.
 
 Open (or create) `~/.zshenv` and add your PATH exports there:
 
@@ -158,8 +134,7 @@ export PATH="$GOPATH/bin:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
 ```
 
-For tools that inject themselves via an eval expression in `~/.zshrc` — such as nvm, pyenv, or
-rbenv — you need to move or duplicate that initialization into `~/.zshenv` as well:
+For tools that inject themselves via an eval expression in `~/.zshrc` — such as nvm, pyenv, or rbenv — you need to move or duplicate that initialization into `~/.zshenv` as well:
 
 ```bash
 # ~/.zshenv — nvm initialization for non-interactive shells
@@ -172,9 +147,7 @@ export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init --path)"
 ```
 
-Note the `--no-use` flag for nvm: it initializes nvm without switching to the default Node.js
-version, which speeds up shell startup for non-interactive contexts. Remove it if you want the
-default version active everywhere.
+Note the `--no-use` flag for nvm: it initializes nvm without switching to the default Node.js version, which speeds up shell startup for non-interactive contexts. Remove it if you want the default version active everywhere.
 
 After saving `~/.zshenv`, verify without restarting your terminal:
 
@@ -190,61 +163,57 @@ zsh -c 'which node'
 
 ## What to Keep in .zshrc vs .zshenv
 
-Moving everything to `~/.zshenv` is not the right answer. Some configuration should stay in
-`~/.zshrc` because it only makes sense in interactive contexts or because it has side effects
-that slow down non-interactive shells unnecessarily.
+Moving everything to `~/.zshenv` is not the right answer. Some configuration should stay in `~/.zshrc` because it only makes sense in interactive contexts or because it has side effects that slow down non-interactive shells unnecessarily.
 
-<div class="tip">
-  <strong>Guiding principle:</strong> If it is an environment variable that a program needs to
-  find another program, it belongs in <code>~/.zshenv</code>. If it is a user-facing customization
-  for your interactive terminal experience, it belongs in <code>~/.zshrc</code>.
+<div className="tip">
+  <p>
+    <strong>Guiding principle:</strong> If it is an environment variable that a program needs to
+    find another program, it belongs in <code>{"~/.zshenv"}</code>. If it is a user-facing customization
+    for your interactive terminal experience, it belongs in <code>{"~/.zshrc"}</code>.
+  </p>
 
-  **Keep in `~/.zshenv`:**
-  - `PATH` exports and modifications
-  - `GOPATH`, `JAVA_HOME`, `PYTHONPATH`, `CARGO_HOME`, and similar tool-specific env vars
-  - `NVM_DIR`, `PYENV_ROOT`, `RBENV_ROOT` and their `PATH` injections
-  - `EDITOR`, `PAGER`, `LANG`, `LC_ALL`
+  <p><strong>Keep in <code>{"~/.zshenv"}</code>:</strong></p>
+  <ul>
+    <li><code>PATH</code> exports and modifications</li>
+    <li><code>GOPATH</code>, <code>JAVA_HOME</code>, <code>PYTHONPATH</code>, <code>CARGO_HOME</code>, and similar tool-specific env vars</li>
+    <li><code>NVM_DIR</code>, <code>PYENV_ROOT</code>, <code>RBENV_ROOT</code> and their <code>PATH</code> injections</li>
+    <li><code>EDITOR</code>, <code>PAGER</code>, <code>LANG</code>, <code>LC_ALL</code></li>
+  </ul>
 
-  **Keep in `~/.zshrc`:**
-  - Shell aliases (`alias ll='ls -la'`)
-  - Prompt configuration (Starship, Powerlevel10k, oh-my-zsh)
-  - Tab completion setup
-  - Shell functions for interactive use
-  - History settings
-  - `zsh` plugins and plugin managers
-  - Anything that prints output (welcome messages, `neofetch`, etc.)
+  <p><strong>Keep in <code>{"~/.zshrc"}</code>:</strong></p>
+  <ul>
+    <li>Shell aliases (<code>alias ll='ls -la'</code>)</li>
+    <li>Prompt configuration (Starship, Powerlevel10k, oh-my-zsh)</li>
+    <li>Tab completion setup</li>
+    <li>Shell functions for interactive use</li>
+    <li>History settings</li>
+    <li><code>zsh</code> plugins and plugin managers</li>
+    <li>Anything that prints output (welcome messages, <code>neofetch</code>, etc.)</li>
+  </ul>
 </div>
 
 ## The Broader Pattern: Any Tool That Spawns Subshells
 
-Claude Code is not unique here. This same behavior affects any process that spawns a child shell
-without the `-i` or `-l` flags:
+Claude Code is not unique here. This same behavior affects any process that spawns a child shell without the `-i` or `-l` flags:
 
-- **CI/CD pipelines** (GitHub Actions, GitLab CI) run commands in non-interactive shells. This is
-  why you often see pipelines that explicitly `source ~/.bashrc` or set up PATH at the top of
-  every job.
-- **Cron jobs** run in minimal environments with almost no PATH set.
-- **VS Code integrated terminal tasks** and `launch.json` configurations may use non-interactive
-  shells depending on the operating system and configuration.
-- **SSH remote command execution** (`ssh host 'command'`) uses a non-interactive shell unless you
-  pass `-t` to force a TTY.
-- **Make** and other build systems that shell out to run commands.
-- **Docker `RUN` instructions** in Dockerfiles.
+- CI/CD pipelines (GitHub Actions, GitLab CI) run commands in non-interactive shells. This is  why you often see pipelines that explicitly `source ~/.bashrc` or set up PATH at the top of every job.
+- Cron jobs run in minimal environments with almost no PATH set.
+- VS Code integrated terminal tasks and `launch.json` configurations may use non-interactive shells depending on the operating system and configuration.
+- SSH remote command execution (`ssh host 'command'`) uses a non-interactive shell unless you pass `-t` to force a TTY.
+- Make and other build systems that shell out to run commands.
+- Docker `RUN` instructions in Dockerfiles.
 
-If you have ever fixed a "works on my machine" problem by adding `export PATH=...` to a CI
-configuration or a Dockerfile, you have already solved the same class of problem. The `~/.zshenv`
-fix is just the developer workstation equivalent.
+If you have ever fixed a "works on my machine" problem by adding `export PATH=...` to a CI configuration or a Dockerfile, you have already solved the same class of problem. The `~/.zshenv` fix is just the developer workstation equivalent.
 
 <Blockquote
   quote="If a command works in your terminal but fails in a script, a CI job, or an AI agent, the first question to ask is: which startup files does this shell read?"
-  person="Platform Engineering"
-  title="Debugging Shell Environment Issues"
 />
+
+<KanvasCTA />
 
 ## Putting It Together: A Minimal ~/.zshenv Template
 
-Here is a starting point for a `~/.zshenv` that covers the most common developer tools on macOS.
-Adjust paths to match your actual installations:
+Here is a starting point for a `~/.zshenv` that covers the most common developer tools on macOS. Adjust paths to match your actual installations:
 
 ```bash
 # ~/.zshenv
@@ -283,8 +252,7 @@ export LANG="en_US.UTF-8"
 export LC_ALL="en_US.UTF-8"
 ```
 
-With this in place, restart Claude Code (or any tool that spawns subshells) and run your
-verification:
+With this in place, restart Claude Code (or any tool that spawns subshells) and run your verification:
 
 ```bash
 zsh -c 'which gh && which go && which node'
@@ -294,11 +262,7 @@ All three should now resolve to their correct paths.
 
 ## Summary
 
-The "command not found" error in Claude Code and similar AI coding assistants is a shell startup
-file problem, not a tool installation problem. Zsh only sources `~/.zshenv` for non-interactive,
-non-login shells. Everything most developers have placed in `~/.zshrc` — including PATH exports,
-version manager initializations, and tool-specific environment variables — is invisible to those
-shells.
+The "command not found" error in Claude Code and similar AI coding assistants is a shell startup file problem, not a tool installation problem. Zsh only sources `~/.zshenv` for non-interactive, non-login shells. Everything most developers have placed in `~/.zshrc` — including PATH exports, version manager initializations, and tool-specific environment variables — is invisible to those shells.
 
 The fix is permanent and simple:
 
@@ -306,21 +270,10 @@ The fix is permanent and simple:
 2. Verify with `zsh -c 'which <tool>'` before and after.
 3. Keep interactive customizations (aliases, prompt, completions) in `~/.zshrc`.
 
-The same fix benefits CI pipelines, cron jobs, Makefiles, Docker builds, and any other context
-where commands run in a non-interactive shell environment.
+The same fix benefits CI pipelines, cron jobs, Makefiles, Docker builds, and any other context where commands run in a non-interactive shell environment.
 
 ---
 
 *Exploring AI-assisted development workflows and developer tooling? The <Link to="/community">Layer5 community</Link> is an active group of platform engineers, open source contributors, and DevOps practitioners. Join us on [Slack](https://slack.layer5.io) to share what you are building and get help when you hit walls like this one. You can also follow the <Link to="/blog">Layer5 blog</Link> for more practical engineering posts.*
-
-<CTA_FullWidth
-  image={CTAImg}
-  heading="Join the Layer5 Community"
-  alt="Layer5 Community"
-  content="Connect with platform engineers, DevOps practitioners, and open source contributors who are building the future of cloud native infrastructure."
-  button_text="Join the Community"
-  url="/community"
-  external_link={false}
-/>
 
 </BlogWrapper>
