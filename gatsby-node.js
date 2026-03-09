@@ -21,6 +21,27 @@ const shouldIncludeCollection = (collection) =>
   isFullSiteBuild || !HEAVY_COLLECTIONS.has(collection);
 
 const { loadRedirects } = require("./src/utils/redirects.js");
+const dev404PageSource =
+  require.resolve("gatsby/dist/internal-plugins/dev-404-page/raw_dev-404-page.js");
+
+const ensureDev404PageCache = (siteRoot) => {
+  if (process.env.NODE_ENV !== "development") {
+    return;
+  }
+
+  const dev404PageDestination = path.join(
+    siteRoot,
+    ".cache",
+    "dev-404-page.js",
+  );
+
+  if (fs.existsSync(dev404PageDestination)) {
+    return;
+  }
+
+  fs.mkdirSync(path.dirname(dev404PageDestination), { recursive: true });
+  fs.copyFileSync(dev404PageSource, dev404PageDestination);
+};
 
 exports.createPages = async ({ actions, graphql, reporter }) => {
   const { createRedirect } = actions;
@@ -789,6 +810,11 @@ const createSectionPage = ({ envCreatePage, node }) => {
       permalink,
     },
   });
+};
+
+exports.onPreExtractQueries = ({ store }) => {
+  // Restore Gatsby's generated dev 404 entry if an incremental rebuild drops it.
+  ensureDev404PageCache(store.getState().program.directory);
 };
 
 exports.onCreateWebpackConfig = ({ actions, stage, getConfig }) => {
