@@ -50,9 +50,9 @@ export const BlogWrapper = styled.div`
     table,
     td {
       text-align: center;
-      border-top: 1px dotted #3c494f;
+      border-top: 1px dotted ${(props) => props.theme.secondaryLightColorTwo};
       th {
-        background-color: #3c494f;
+        background-color: ${(props) => props.theme.secondaryLightColorTwo};
         color: #eee;
         padding: 0rem 0.5rem;
       }
@@ -107,10 +107,10 @@ export const BlogWrapper = styled.div`
     ,
     td {
       text-align: center;
-      border-top: 1px dotted #3c494f;
+      border-top: 1px dotted ${(props) => props.theme.secondaryLightColorTwo};
       th {
-        background-color: #3c494f;
-        color: #eee;
+        background-color: ${(props) => props.theme.secondaryLightColorTwo};
+        color: ${(props) => props.theme.grey232323ToGreyEEEEEE};
         padding: 0rem 0.5rem;
       }
     }
