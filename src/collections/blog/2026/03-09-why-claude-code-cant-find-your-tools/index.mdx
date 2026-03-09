@@ -17,7 +17,6 @@ published: true
 resource: true
 ---
 
-{/* TODO: Add thumbnail image at ./claude-code-shell-path.png */}
 
 import { BlogWrapper } from "../../Blog.style.js";
 import { Link } from "gatsby";
@@ -166,11 +165,7 @@ zsh -c 'which node'
 Moving everything to `~/.zshenv` is not the right answer. Some configuration should stay in `~/.zshrc` because it only makes sense in interactive contexts or because it has side effects that slow down non-interactive shells unnecessarily.
 
 <div className="tip">
-  <p>
-    <strong>Guiding principle:</strong> If it is an environment variable that a program needs to
-    find another program, it belongs in <code>{"~/.zshenv"}</code>. If it is a user-facing customization
-    for your interactive terminal experience, it belongs in <code>{"~/.zshrc"}</code>.
-  </p>
+  <strong>Guiding principle:</strong> If it is an environment variable that a program needs to find another program, it belongs in <code>~/.zshenv</code>. If it is a user-facing customization for your interactive terminal experience, it belongs in <code>~/.zshrc</code>.
 
   <p><strong>Keep in <code>{"~/.zshenv"}</code>:</strong></p>
   <ul>
