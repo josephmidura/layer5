@@ -23,11 +23,11 @@ import { BlogWrapper } from "../../Blog.style.js";
 import { Link } from "gatsby";
 import Blockquote from "../../../../reusecore/Blockquote";
 import CTA_FullWidth from "../../../../components/Call-To-Actions/CTA_FullWidth";
-import CTAImg from "../../../../assets/images/layer5/5 icon/png/light/5-light-no-trim.webp";
+import CTAImg from "../../../../assets/images/layer5/5 icon/png/light/5-light-bg.webp";
 
 <BlogWrapper>
 
-<div class="intro">
+<div className="intro">
   <p>
     You type <code>gh pr list</code> in your terminal and it works perfectly. You ask Claude Code to
     do the same, and it replies: <em>"command not found: gh"</em>. Your Go toolchain, nvm, pyenv,
@@ -130,7 +130,7 @@ The `-i` flag forces an interactive shell, which sources `~/.zshrc`. If `zsh -c 
 `gh not found` but `zsh -i -c 'which gh'` prints the correct path, your PATH export is in
 `~/.zshrc` and you have confirmed the root cause.
 
-<div class="note">
+<div className="note">
   <strong>Quick diagnosis:</strong> Run <code>zsh -c 'which gh'</code> (no <code>-i</code> flag).
   If this fails but <code>which gh</code> in your normal terminal works, your PATH is only set in
   <code>~/.zshrc</code>. Move the relevant exports to <code>~/.zshenv</code> to fix it.
@@ -194,7 +194,7 @@ Moving everything to `~/.zshenv` is not the right answer. Some configuration sho
 `~/.zshrc` because it only makes sense in interactive contexts or because it has side effects
 that slow down non-interactive shells unnecessarily.
 
-<div class="tip">
+<div className="tip">
   <strong>Guiding principle:</strong> If it is an environment variable that a program needs to
   find another program, it belongs in <code>~/.zshenv</code>. If it is a user-facing customization
   for your interactive terminal experience, it belongs in <code>~/.zshrc</code>.
