@@ -32,6 +32,7 @@ module.exports = {
   flags: {
     FAST_DEV: false,
     DEV_SSR: false,
+    PARALLEL_SOURCING: false,
     ...devFlags,
   },
   trailingSlash: "never",
