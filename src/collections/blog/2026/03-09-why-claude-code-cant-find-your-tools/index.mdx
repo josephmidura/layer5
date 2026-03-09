@@ -16,8 +16,6 @@ featured: false
 published: true
 resource: true
 ---
-
-
 import { BlogWrapper } from "../../Blog.style.js";
 import { Link } from "gatsby";
 import Blockquote from "../../../../reusecore/Blockquote";
@@ -165,7 +163,9 @@ zsh -i -c 'which node'`}</code>
 </p>
 
 <div className="note">
-  <strong>Quick diagnosis:</strong> Run <code>zsh -c 'which gh'</code> (no <code>-i</code> flag). If this fails but <code>which gh</code> in your normal terminal works, your PATH is only set in <code>{"~/.zshrc"}</code>. Move the relevant exports to <code>{"~/.zshenv"}</code> to fix it.
+  <p>
+    <strong>Quick diagnosis:</strong> Run <code>zsh -c 'which gh'</code> (no <code>-i</code> flag). If this fails but <code>which gh</code> in your normal terminal works, your PATH is only set in <code>{"~/.zshrc"}</code>. Move the relevant exports to <code>{"~/.zshenv"}</code> to fix it.
+  </p>
 </div>
 
 <h2>The Fix: Move PATH Exports to <code>{"~/.zshenv"}</code></h2>
@@ -233,7 +233,9 @@ zsh -c 'which node'`}</code>
 </p>
 
 <div className="tip">
-  <strong>Guiding principle:</strong> If it is an environment variable that a program needs to find another program, it belongs in <code>{"~/.zshenv"}</code>. If it is a user-facing customization for your interactive terminal experience, it belongs in <code>{"~/.zshrc"}</code>.
+  <p>
+    <strong>Guiding principle:</strong> If it is an environment variable that a program needs to find another program, it belongs in <code>{"~/.zshenv"}</code>. If it is a user-facing customization for your interactive terminal experience, it belongs in <code>{"~/.zshrc"}</code>.
+  </p>
 
   <p><strong>Keep in <code>{"~/.zshenv"}</code>:</strong></p>
   <ul>
