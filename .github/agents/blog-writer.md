@@ -41,77 +41,12 @@ including information about design patterns and how users can contribute
 their own patterns to the catalog.
 ```
 
-## How Custom Agents Work
-
-Custom agents are specialized configurations that give GitHub Copilot deep expertise in specific areas. They include:
-
-1. **Domain Knowledge:** Understanding of Layer5's projects, style, and conventions
-2. **Structural Templates:** Knowledge of required file formats and structures
-3. **Best Practices:** Built-in guidelines for quality and consistency
-4. **Component Library:** Awareness of available React components and styles
-
-## Agent Configuration Format
-
-Each agent is defined in a YAML file with the following structure:
-
-```yaml
-name: agent-name
-description: |
-  Brief description of what the agent does
-  (must start with "Custom agent:" for proper recognition)
-
-instructions: |
-  Detailed instructions and guidelines for the agent
-  Includes templates, examples, and requirements
-```
-
-## Adding New Custom Agents
-
-To add a new custom agent:
-
-1. Create a new YAML file in this directory (`.github/agents/`)
-2. Follow the naming convention: `agent-name.yml`
-3. Include a clear name and description (starting with "Custom agent:")
-4. Provide comprehensive instructions with examples
-5. Test the agent with GitHub Copilot
-6. Update this README with the new agent information
-
-## Guidelines for Agent Instructions
-
-When creating agent instructions:
-
-- **Be Specific:** Include exact file paths, naming conventions, and requirements
-- **Provide Examples:** Show complete examples of expected output
-- **List Options:** Enumerate available choices (tags, categories, components)
-- **Include Constraints:** Specify what must be included and what should be avoided
-- **Reference Existing Code:** Point to template files and examples in the repository
-- **Consider Edge Cases:** Address common scenarios and special situations
-
-## Benefits of Custom Agents
-
-- **Consistency:** Ensures all outputs follow established patterns
-- **Efficiency:** Reduces time spent on boilerplate and formatting
-- **Quality:** Incorporates best practices automatically
-- **Onboarding:** Helps new contributors understand standards quickly
-- **Maintenance:** Centralizes knowledge that might otherwise be scattered
-
-## Troubleshooting
-
-If a custom agent isn't working as expected:
-
-1. Verify YAML syntax: `python3 -c "import yaml; yaml.safe_load(open('agent-file.yml'))"`
-2. Check that description starts with "Custom agent:"
-3. Ensure instructions are clear and comprehensive
-4. Test with simple prompts first
-5. Gradually add complexity to your requests
-
 ## Resources
 
 - [GitHub Copilot Documentation](https://docs.github.com/copilot)
 - [Layer5 Contributing Guidelines](../../CONTRIBUTING.md)
 - [Layer5 Blog Template](../../src/collections/blog/blog-template/index.mdx)
 - [Layer5 AGENTS.md](../../AGENTS.md)
-
 
 ## Topics to never write about
 - service mesh
