@@ -5,7 +5,7 @@ We are beyond excited to see that you want to contribute! We would love to accep
 - [Before You Get Started](#before-you-get-started)
 - [Contributing to Layer5 Projects](#contributing-to-layer5-projects)
 - [Contributing to Layer5's Blogs](#contributing-to-layer5s-blogs)
-- [Contributing to Layer5's Sistent](#contributing-to-layer5s-sistent)
+- [Contributing to Layer5 Sistent](#contributing-to-layer5-sistent)
 - [How to Contribute](#how-to-contribute)
   - [Prerequisites](#prerequisites)
   - [Set up your Local Development Environment](#set-up-your-local-development-environment)
@@ -127,9 +127,9 @@ If you'd like to contribute a post to layer5.io/blog, please open an Issue and s
 
 1. In order to add/update news items, see the detailed instructions in the [news issue template](https://github.com/layer5io/layer5/issues/new?template=news.md). When adding a reprint, use the optional `source_url` field in the frontmatter to link back to the original article for attribution.
 
-# Contributing to Layer5's Sistent
+# Contributing to Layer5 Sistent
 
-If you'd like to contribute to Sistent, start by selecting the project/sistent label in the [#GitHub issue tracker](https://github.com/layer5io/layer5/labels/project%2Fsistent).
+If you'd like to contribute to [Sistent](https://github.com/layer5io/sistent), a UI/UX design system, start by selecting the [project/sistent](https://github.com/layer5io/layer5/labels/project%2Fsistent)label in this repo at https://github.com/layer5io/layer5/labels/project%2Fsistent or by visiting the project repo at hhttps://github.com/layer5io/sistent.
 
 ### General Contribution Guidelines
 

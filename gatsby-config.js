@@ -32,6 +32,7 @@ module.exports = {
   flags: {
     FAST_DEV: false,
     DEV_SSR: false,
+    PARALLEL_SOURCING: false, // Disabled to avoid build instability and excessive resource usage in CI; re-evaluate after Gatsby/infra upgrades
     ...devFlags,
   },
   trailingSlash: "never",

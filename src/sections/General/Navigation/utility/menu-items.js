@@ -213,7 +213,7 @@ const Data = {
           name: "Recognition Program",
           path: "https://badges.layer5.io",
           sepLine: true,
-          externalLink: true,
+          external: true,
         },
       ],
       actionItems: [
