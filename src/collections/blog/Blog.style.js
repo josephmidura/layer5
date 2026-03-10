@@ -41,248 +41,258 @@ export const BlogWrapper = styled.div`
     span {
       font-style: normal;
     }
-    h2,
-    h3,
-    h4 {
-      margin-bottom: 0.5rem;
-      margin-top: 0.5rem;
-    }
-    table,
-    td {
-      text-align: center;
-      border-top: 1px dotted #3c494f;
-      th {
-        background-color: #3c494f;
-        color: #eee;
-        padding: 0rem 0.5rem;
-      }
-    }
-    @media (max-width: 990px) {
-      max-width: 100%;
-    }
-    @media (max-width: 699px) {
-      margin-left: 0rem;
-      margin-right: 0rem;
-    }
   }
-  h3 {
-    margin-top: 0.75rem;
-    margin-bottom: 0.75rem;
+  h2,
+  h3,
+  h4 {
+    margin-bottom: 0.5rem;
+    margin-top: 0.5rem;
   }
-  ul {
-    margin-bottom: 0.75rem;
+  table {
+      x-overflow: auto;
+      margin: 1rem auto;
+      border-collapse: collapse;
   }
-  .to-uppercase {
-    text-transform: uppercase;
-  }
-
-  .content-left-margin {
-    margin-left: 0.5em;
-  }
-
-  .table-1 {
-    white-space: nowrap;
-    max-width: 290px;
-  }
-
-  .table-2 {
-    width: 40%;
-    margin-left: 1.8em;
-  }
-  .table-3 {
-    display: flex;
-    flex-direction: row;
-    width: fit-content;
-    table {
-      display: inline;
-    }
-    ,
-    tr:nth-child(even) {
+  th {
+    background-color: ${(props) => props.theme.secondaryLightColorTwo};
+    color: ${(props) => props.theme.grey232323ToGreyEEEEEE};
+    padding: 0.5rem;
+  } 
+  td {
+    text-align: center;
+    border-top: 1px dotted ${(props) => props.theme.secondaryLightColorTwo};
+    th {
       background-color: ${(props) => props.theme.secondaryLightColorTwo};
-    }
-    ,
-    tr:nth-child(odd) {
-      background-color: ${(props) => props.theme.secondaryLightColor};
-    }
-    ,
-    td {
-      text-align: center;
-      border-top: 1px dotted #3c494f;
-      th {
-        background-color: #3c494f;
-        color: #eee;
-        padding: 0rem 0.5rem;
-      }
+      color: #eee;
+      padding: 0rem 0.5rem;
     }
   }
-  .table-box {
-    margin-top: 2em;
-    margin-bottom: 2em;
-    width: 50%;
-    border: 2px solid gray;
-  }
-  .text-centre {
-    text-align: center;
-  }
-  .table-adapters {
-    float: right;
-    width: auto;
-    vertical-align: middle;
-    border: 1px solid darkgray;
-    .adapter-logo {
-      vertical-align: middle;
-      margin-right: 5px;
-      height: 30px;
-      width: 30px;
-    }
-    .stable-adapters {
-      width: auto;
-      background-color: #3c494f;
-      text-align: center;
-      color: #fff;
-    }
-    .beta-adapters {
-      width: auto;
-      background-color: #00d3a9;
-      text-align: center;
-      color: #fff;
-    }
-    .alpha-adapters {
-      width: auto;
-      background-color: lightgray;
-      text-align: center;
-      color: black;
-    }
-  }
-
-  .starting-letter {
-    margin-left: 0.75em;
-    font-size: 2em;
-  }
-
-  .pull-right {
-    float: right;
-  }
-
-  .hidden {
-    display: none;
-  }
-
-  .fit-content {
-    width: fit-content;
-  }
-
-  .embed-dimension {
-    min-height: 315px;
-    min-width: 280px;
-  }
-
-  .pa-20 {
-    padding: 20px;
-  }
-
-  .image-left {
-    width: 40%;
-    float: left;
-    margin: 1rem 1.25rem 1rem 0rem;
-    box-shadow: 0px 5px 10px 1px
-      ${(props) => props.theme.green00D3A9ToGreen00B39FFive};
-  }
-
-  .image-right {
-    width: 40%;
-    float: right;
-    margin: 1rem 0rem 1rem 1.25rem;
-    box-shadow: 0px 5px 10px 1px
-      ${(props) => props.theme.green00D3A9ToGreen00B39FFive};
-  }
-  .image-right-no-shadow {
-    width: 40%;
-    float: right;
-    margin: 1rem 0rem 1rem 1rem;
-  }
-  .image-left-no-shadow {
-    width: 40%;
-    float: left;
-    margin: 1rem 1rem 1rem 0rem;
-  }
-  .image-center-shadow {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: 1.5rem;
-    width: 90%;
-    box-shadow: 0px 5px 10px 1px rgba(0, 179, 159, 0.5);
-  }
-  .image-center {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    width: 90%;
-    padding-bottom: 10px;
-    padding-top: 10px;
-  }
-
-  .align-right {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    width: 22%;
-    height: 22%;
-    float: right;
-    border-radius: 50%;
-  }
-
-  .gsoc-image {
+  @media (max-width: 990px) {
     max-width: 100%;
-    height: auto;
   }
-  .smp-image {
-    height: 40%;
-    width: 40%;
+  @media (max-width: 699px) {
+    margin-left: 0rem;
+    margin-right: 0rem;
   }
-  .date {
-    color: gray;
-  }
+}
+h3 {
+  margin-top: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+ul {
+  margin-bottom: 0.75rem;
+}
+.to-uppercase {
+  text-transform: uppercase;
+}
 
-  .centered-text {
-    color: #3c494f;
+.content-left-margin {
+  margin-left: 0.5em;
+}
+
+.table-1 {
+  white-space: nowrap;
+  max-width: 290px;
+}
+
+.table-2 {
+  width: 40%;
+  margin-left: 1.8em;
+}
+.table-3 {
+  display: flex;
+  flex-direction: row;
+  width: fit-content;
+  table {
+    display: inline;
+  }
+  ,
+  tr:nth-child(even) {
+    background-color: ${(props) => props.theme.secondaryLightColorTwo};
+  }
+  ,
+  tr:nth-child(odd) {
+    background-color: ${(props) => props.theme.secondaryLightColor};
+  }
+  ,
+  td {
     text-align: center;
+    border-top: 1px dotted ${(props) => props.theme.secondaryLightColorTwo};
+    th {
+      background-color: ${(props) => props.theme.secondaryLightColorTwo};
+      color: ${(props) => props.theme.grey232323ToGreyEEEEEE};
+      padding: 0rem 0.5rem;
+    }
   }
-  .kubecon-header {
-    color: #00b39f;
+}
+.table-box {
+  margin-top: 2em;
+  margin-bottom: 2em;
+  width: 50%;
+  border: 2px solid gray;
+}
+.text-centre {
+  text-align: center;
+}
+.table-adapters {
+  float: right;
+  width: auto;
+  vertical-align: middle;
+  border: 1px solid darkgray;
+  .adapter-logo {
+    vertical-align: middle;
+    margin-right: 5px;
+    height: 30px;
+    width: 30px;
   }
-  .kubecon-img1 {
-    width: 28%;
+  .stable-adapters {
+    width: auto;
+    background-color: #3c494f;
+    text-align: center;
+    color: #fff;
   }
-  .kubecon-img2 {
-    padding-top: 8px;
-    width: 28%;
+  .beta-adapters {
+    width: auto;
+    background-color: #00d3a9;
+    text-align: center;
+    color: #fff;
   }
-  .kubecon-img3 {
-    padding-top: 15px;
-    width: 28%;
+  .alpha-adapters {
+    width: auto;
+    background-color: lightgray;
+    text-align: center;
+    color: black;
   }
-  img.right {
-    width: 25%;
-    display: inline;
-    position: relative;
-    float: right;
-  }
-  img.left {
-    width: 25%;
-    display: inline;
-    position: relative;
-    float: left;
-    margin: 1rem 1rem 1rem 0rem;
-  }
-  div.intro {
-    padding-left: 3rem;
-    padding-right: 3rem;
-    font-style: italic;
-    font-size: 0.8rem;
-    border-bottom: 1px dashed ${(props) => props.theme.primaryLightColor};
-  }
+}
+
+.starting-letter {
+  margin-left: 0.75em;
+  font-size: 2em;
+}
+
+.pull-right {
+  float: right;
+}
+
+.hidden {
+  display: none;
+}
+
+.fit-content {
+  width: fit-content;
+}
+
+.embed-dimension {
+  min-height: 315px;
+  min-width: 280px;
+}
+
+.pa-20 {
+  padding: 20px;
+}
+
+.image-left {
+  width: 40%;
+  float: left;
+  margin: 1rem 1.25rem 1rem 0rem;
+  box-shadow: 0px 5px 10px 1px
+    ${(props) => props.theme.green00D3A9ToGreen00B39FFive};
+}
+
+.image-right {
+  width: 40%;
+  float: right;
+  margin: 1rem 0rem 1rem 1.25rem;
+  box-shadow: 0px 5px 10px 1px
+    ${(props) => props.theme.green00D3A9ToGreen00B39FFive};
+}
+.image-right-no-shadow {
+  width: 40%;
+  float: right;
+  margin: 1rem 0rem 1rem 1rem;
+}
+.image-left-no-shadow {
+  width: 40%;
+  float: left;
+  margin: 1rem 1rem 1rem 0rem;
+}
+.image-center-shadow {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 1.5rem;
+  width: 90%;
+  box-shadow: 0px 5px 10px 1px rgba(0, 179, 159, 0.5);
+}
+.image-center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 90%;
+  padding-bottom: 10px;
+  padding-top: 10px;
+}
+
+.align-right {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 22%;
+  height: 22%;
+  float: right;
+  border-radius: 50%;
+}
+
+.gsoc-image {
+  max-width: 100%;
+  height: auto;
+}
+.smp-image {
+  height: 40%;
+  width: 40%;
+}
+.date {
+  color: gray;
+}
+
+.centered-text {
+  color: #3c494f;
+  text-align: center;
+}
+.kubecon-header {
+  color: #00b39f;
+}
+.kubecon-img1 {
+  width: 28%;
+}
+.kubecon-img2 {
+  padding-top: 8px;
+  width: 28%;
+}
+.kubecon-img3 {
+  padding-top: 15px;
+  width: 28%;
+}
+img.right {
+  width: 25%;
+  display: inline;
+  position: relative;
+  float: right;
+}
+img.left {
+  width: 25%;
+  display: inline;
+  position: relative;
+  float: left;
+  margin: 1rem 1rem 1rem 0rem;
+}
+div.intro {
+  padding-left: 3rem;
+  padding-right: 3rem;
+  font-style: italic;
+  font-size: 0.8rem;
+  border-bottom: 1px dashed ${(props) => props.theme.primaryLightColor};
+}
 
   /* ==============
 styles for figure with caption
