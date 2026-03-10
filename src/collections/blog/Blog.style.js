@@ -51,11 +51,11 @@ export const BlogWrapper = styled.div`
     td {
       text-align: center;
       border-top: 1px dotted ${(props) => props.theme.secondaryLightColorTwo};
-      th {
-        background-color: ${(props) => props.theme.secondaryLightColorTwo};
-        color: #eee;
-        padding: 0rem 0.5rem;
-      }
+    }
+    th {
+      background-color: ${(props) => props.theme.secondaryLightColorTwo};
+      color: #eee;
+      padding: 0rem 0.5rem;
     }
     @media (max-width: 990px) {
       max-width: 100%;
@@ -96,23 +96,20 @@ export const BlogWrapper = styled.div`
     table {
       display: inline;
     }
-    ,
     tr:nth-child(even) {
       background-color: ${(props) => props.theme.secondaryLightColorTwo};
     }
-    ,
     tr:nth-child(odd) {
       background-color: ${(props) => props.theme.secondaryLightColor};
     }
-    ,
     td {
       text-align: center;
       border-top: 1px dotted ${(props) => props.theme.secondaryLightColorTwo};
-      th {
-        background-color: ${(props) => props.theme.secondaryLightColorTwo};
-        color: ${(props) => props.theme.grey232323ToGreyEEEEEE};
-        padding: 0rem 0.5rem;
-      }
+    }
+    th {
+      background-color: ${(props) => props.theme.secondaryLightColorTwo};
+      color: ${(props) => props.theme.grey232323ToGreyEEEEEE};
+      padding: 0rem 0.5rem;
     }
   }
   .table-box {
@@ -276,14 +273,6 @@ export const BlogWrapper = styled.div`
     float: left;
     margin: 1rem 1rem 1rem 0rem;
   }
-  div.intro {
-    padding-left: 3rem;
-    padding-right: 3rem;
-    font-style: italic;
-    font-size: 0.8rem;
-    border-bottom: 1px dashed ${(props) => props.theme.primaryLightColor};
-  }
-
   /* ==============
 styles for figure with caption
 
