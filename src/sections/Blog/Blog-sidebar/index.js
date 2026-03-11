@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { graphql, Link, useStaticQuery } from "gatsby";
 import slugify from "../../../utils/slugify";
-import { StaticImage } from "gatsby-plugin-image";
 
 import BlogSideBarWrapper from "./blogSidebar.style";
 import { HiOutlineChevronUp } from "@react-icons/all-files/hi/HiOutlineChevronUp";
@@ -61,7 +60,7 @@ const Sidebar = ({ pageContext }) => {
             <div className="card">
               <h2>Join the Conversation</h2>
               <p>On our Discussion Forum</p>
-              <StaticImage imgClassName="logo" alt="Discuss" src={Discuss} />
+              <img className="logo" alt="Discuss" src={Discuss} loading="lazy" />
             </div>
           </a>
         </div>
@@ -125,9 +124,10 @@ const Sidebar = ({ pageContext }) => {
           <Link to="/community/adventures-of-five-and-friends">
             <div className="card">
               <h2>See the Adventures of Five and Friends</h2>
-              <StaticImage
+              <img
                 alt="layer5 five and friends adventures"
                 src={FiveandFriendsAdventures}
+                loading="lazy"
               />
             </div>
           </Link>

@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "gatsby";
+import { Link, withPrefix } from "gatsby";
 import { StaticImage } from "gatsby-plugin-image";
 
 import { Container, Row, Col } from "../../reusecore/Layout";
@@ -12,49 +12,32 @@ import Five from "./Community-pictures/community.webp";
 import NewcomersMap from "./Newcomers-guide/newcomers-map.js";
 import DiscussCallout from "../../sections/Discuss-Callout";
 import { ReactComponent as MeshmateIcon } from "../../assets/images/meshmate/meshmate-stack-colorMode.svg";
-import { graphql, useStaticQuery } from "gatsby";
-import { getImage } from "gatsby-plugin-image";
-import { BgImage } from "gbimage-bridge";
-import useHasMounted from "../../utils/useHasMounted";
 import InlineQuotes from "../../components/Inline-quotes";
 import AdventuresCallout from "../Adventures-Callout";
 import PictureSlider from "./slider";
 
 const CommunityMember = "./Community-pictures/five.svg";
+const backgroundImageSrc = withPrefix("/images/lite/bookmarks.webp");
 // const Picture = "./Community-pictures/join-the-community.png";
 
 const CommunityPage = () => {
 
-  const { backgroundImage123 } = useStaticQuery(
-    graphql`
-      query {
-        backgroundImage123: file(
-          relativePath: { eq: "bookmarks.webp" }
-        ) {
-          childImageSharp {
-            gatsbyImageData(
-              width: 2000
-              quality: 50
-              webpOptions: { quality: 70 }
-            )
-          }
-        }
-      }
-    `
-  );
-
-  const hasMounted = useHasMounted();
-
-  const pluginImage = hasMounted && getImage(backgroundImage123);
-
   return (
     <CommunitySectionWrapper>
-      <BgImage image={pluginImage} className="section">
+      <div
+        className="community-hero"
+        style={{
+          backgroundImage: `url(${backgroundImageSrc})`,
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+          backgroundSize: "cover",
+        }}
+      >
         <div className="community-header">
           <h1>The Layer5 Community</h1>
           <h2>New members are always welcome</h2>
         </div>
-      </BgImage>
+      </div>
       <div className="community-section-wrapper">
         <Container>
           <Row style={{
