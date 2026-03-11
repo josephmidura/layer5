@@ -60,7 +60,7 @@ const Card = ({
                   className="external-link-btn"
                   href={frontmatter.eurl}
                   target="_blank"
-                  rel="noreferrer"
+                  rel="noreferrer oopener"
                 >
                   <BiLinkExternal />
                 </a>
