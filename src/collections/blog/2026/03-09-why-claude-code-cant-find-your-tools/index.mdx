@@ -111,7 +111,7 @@ import Callout from "../../../../reusecore/Callout";
   You can observe this yourself. Run these two commands and compare the output:
 </p>
 
-```bash
+```shell
 # What a non-interactive shell sees
 zsh -c 'echo $PATH'
 
@@ -146,7 +146,7 @@ echo $PATH
   Before changing anything, confirm the symptom. Use <code>zsh -c</code> to simulate what Claude Code sees:
 </p>
 
-```bash
+```shell
 # Does Claude Code's shell see the tool?
 zsh -c 'which gh'
 zsh -c 'which go'
@@ -176,7 +176,7 @@ zsh -i -c 'which node'
   Open (or create) <code>{"~/.zshenv"}</code> and add your PATH exports there:
 </p>
 
-```bash
+```shell
 # ~/.zshenv
 # Sourced for every zsh invocation — interactive, login, and non-interactive alike
 
@@ -195,7 +195,7 @@ export PATH="$HOME/.local/bin:$PATH"
   For tools that inject themselves via an eval expression in <code>{"~/.zshrc"}</code> — such as <code>nvm</code>, <code>pyenv</code>, or <code>rbenv</code> — you need to move or duplicate that initialization into <code>{"~/.zshenv"}</code> as well:
 </p>
 
-```bash
+```shell
 # ~/.zshenv — nvm initialization for non-interactive shells
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && source "$NVM_DIR/nvm.sh" --no-use
@@ -214,7 +214,7 @@ eval "$(pyenv init --path)"
   After saving <code>{"~/.zshenv"}</code>, verify without restarting your terminal:
 </p>
 
-```bash
+```shell
 # Reload .zshenv in your current shell
 source ~/.zshenv
 
@@ -260,7 +260,7 @@ zsh -c 'which node'
 </p>
 
 <ul>
-  <li>CI/CD pipelines (GitHub Actions, GitLab CI) run commands in non-interactive shells. This is why you often see pipelines that explicitly <code>source ~/.bashrc</code> or set up PATH at the top of every job.</li>
+  <li>CI/CD pipelines (GitHub Actions, GitLab CI) run commands in non-interactive shells. This is why you often see pipelines that explicitly <code>source ~/.shellrc</code> or set up PATH at the top of every job.</li>
   <li>Cron jobs run in minimal environments with almost no PATH set.</li>
   <li>VS Code integrated terminal tasks and <code>launch.json</code> configurations may use non-interactive shells depending on the operating system and configuration.</li>
   <li>SSH remote command execution (<code>ssh host 'command'</code>) uses a non-interactive shell unless you pass <code>-t</code> to force a TTY.</li>
@@ -282,7 +282,7 @@ zsh -c 'which node'
   Here is a starting point for a <code>{"~/.zshenv"}</code> that covers the most common developer tools on macOS. Adjust paths to match your actual installations:
 </p>
 
-```bash
+```shell
 # ~/.zshenv
 # Sourced for ALL zsh shells — interactive, login, and non-interactive.
 # Keep this file fast and free of output-producing commands.
@@ -320,10 +320,10 @@ export LC_ALL="en_US.UTF-8"
 ```
 
 <p>
-  With this in place, restart Claude Code (or any tool that spawns subshells) and run your verification:
+  With this in place, restart Claude Code (or any tool that spawns subshells) and run your verification.
 </p>
 
-```bash
+```shell
 zsh -c 'which gh && which go && which node'
 ```
 
@@ -351,12 +351,12 @@ zsh -c 'which gh && which go && which node'
   The same fix benefits CI pipelines, cron jobs, Makefiles, Docker builds, and any other context where commands run in a non-interactive shell environment.
 </p>
 
-<hr />
-
-<p>
-  <em>
-    Exploring AI-assisted development workflows and developer tooling? The <Link to="/community">Layer5 community</Link> is an active group of platform engineers, open source contributors, and DevOps practitioners. Join us on <a href="https://slack.layer5.io">Slack</a> to share what you are building and get help when you hit walls like this one. You can also follow the <Link to="/blog">Layer5 blog</Link> for more practical engineering posts.
-  </em>
-</p>
+<div className="intro">
+  <p>
+    <em>
+      Exploring AI-assisted development workflows and developer tooling? The <Link to="/community">Layer5 community</Link> is an active group of platform engineers, open source contributors, and DevOps practitioners. Join us on <a href="https://slack.layer5.io">Slack</a> to share what you are building and get help when you hit walls like this one. You can also follow the <Link to="/blog">Layer5 blog</Link> for more practical engineering posts.
+    </em>
+  </p>
+</div>
 
 </BlogWrapper>
