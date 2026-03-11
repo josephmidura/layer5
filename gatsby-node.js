@@ -23,7 +23,8 @@ const shouldBuildFullSite = isFullSiteBuild();
 const excludedCollections = new Set(
   getExcludedCollections({ isFullSiteBuild: shouldBuildFullSite }),
 );
-const isCollectionEnabled = (collection) => !excludedCollections.has(collection);
+const isCollectionEnabled = (collection) =>
+  !excludedCollections.has(collection);
 
 const { loadRedirects } = require("./src/utils/redirects.js");
 const dev404PageSource =
@@ -259,8 +260,9 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
           fieldValue
         }
       }
-      ${isFullSiteBuild
-    ? `memberPosts: allMdx(
+      ${
+        isFullSiteBuild
+          ? `memberPosts: allMdx(
         filter: {
           fields: { collection: { eq: "members" } }
           frontmatter: { published: { eq: true } }
@@ -310,7 +312,8 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
           }
         }
       }`
-    : ""}
+          : ""
+      }
       singleWorkshop: allMdx(
         filter: { fields: { collection: { eq: "workshops" } } }
       ) {
@@ -1081,9 +1084,9 @@ exports.createSchemaCustomization = ({ actions }) => {
        subcategory: String
       tags: [String]
       type: String
-      product: [String]
-      technology: [String]
-      mesh: [String]
+      product: String
+      technology: String
+      mesh: String
       featured: Boolean
       upcoming: Boolean
       resource: Boolean
