@@ -7,31 +7,36 @@ import { HiOutlineChevronUp } from "@react-icons/all-files/hi/HiOutlineChevronUp
 import { HiOutlineChevronDown } from "@react-icons/all-files/hi/HiOutlineChevronDown";
 // import { FaSearch } from "@react-icons/all-files/fa/FaSearch";
 
-const Discuss = "../../../assets/images/discuss/layer5-discuss-white.webp";
-const FiveandFriendsAdventures =
-  "../../../assets/images/blog/five-and-friends.webp";
+const Discuss = "/images/layer5-discuss-white.webp";
+const FiveandFriendsAdventures = "/images/five-and-friends.webp";
 
 const Sidebar = ({ pageContext }) => {
-  const data = useStaticQuery(
-    graphql`query allTagsAndCategories {
-  tags: allMdx(
-    filter: {fields: {collection: {eq: "blog"}}, frontmatter: {published: {eq: true}}}
-  ) {
-    group(field: {frontmatter: {tags: SELECT}}) {
-      fieldValue
-      totalCount
+  const data = useStaticQuery(graphql`
+    query allTagsAndCategories {
+      tags: allMdx(
+        filter: {
+          fields: { collection: { eq: "blog" } }
+          frontmatter: { published: { eq: true } }
+        }
+      ) {
+        group(field: { frontmatter: { tags: SELECT } }) {
+          fieldValue
+          totalCount
+        }
+      }
+      categories: allMdx(
+        filter: {
+          fields: { collection: { eq: "blog" } }
+          frontmatter: { published: { eq: true } }
+        }
+      ) {
+        group(field: { frontmatter: { category: SELECT } }) {
+          fieldValue
+          totalCount
+        }
+      }
     }
-  }
-  categories: allMdx(
-    filter: {fields: {collection: {eq: "blog"}}, frontmatter: {published: {eq: true}}}
-  ) {
-    group(field: {frontmatter: {category: SELECT}}) {
-      fieldValue
-      totalCount
-    }
-  }
-}`
-  );
+  `);
 
   const [showTag, setShowTag] = useState(true);
   const [showCategory, setShowCategory] = useState(true);
@@ -60,7 +65,12 @@ const Sidebar = ({ pageContext }) => {
             <div className="card">
               <h2>Join the Conversation</h2>
               <p>On our Discussion Forum</p>
-              <img className="logo" alt="Discuss" src={Discuss} loading="lazy" />
+              <img
+                className="logo"
+                alt="Discuss"
+                src={Discuss}
+                loading="lazy"
+              />
             </div>
           </a>
         </div>
