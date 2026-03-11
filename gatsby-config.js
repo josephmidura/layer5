@@ -49,10 +49,11 @@ module.exports = {
         mergeCachingHeaders: true,
       },
     },
-    {
+    process.env.ANALYZE_BUNDLE && {
       resolve: "gatsby-plugin-webpack-bundle-analyser-v2",
       options: {
-        disable: true,
+        analyzerMode: "server",
+        openAnalyzer: true,
       },
     },
     {
