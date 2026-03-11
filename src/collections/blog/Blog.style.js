@@ -76,7 +76,7 @@ export const BlogWrapper = styled.div`
   }
   th {
     background-color: #3c494f;
-    color: ${(props) => props.theme.grey232323ToGreyEEEEEE};
+    color: #eee;
     padding: 0.5rem 1rem;
     text-align: center;
   }
