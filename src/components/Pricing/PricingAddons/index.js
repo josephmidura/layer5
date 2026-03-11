@@ -237,10 +237,6 @@ export const PricingAddons = ({ isYearly = false, setIsYearly, currency, enterpr
                         value={selectedAddon?.id || ""}
                         onChange={(e) => handleAddonChange(e.target.value)}
                         label="Optionally, choose one or more add-ons"
-                        MenuProps={{
-                          disableScrollLock: true,
-                          disablePortal: true,
-                        }}
                       >
                         {addOns.map((addon) => (
                           <MenuItem key={addon.id} value={addon.id}>

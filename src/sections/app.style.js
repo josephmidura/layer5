@@ -57,6 +57,13 @@ body,html {
     overflow-x: hidden;
 }
 
+/* When MUI opens a dropdown/modal, it injects overflow:hidden on <body> via inline style.
+   Because body has overflow:clip, <html> is the actual scroll container. This rule
+   synchronizes the lock — when MUI locks body, we also lock html to prevent scrolling. */
+html:has(body[style*="overflow: hidden"]) {
+    overflow: hidden;
+}
+
 body {
   font-size: 1.125rem;
   overflow: clip;
