@@ -92,8 +92,9 @@ export const BlogWrapper = styled.div`
     margin-top: 0.75rem;
     margin-bottom: 0.75rem;
   }
-  ul {
-    margin-bottom: 0.75rem;
+  ul,
+  ol {
+    margin-bottom: 1rem;
   }
   .to-uppercase {
     text-transform: uppercase;
