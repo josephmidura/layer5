@@ -890,11 +890,17 @@ exports.createSchemaCustomization = ({ actions }) => {
        whiteIcon: File @fileByRelativePath
      }
 
+     type FrontmatterMeshesYouLearn {
+       name: String
+       imagepath: File @fileByRelativePath
+     }
+
      type Frontmatter {
        title: String
        subtitle: String
        abstract: String
        description: String
+       cardImage: File @fileByRelativePath
        eurl: String
        twitter: String
        github: String
@@ -937,6 +943,9 @@ exports.createSchemaCustomization = ({ actions }) => {
         company: String
         executive_image: File @fileByRelativePath
        image_path: File @fileByRelativePath
+       thumbnail_svg: File @fileByRelativePath
+       darkthumbnail_svg: File @fileByRelativePath
+       meshesYouLearn: [FrontmatterMeshesYouLearn]
      }
    `;
   createTypes(typeDefs);
