@@ -11,13 +11,18 @@ const slugify = require("./src/utils/slugify");
 const { paginate } = require("gatsby-awesome-pagination");
 const { createFilePath } = require("gatsby-source-filesystem");
 const config = require("./gatsby-config");
-const { getExcludedCollections } = require("./src/utils/build-collections");
+const {
+  getExcludedCollections,
+  isFullSiteBuild,
+} = require("./src/utils/build-collections");
 const {
   componentsData,
 } = require("./src/sections/Projects/Sistent/components/content");
 
-const isFullSiteBuild = process.env.BUILD_FULL_SITE !== "false";
-const excludedCollections = new Set(getExcludedCollections({ isFullSiteBuild }));
+const shouldBuildFullSite = isFullSiteBuild();
+const excludedCollections = new Set(
+  getExcludedCollections({ isFullSiteBuild: shouldBuildFullSite }),
+);
 const isCollectionEnabled = (collection) => !excludedCollections.has(collection);
 
 const { loadRedirects } = require("./src/utils/redirects.js");

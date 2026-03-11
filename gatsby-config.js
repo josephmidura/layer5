@@ -3,13 +3,16 @@
 const {
   DEFAULT_LITE_BUILD_PROFILE,
   getExcludedCollections,
+  isFullSiteBuild,
 } = require("./src/utils/build-collections");
 
 const isDevelopment = process.env.NODE_ENV === "development";
 const isProduction = process.env.NODE_ENV === "production";
-const isFullSiteBuild = process.env.BUILD_FULL_SITE !== "false";
-const isLiteDevBuild = isDevelopment && !isFullSiteBuild;
-const excludedCollections = getExcludedCollections({ isFullSiteBuild });
+const shouldBuildFullSite = isFullSiteBuild();
+const isLiteDevBuild = isDevelopment && !shouldBuildFullSite;
+const excludedCollections = getExcludedCollections({
+  isFullSiteBuild: shouldBuildFullSite,
+});
 const collectionIgnoreGlobs = excludedCollections.map(
   (name) => `**/${name}/**`,
 );
