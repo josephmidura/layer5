@@ -1,4 +1,5 @@
 import React from "react";
+import { withPrefix } from "gatsby";
 import { StaticImage } from "gatsby-plugin-image";
 
 
@@ -10,7 +11,7 @@ import KanvasCTA from "../../Kanvas/kanvas-cta";
 import example from "../../../assets/images/smp-page/service-mesh-performance-specification-example.gif";
 import smp from "../../../assets/images/smp-page/smp-white.svg";
 
-const heroImageSrc = "/images/lite/smp-hero.webp";
+const heroImageSrc = withPrefix("/images/lite/smp-hero.webp");
 
 const latency = "../../../assets/images/smp-page/latency-at-scale.webp";
 const wasm_capacity = "../../../assets/images/smp-page/native-and-wasm-at-capacity-100rps.webp";

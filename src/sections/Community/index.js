@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "gatsby";
+import { Link, withPrefix } from "gatsby";
 import { StaticImage } from "gatsby-plugin-image";
 
 import { Container, Row, Col } from "../../reusecore/Layout";
@@ -17,7 +17,7 @@ import AdventuresCallout from "../Adventures-Callout";
 import PictureSlider from "./slider";
 
 const CommunityMember = "./Community-pictures/five.svg";
-const backgroundImageSrc = "/images/lite/bookmarks.webp";
+const backgroundImageSrc = withPrefix("/images/lite/bookmarks.webp");
 // const Picture = "./Community-pictures/join-the-community.png";
 
 const CommunityPage = () => {

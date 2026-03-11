@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { withPrefix } from "gatsby";
 // import { Link } from "gatsby";
 
 import { Container, Row, Col } from "../../../reusecore/Layout";
@@ -19,7 +20,7 @@ import Banner1SectionWrapper from "./banner4.style";
 // import kanvasVideo from "../../../assets/video/meshery/kanvas/kanvas-short-consul.mp4";
 import useHasMounted from "../../../utils/useHasMounted";
 
-const heroImageSrc = "/images/lite/poster.webp";
+const heroImageSrc = withPrefix("/images/lite/poster.webp");
 
 const Banner1 = (props) => {
   const [videoReady, setVideoReady] = useState(false);
