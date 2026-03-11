@@ -56,6 +56,13 @@ export const BlogWrapper = styled.div`
       margin-right: 0rem;
     }
   }
+  h2,
+  h3 {
+    margin-bottom: 1rem;
+  }
+  h4 {
+    margin-bottom: 0.5rem;
+  }
   table {
     overflow-x: auto;
     display: block;

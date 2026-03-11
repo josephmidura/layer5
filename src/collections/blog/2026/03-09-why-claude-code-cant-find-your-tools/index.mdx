@@ -166,7 +166,7 @@ zsh -i -c 'which node'
   <p>Run <code>zsh -c 'which gh'</code> (no <code>-i</code> flag). If this fails but <code>which gh</code> in your normal terminal works, your PATH is only set in <code>{"~/.zshrc"}</code>. Move the relevant exports to <code>{"~/.zshenv"}</code> to fix it.</p>
 </Callout>
 
-<h2>The Fix: Move PATH Exports to <code>{"~/.zshenv"}</code></h2>
+<h2>The Fix: Move PATH Exports to ~/.zshenv</h2>
 
 <p>
   The solution is straightforward: any environment variable that must be visible to all processes — including non-interactive subshells — belongs in <code>{"~/.zshenv"}</code>, not <code>{"~/.zshrc"}</code>.
@@ -232,26 +232,26 @@ zsh -c 'which node'
 
 <Callout type="tip" title="Guiding principle">
   <p>If it is an environment variable that a program needs to find another program, it belongs in <code>{"~/.zshenv"}</code>. If it is a user-facing customization for your interactive terminal experience, it belongs in <code>{"~/.zshrc"}</code>.</p>
-
-  <p><strong>Keep in <code>{"~/.zshenv"}</code>:</strong></p>
-  <ul>
-    <li><code>PATH</code> exports and modifications</li>
-    <li><code>GOPATH</code>, <code>JAVA_HOME</code>, <code>PYTHONPATH</code>, <code>CARGO_HOME</code>, and similar tool-specific env vars</li>
-    <li><code>NVM_DIR</code>, <code>PYENV_ROOT</code>, <code>RBENV_ROOT</code> and their <code>PATH</code> injections</li>
-    <li><code>EDITOR</code>, <code>PAGER</code>, <code>LANG</code>, <code>LC_ALL</code></li>
-  </ul>
-
-  <p><strong>Keep in <code>{"~/.zshrc"}</code>:</strong></p>
-  <ul>
-    <li>Shell aliases (<code>alias ll='ls -la'</code>)</li>
-    <li>Prompt configuration (Starship, Powerlevel10k, oh-my-zsh)</li>
-    <li>Tab completion setup</li>
-    <li>Shell functions for interactive use</li>
-    <li>History settings</li>
-    <li><code>zsh</code> plugins and plugin managers</li>
-    <li>Anything that prints output (welcome messages, <code>neofetch</code>, etc.)</li>
-  </ul>
 </Callout>
+
+<p><strong>Keep in <code>{"~/.zshenv"}</code>:</strong></p>
+<ul>
+  <li><code>PATH</code> exports and modifications</li>
+  <li><code>GOPATH</code>, <code>JAVA_HOME</code>, <code>PYTHONPATH</code>, <code>CARGO_HOME</code>, and similar tool-specific env vars</li>
+  <li><code>NVM_DIR</code>, <code>PYENV_ROOT</code>, <code>RBENV_ROOT</code> and their <code>PATH</code> injections</li>
+  <li><code>EDITOR</code>, <code>PAGER</code>, <code>LANG</code>, <code>LC_ALL</code></li>
+</ul>
+
+<p><strong>Keep in <code>{"~/.zshrc"}</code>:</strong></p>
+<ul>
+  <li>Shell aliases (<code>alias ll='ls -la'</code>)</li>
+  <li>Prompt configuration (Starship, Powerlevel10k, oh-my-zsh)</li>
+  <li>Tab completion setup</li>
+  <li>Shell functions for interactive use</li>
+  <li>History settings</li>
+  <li><code>zsh</code> plugins and plugin managers</li>
+  <li>Anything that prints output (welcome messages, <code>neofetch</code>, etc.)</li>
+</ul>
 
 <h2>The Broader Pattern: Any Tool That Spawns Subshells</h2>
 
