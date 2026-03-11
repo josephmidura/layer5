@@ -17,7 +17,6 @@ jobs:
         uses: actions/download-artifact@v7
         with:
           github-token: ${{ secrets.GH_ACCESS_TOKEN }}
-          repository: ${{ github.repository }}
           run-id: ${{ github.event.workflow_run.id }}
           name: public-dir
 
@@ -44,4 +43,3 @@ jobs:
         with:
           token: ${{ secrets.GH_ACCESS_TOKEN }}
           deploy_url: "${{ steps.netlify.outputs.deploy-url }}"
-
