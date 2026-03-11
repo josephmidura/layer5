@@ -60,17 +60,25 @@ export const CardWrapper = styled.div`
 
     .gatsby-image-wrapper,
     .old-gatsby-image-wrapper {
+      width: 100%;
       height: 100%;
       margin-top: 0.2rem;
       transition: all 0.3s ease-in;
+
+      & > div,
+      picture {
+        width: 100% !important;
+        height: 100% !important;
+      }
     }
     img {
-      height: inherit;
+      width: 100%;
+      height: 100%;
       max-height: 180px;
       display: block;
-      text-align: center;
-      margin: auto;
+      object-fit: cover;
       object-position: center;
+      margin: 0 auto;
     }
   }
 
