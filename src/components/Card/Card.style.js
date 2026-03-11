@@ -70,6 +70,7 @@ export const CardWrapper = styled.div`
       display: block;
       text-align: center;
       margin: auto;
+      object-position: center;
     }
   }
 
