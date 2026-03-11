@@ -17,34 +17,13 @@ import playIcon from "../../../assets/images/homePage-images/play-button.webp";
 import Banner1SectionWrapper from "./banner4.style";
 
 // import kanvasVideo from "../../../assets/video/meshery/kanvas/kanvas-short-consul.mp4";
-import { graphql, useStaticQuery } from "gatsby";
-import { getImage } from "gatsby-plugin-image";
 import useHasMounted from "../../../utils/useHasMounted";
+
+const heroImageSrc = "/images/lite/poster.webp";
 
 const Banner1 = (props) => {
   const [videoReady, setVideoReady] = useState(false);
   const thumbnailRef = useRef(null);
-
-  const { heroImage } = useStaticQuery(
-    graphql`
-      query {
-        heroImage: file(
-          relativePath: { eq: "poster.webp" }
-        ) {
-          childImageSharp {
-            gatsbyImageData(
-              width: 2000
-              quality: 50
-              webpOptions: { quality: 70 }
-              breakpoints: [760]
-            )
-          }
-        }
-      }
-    `
-  );
-
-  const pluginImage = getImage(heroImage);
 
   const hasMounted = useHasMounted();
 
@@ -81,7 +60,7 @@ const Banner1 = (props) => {
 
   return (
     <Banner1SectionWrapper {...props}>
-      <BGImg title="heroImage" image={pluginImage}>
+      <BGImg title="heroImage" src={heroImageSrc}>
         <Row style={{ marginRight: 0 }}>
           <Col $sm={4} $lg={6} className="section-title-wrapper text-col">
             <Container $fullWidthSM>

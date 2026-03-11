@@ -197,10 +197,8 @@ const WorkshopsSection = () => {
   ) {
     nodes {
       frontmatter {
+				title
         thumbnail {
-          childImageSharp {
-            gatsbyImageData(layout: FULL_WIDTH)
-          }
           extension
           publicURL
         }
