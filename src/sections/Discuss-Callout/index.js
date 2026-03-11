@@ -1,5 +1,4 @@
 import React from "react";
-import { StaticImage } from "gatsby-plugin-image";
 import { Col } from "../../reusecore/Layout";
 import SectionTitle from "../../reusecore/SectionTitle";
 import DiscussWrapper from "./discuss.style";
@@ -28,10 +27,11 @@ const DiscussCallout = () => {
                       </p>
 
                       <button>
-                        <StaticImage
+                        <img
                           className="logo"
                           alt="Discuss"
                           src={Discuss}
+                          loading="lazy"
                         />
                       </button>
                     </div>
