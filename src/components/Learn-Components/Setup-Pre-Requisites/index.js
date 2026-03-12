@@ -1,6 +1,8 @@
 import React from "react";
 import SetupPreReqWrapper from "./setup-pre-req.style";
 import { BsTerminalFill } from "@react-icons/all-files/bs/BsTerminalFill";
+import meshery from "../../../assets/images/meshery/icon-only/meshery-logo-light.svg";
+import mesheryOperator from "../../../assets/images/meshery-operator/meshery-operator-dark.svg";
 
 const SetupPreReq = () => (
   <SetupPreReqWrapper>
@@ -42,7 +44,7 @@ const SetupPreReq = () => (
           <div className="card-header">
             <h2>Access to Meshery</h2>
             <img
-              src="../../../assets/images/meshery/icon-only/meshery-logo-light.svg"
+              src={meshery}
               alt="Meshery"
               className="setup-imgs"
               loading="lazy"
@@ -72,7 +74,7 @@ const SetupPreReq = () => (
           <div className="card-header">
             <h2>Or Run Meshery</h2>
             <img
-              src="../../../assets/images/meshery-operator/meshery-operator-dark.svg"
+              src={mesheryOperator}
               alt="Meshery Operator"
               className="setup-imgs"
               loading="lazy"
