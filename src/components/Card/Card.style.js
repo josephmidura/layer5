@@ -57,27 +57,22 @@ export const CardWrapper = styled.div`
     height: 11.5rem;
     border-top-right-radius: 0.5rem;
     border-top-left-radius: 0.5rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
 
     .gatsby-image-wrapper,
     .old-gatsby-image-wrapper {
+      width: 100%;
+      height: 100%;
       margin-top: 0;
-      max-width: 100%;
-      max-height: 100%;
       transition: all 0.3s ease-in;
     }
 
     img {
-      max-width: 100%;
-      max-height: 100%;
-      height: auto;
-      width: auto;
+      width: 100%;
+      height: 100%;
       display: block;
-      object-fit: contain;
+      object-fit: cover;
       object-position: center;
-      margin: 0 auto;
+      margin: 0;
     }
 
     @media screen and (max-width: 768px) {
