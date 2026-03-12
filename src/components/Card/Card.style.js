@@ -57,26 +57,26 @@ export const CardWrapper = styled.div`
     height: 11.5rem;
     border-top-right-radius: 0.5rem;
     border-top-left-radius: 0.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0.75rem;
 
     .gatsby-image-wrapper,
     .old-gatsby-image-wrapper {
-      width: 100%;
-      height: 100%;
-      margin-top: 0.2rem;
+      margin-top: 0;
+      max-width: 100%;
+      max-height: 100%;
       transition: all 0.3s ease-in;
-
-      & > div,
-      picture {
-        width: 100%;
-        height: 100%;
-      }
     }
+
     img {
-      width: 100%;
-      height: 100%;
-      max-height: 180px;
+      max-width: 100%;
+      max-height: 100%;
+      height: auto;
+      width: auto;
       display: block;
-      object-fit: cover;
+      object-fit: contain;
       object-position: center;
       margin: 0 auto;
     }
