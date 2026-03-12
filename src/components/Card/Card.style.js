@@ -80,6 +80,11 @@ export const CardWrapper = styled.div`
       object-position: center;
       margin: 0 auto;
     }
+
+    @media screen and (max-width: 768px) {
+      height: 9.5rem;
+      padding: 0.5rem;
+    }
   }
 
   .post-content-block {
