@@ -60,7 +60,6 @@ export const CardWrapper = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 0.75rem;
 
     .gatsby-image-wrapper,
     .old-gatsby-image-wrapper {
@@ -83,7 +82,6 @@ export const CardWrapper = styled.div`
 
     @media screen and (max-width: 768px) {
       height: 9.5rem;
-      padding: 0.5rem;
     }
   }
 
