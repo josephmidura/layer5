@@ -25,7 +25,7 @@ const Card = ({
               frontmatter.thumbnail.publicURL
               ? frontmatter.darkthumbnail
               : frontmatter.thumbnail)}
-            imgStyle={{ objectFit: "cover", objectPosition: "center" }}
+            imgStyle={{ objectFit: "cover" }}
             loading={loading}
             fetchpriority={fetchpriority}
             alt={frontmatter.title}
