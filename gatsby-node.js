@@ -15,9 +15,6 @@ const {
   getExcludedCollections,
   isFullSiteBuild,
 } = require("./src/utils/build-collections");
-const {
-  componentsData,
-} = require("./src/sections/Projects/Sistent/components/content");
 
 const shouldBuildFullSite = isFullSiteBuild();
 const excludedCollections = new Set(
