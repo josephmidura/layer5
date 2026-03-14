@@ -57,13 +57,6 @@ body,html {
     overflow-x: hidden;
 }
 
-/* When MUI opens a dropdown/modal, it injects overflow:hidden on <body> via inline style.
-   Because body has overflow:clip, <html> is the actual scroll container. This rule
-   synchronizes the lock — when MUI locks body, we also lock html to prevent scrolling. */
-html:has(body[style*="overflow: hidden"]) {
-    overflow: hidden;
-}
-
 body {
   font-size: 1.125rem;
   overflow: clip;
@@ -189,8 +182,8 @@ section{
   // styling for the searchbox
   .search-box {
         input {
-            background-color: ${(props) => props.theme.shadowDarkColor}!important;
-            color: ${(props) => props.theme.text};
+            background-color: ${props => props.theme.shadowDarkColor}!important;
+            color: ${props => props.theme.text};
             transition: all 450ms ease 0s;
 
             &:focus {
