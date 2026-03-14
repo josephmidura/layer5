@@ -69,16 +69,12 @@ export const CardWrapper = styled.div`
       justify-content: center;
     }
 
-    .gatsby-image-wrapper > div,
-    .old-gatsby-image-wrapper > div {
-      height: auto;
-      width: 100%;
-    }
-
     .gatsby-image-wrapper img,
     .old-gatsby-image-wrapper img {
+      max-width: 100%;
       max-height: 100%;
       width: auto;
+      height: auto;
       display: block;
       object-fit: contain;
       object-position: center;
