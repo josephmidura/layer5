@@ -261,7 +261,7 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
         }
       }
       ${
-        isFullSiteBuild
+        shouldBuildFullSite
           ? `memberPosts: allMdx(
         filter: {
           fields: { collection: { eq: "members" } }
@@ -497,7 +497,7 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
     });
   });
 
-  if (isFullSiteBuild) {
+  if (shouldBuildFullSite) {
     members.forEach((member) => {
       envCreatePage({
         path: member.fields.slug,
@@ -510,7 +510,7 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
   }
 
   const MemberBio = res.data.memberBio?.nodes || [];
-  if (isFullSiteBuild) {
+  if (shouldBuildFullSite) {
     MemberBio.forEach((memberbio) => {
       envCreatePage({
         path: `${memberbio.fields.slug}/bio`,
@@ -542,7 +542,7 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
     });
   });
 
-  if (isFullSiteBuild) {
+  if (shouldBuildFullSite) {
     integrations.forEach((integration) => {
       envCreatePage({
         path: `/cloud-native-management/meshery${integration.fields.slug}`,
@@ -575,7 +575,7 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
     });
   });
 
-  if (!isFullSiteBuild) {
+  if (!shouldBuildFullSite) {
     const litePlaceholderPages = [
       {
         collection: "members",
@@ -844,6 +844,24 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
     node,
     value: collection,
   });
+
+  // Normalize blog date to ISO string for stable sort order across build environments (fixes production blog order)
+  if (collection === "blog") {
+    let dateForSort = "1970-01-01T00:00:00.000Z";
+    if (node.frontmatter?.date != null) {
+      try {
+        const parsed = new Date(node.frontmatter.date).toISOString();
+        if (!Number.isNaN(Date.parse(parsed))) dateForSort = parsed;
+      } catch {
+        // keep fallback
+      }
+    }
+    createNodeField({
+      name: "dateForSort",
+      node,
+      value: dateForSort,
+    });
+  }
 
   if (collection !== "content-learn") {
     let slug = "";
