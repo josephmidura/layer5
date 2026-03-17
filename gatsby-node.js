@@ -849,6 +849,24 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
     value: collection,
   });
 
+  // Normalize blog date to ISO string for stable sort order across build environments (fixes production blog order)
+  if (collection === "blog") {
+    let dateForSort = "1970-01-01T00:00:00.000Z";
+    if (node.frontmatter?.date != null) {
+      try {
+        const parsed = new Date(node.frontmatter.date).toISOString();
+        if (!Number.isNaN(Date.parse(parsed))) dateForSort = parsed;
+      } catch {
+        // keep fallback
+      }
+    }
+    createNodeField({
+      name: "dateForSort",
+      node,
+      value: dateForSort,
+    });
+  }
+
   if (collection !== "content-learn") {
     let slug = "";
     if (node.frontmatter.permalink) {
