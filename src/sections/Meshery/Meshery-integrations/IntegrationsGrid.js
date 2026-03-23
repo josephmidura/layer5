@@ -216,7 +216,7 @@ const IntegrationsGrid = ({ category, count }) => {
   };
 
   return (
-    <HoneycombGrid>
+    <HoneycombGrid isDark={isDark}>
       <section className="heading">
         <h1>
           {Math.ceil(data.allMdx.nodes.length / 10) * 10}+ Built-In Integrations
