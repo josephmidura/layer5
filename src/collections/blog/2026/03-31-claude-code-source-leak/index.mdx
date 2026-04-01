@@ -1,7 +1,7 @@
 ---
 title: "The Claude Code Source Leak: 512,000 Lines, a Missing .npmignore, and the Fastest-Growing Repo in GitHub History"
 subtitle: "A build config oversight exposed Anthropic's entire AI coding agent - unreleased features, anti-competitive countermeasures, and all"
-date: "2026-03-31T10:00:00-05:00"
+date: "2026-03-31T15:00:00-05:00"
 author: Lee Calcote
 thumbnail: ./claude-code-source-leak.webp
 darkthumbnail: ./claude-code-source-leak.webp
@@ -36,7 +36,7 @@ import Callout from "../../../../reusecore/Callout";
 </p>
 
 <p>
-  Security researcher Chaofan Shou spotted the exposure at approximately 4:23 AM ET and posted a download link on X. The tweet accumulated over 21 million views. Because the leaked data was bundled inside a routinely published package, anyone using standard npm tooling could obtain the archive and inspect its contents to reach the source map, without needing any special access or exploits. The source map also referenced a ZIP archive hosted on Anthropic's own Cloudflare R2 storage bucket, downloadable by anyone with the URL.
+  Security researcher Chaofan Shou spotted the exposure at approximately 4:23 AM ET and posted a download link on X. The tweet accumulated over 21 million views. Extraction was trivial: <code>npm pack @anthropic-ai/claude-code@2.1.88</code>, untar the archive, and read the map. The source map also referenced a ZIP archive hosted on Anthropic's own Cloudflare R2 storage bucket, downloadable by anyone with the URL.
 </p>
 
 <p>
