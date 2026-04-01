@@ -1,7 +1,7 @@
 ---
 title: "The Claude Code Source Leak: 512,000 Lines, a Missing .npmignore, and the Fastest-Growing Repo in GitHub History"
 subtitle: "A build config oversight exposed Anthropic's entire AI coding agent - unreleased features, anti-competitive countermeasures, and all"
-date: 2026-03-31 10:00:00 -0530
+date: "2026-03-31T15:00:00-05:00"
 author: Lee Calcote
 thumbnail: ./claude-code-source-leak.webp
 darkthumbnail: ./claude-code-source-leak.webp
@@ -36,7 +36,11 @@ import Callout from "../../../../reusecore/Callout";
 </p>
 
 <p>
+<<<<<<< HEAD
   Security researcher Chaofan Shou spotted the exposure at approximately 4:23 AM ET and posted a download link on X. The tweet accumulated over 21 million views. Extraction was trivial: <code>npm pack @anthropic-ai/claude-code@2.1.88</code>, untar the archive, and read the map. The source map also referenced a ZIP archive hosted on Anthropic's own Cloudflare R2 storage bucket, downloadable by anyone with the URL.
+=======
+  Security researcher Chaofan Shou spotted the exposure at approximately 4:23 AM ET and posted a download link on X. The tweet accumulated over 21 million views. Because the leaked data was bundled inside a routinely published package, anyone using standard npm tooling could obtain the archive and inspect its contents to reach the source map, without needing any special access or exploits. The source map also referenced a ZIP archive hosted on Anthropic's own Cloudflare R2 storage bucket, downloadable by anyone with the URL.
+>>>>>>> 100597aa1d6ba58a4edd8292b7beca94acb79370
 </p>
 
 <p>
@@ -116,7 +120,11 @@ import Callout from "../../../../reusecore/Callout";
 </p>
 
 <Callout type="tip" title="The mirror landscape">
+<<<<<<< HEAD
   <p>Beyond claw-code, the raw source was mirrored to Gitlawb (a decentralized git platform), Kuberwastaken/claude-code (with a detailed architectural breakdown and Rust port), chatgptprojects/claude-code, and alex000kim/claude-code. Anthropic's DMCA campaign targets direct mirrors on GitHub but cannot reach decentralized platforms or clean-room rewrites.</p>
+=======
+  <p>Beyond claw-code and other clean-room efforts, the raw source was quickly mirrored and forked across both centralized code forges and decentralized git platforms, with some projects adding architectural breakdowns, ports to other languages, and experimental extensions. Anthropic's DMCA campaign targets direct mirrors on major hosting providers but cannot reach decentralized platforms or independent clean-room rewrites that avoid hosting the leaked source.</p>
+>>>>>>> 100597aa1d6ba58a4edd8292b7beca94acb79370
 </Callout>
 
 <h2>Security Implications Beyond the Source</h2>
