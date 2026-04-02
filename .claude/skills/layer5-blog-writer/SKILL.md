@@ -129,4 +129,6 @@ darkthumbnail: ./hero-image.svg
 
 - **`references/blog-structure.md`** — Complete MDX format, frontmatter fields, all component patterns including `<MesheryDesignEmbed>` with the full table of available designs. Read before writing.
 - **`references/tags-categories.md`** — Approved tags and categories.
+- **`references/docs-sources.md`** — Local doc repo paths, URL mappings, and grep patterns for fact-checking.
 - **`scripts/generate_hero_image.py`** — Cosmic-style hero image generator.
+- **`assets/sample-hero-images/`** — Four canonical hero image examples showing the visual style, Five mascot treatment, and freeform glow across different category palettes (Kubernetes, Observability, Platform Engineering, Community). Use these as visual reference when deciding if an output looks right.
