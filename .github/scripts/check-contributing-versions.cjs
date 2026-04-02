@@ -11,11 +11,28 @@ const pkg = JSON.parse(fs.readFileSync(packageJsonPath, "utf8"));
 const contributing = fs.readFileSync(contributingPath, "utf8");
 const lines = contributing.split(/\r?\n/);
 
-const reactVersion = pkg.dependencies?.react;
-const gatsbyVersion = pkg.dependencies?.gatsby;
+function getPackageVersion(name) {
+  const sections = [
+    pkg.dependencies,
+    pkg.devDependencies,
+    pkg.peerDependencies,
+    pkg.optionalDependencies,
+  ];
+
+  for (const section of sections) {
+    if (section?.[name]) {
+      return section[name];
+    }
+  }
+
+  return undefined;
+}
+
+const reactVersion = getPackageVersion("react");
+const gatsbyVersion = getPackageVersion("gatsby");
 
 if (!reactVersion || !gatsbyVersion) {
-  console.error("Missing react or gatsby dependency in package.json.");
+  console.error("Missing react or gatsby version in package.json dependency sections.");
   process.exit(1);
 }
 
