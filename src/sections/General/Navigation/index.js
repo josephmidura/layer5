@@ -546,7 +546,7 @@ const Navigation = () => {
               $url="https://cloud.layer5.io/registration"
             />
           )}
-          {/* <Button id="book-a-demo" aria-label="Book a demo" secondary className="banner-btn book-a-demo" external={true} title="Book a demo" alt="Book a demo" url="https://calendar.google.com/calendar/appointments/schedules/AcZssZ3pmcApaDP4xd8hvG5fy8ylxuFxD3akIRc5vpWJ60q-HemQi80SFFAVftbiIsq9pgiA2o8yvU56?gv=true" /> */}
+          {/* <Button id="book-a-demo" aria-label="Book a demo" secondary className="banner-btn book-a-demo" external={true} title="Book a demo" url="https://calendar.google.com/calendar/appointments/schedules/AcZssZ3pmcApaDP4xd8hvG5fy8ylxuFxD3akIRc5vpWJ60q-HemQi80SFFAVftbiIsq9pgiA2o8yvU56?gv=true" /> */}
           {!userData && (
             <Button
               id="book-a-demo"
