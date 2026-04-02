@@ -2,11 +2,20 @@
 """
 Layer5 Hero Image Generator
 
-Creates branded 1200x630 hero images for Layer5 blog posts.
-Output is an SVG file that embeds a cosmic PNG background and overlays
-a real Five mascot SVG file (from the Layer5 repo), with Qanelas Soft typography.
+Creates branded 1200x630 SVG hero images for Layer5 blog posts.
 
-Requirements: pip install Pillow
+The visual style follows Layer5's Illustration Background Style guide:
+  - Base: Eerie Black (#1E2117)
+  - 5-7 brand-color blobs with heavy Gaussian blur creating a freeform gradient
+    (simulates Adobe Illustrator's Freeform Gradient tool)
+  - White subject halo positioned where Five will be composed, with soft feathered
+    edges blending organically into surrounding color zones
+  - Dark tones at 1-3 edges/corners, never symmetrically around the perimeter
+  - Full brand palette: Keppel teal, Caribbean Green, Saffron gold, Steel Teal,
+    Charcoal, Banana Mania, White
+
+Pillow (pip install Pillow) is used only for the font-loading fallback and the
+optional PNG-only output mode. The main SVG path works with or without Pillow.
 
 Usage:
     python3 generate_hero_image.py \\
@@ -16,271 +25,182 @@ Usage:
         --output src/collections/blog/2026/04-01-my-post/hero-image.svg \\
         --repo-root /path/to/layer5/repo
 
-    # If --repo-root is omitted, falls back to PNG-only output (no Five, system font)
+    # --repo-root enables: Five mascot SVG, Qanelas Soft font, brand-accurate output
+    # Without --repo-root: minimal SVG with no mascot and system font fallback
 """
 
 import argparse
 import base64
-import io
-import math
 import random
 import re
 import sys
 from pathlib import Path
 
-try:
-    from PIL import Image, ImageDraw, ImageFont, ImageFilter
-except ImportError:
-    print("Error: Pillow is required. Run: pip install Pillow")
-    sys.exit(1)
+# ── Layer5 Brand Palette ───────────────────────────────────────────────────
+# Source: Layer5 Illustration Background Style guide
+# Each color has a defined role in the background composition.
 
-# Layer5 Brand Colors
-TEAL    = (0, 179, 159)    # #00B39F
-BG_VOID = (8, 10, 16)      # Deep space black
-BG_DEEP = (14, 18, 30)     # Dark navy
-WHITE   = (255, 255, 255)
-SUBTLE  = (140, 148, 168)  # Muted grey
+EERIE_BLACK  = "#1E2117"   # Base background fill; deep shadow anchor at periphery
+CHARCOAL     = "#3C494F"   # Edge/corner darkness; atmosphere depth
+STEEL_TEAL   = "#477E96"   # Cool blue-grey midtone anchor
+TEAL         = "#00B39F"   # Keppel — Layer5 primary; major color anchor
+TEAL_LIGHT   = "#00D3A9"   # Caribbean Green — secondary anchor adjacent to teal
+SAFFRON      = "#EBC017"   # Warm gold; typically upper regions; "sunrise" warmth
+BANANA       = "#FFF3C5"   # Banana Mania — pale yellow; warm transition near gold
+OFF_WHITE    = "#F8FFFC"   # Slight cool tint; more natural than pure white for halos
+WHITE        = "#FFFFFF"   # Subject contrast zone (critical for black stick figures)
 
-TEAL_HEX   = "#00B39F"
-WHITE_HEX  = "#FFFFFF"
-SUBTLE_HEX = "#8C94A8"
+# SVG text colors
+TEAL_HEX     = "#00B39F"
+WHITE_HEX    = "#FFFFFF"
+SUBTLE_HEX   = "#8C94A8"
 
-NEBULA_PALETTES = {
-    "Kubernetes":           [(30, 60, 160),   (10, 30, 100)],
-    "Meshery":              [(0, 100, 90),    (0, 60, 55)],
-    "Kanvas":               [(60, 40, 140),   (30, 20, 90)],
-    "AI":                   [(80, 30, 120),   (50, 10, 80)],
-    "Engineering":          [(120, 50, 20),   (80, 30, 10)],
-    "Platform Engineering": [(0, 80, 70),     (0, 50, 40)],
-    "Cloud Native":         [(10, 80, 120),   (5, 50, 80)],
-    "Docker":               [(10, 80, 140),   (5, 50, 90)],
-    "Open Source":          [(0, 100, 90),    (0, 60, 55)],
-    "Observability":        [(0, 90, 80),     (0, 55, 50)],
-    "Community":            [(100, 60, 10),   (70, 40, 5)],
-    "Events":               [(110, 20, 20),   (70, 10, 10)],
+
+# ── Freeform Background Compositions ──────────────────────────────────────
+#
+# Each composition is a list of blob descriptors:
+#   (cx_frac, cy_frac, rx_frac, ry_frac, color, opacity)
+# Fractions are relative to canvas width/height (0.0–1.0).
+# All blobs share a single heavy Gaussian blur filter.
+#
+# Three canonical patterns (from the style guide):
+#
+#   CORNER_WARMTH — Gold upper-left, teal right edge/bottom-right, dark
+#                   bottom-left, white center-to-upper-center. Creates a
+#                   sunrise or atmospheric glow effect.
+#
+#   DEEP_SPACE    — Dark blue-black majority, teal and gold accents pushed
+#                   to corners, bright white-to-light zone at mid-canvas.
+#                   Like looking through a clearing in a nebula.
+#
+# The white subject halo is always the LAST blob added (on top), positioned
+# where Five will be composed (right 40% of the image, centered vertically).
+# It is deliberately off-center and non-circular to feel organic, not like
+# a spotlight.
+
+CORNER_WARMTH = [
+    # cx,   cy,   rx,   ry,   color,       opacity
+    (0.13,  0.12, 0.40, 0.35, SAFFRON,     0.85),   # gold — upper left
+    (0.22,  0.90, 0.30, 0.28, BANANA,      0.60),   # pale yellow — lower left warmth
+    (0.82,  0.18, 0.32, 0.38, TEAL,        0.78),   # teal — upper right
+    (0.88,  0.80, 0.28, 0.32, TEAL_LIGHT,  0.62),   # light teal — lower right
+    (0.08,  0.72, 0.30, 0.30, CHARCOAL,    0.90),   # dark — lower left corner
+    (0.50,  0.48, 0.42, 0.38, STEEL_TEAL,  0.38),   # steel teal — midfield cool
+    # White subject halo — where Five stands (right portion, center-height)
+    # Off-center, elongated vertically, feathered edges via the shared blur
+    (0.74,  0.46, 0.30, 0.44, OFF_WHITE,   0.96),
+]
+
+DEEP_SPACE = [
+    (0.10,  0.10, 0.28, 0.28, CHARCOAL,    0.95),   # dark — upper left
+    (0.90,  0.15, 0.24, 0.26, TEAL,        0.72),   # teal — upper right
+    (0.14,  0.85, 0.28, 0.24, SAFFRON,     0.65),   # gold — lower left
+    (0.88,  0.82, 0.24, 0.28, TEAL_LIGHT,  0.58),   # light teal — lower right
+    (0.50,  0.50, 0.22, 0.26, STEEL_TEAL,  0.45),   # steel teal — mid accent
+    # Large luminous opening (the "clearing in the nebula")
+    (0.60,  0.46, 0.36, 0.46, WHITE,       0.90),
+    (0.68,  0.44, 0.18, 0.22, OFF_WHITE,   0.82),   # extra bright core
+]
+
+# Map category → composition. Corner Warmth is the warmer, more energetic look;
+# Deep Space suits darker / more technical topics.
+CATEGORY_COMPOSITION = {
+    "Kubernetes":           CORNER_WARMTH,
+    "Platform Engineering": CORNER_WARMTH,
+    "Engineering":          CORNER_WARMTH,
+    "Cloud Native":         CORNER_WARMTH,
+    "Docker":               CORNER_WARMTH,
+    "Open Source":          CORNER_WARMTH,
+    "Community":            CORNER_WARMTH,
+    "Events":               CORNER_WARMTH,
+    "Announcements":        CORNER_WARMTH,
+    "Partners":             CORNER_WARMTH,
+    "AWS":                  CORNER_WARMTH,
+    "GCP":                  CORNER_WARMTH,
+    "Azure":                CORNER_WARMTH,
+    "Performance":          CORNER_WARMTH,
+    "Meshery":              DEEP_SPACE,
+    "Kanvas":               DEEP_SPACE,
+    "Observability":        DEEP_SPACE,
+    "AI":                   DEEP_SPACE,
+    "WebAssembly":          DEEP_SPACE,
+    "Service Mesh":         DEEP_SPACE,
+    "Security":             DEEP_SPACE,
+    "Layer5 Cloud":         DEEP_SPACE,
 }
-DEFAULT_NEBULA = [(20, 50, 80), (10, 30, 55)]
 
 
-# ── Background raster helpers ──────────────────────────────────────────────
-
-def lerp_color(c1, c2, t):
-    return tuple(int(c1[i] + (c2[i] - c1[i]) * t) for i in range(3))
-
-def ease_inout(t):
-    return t * t * (3 - 2 * t)
-
-def clamp(v):
-    return max(0, min(255, int(v)))
-
-def noise_val(x, y, seed=42):
-    n = math.sin(x * 127.1 + y * 311.7 + seed) * 43758.5453
-    return n - math.floor(n)
-
-def build_cosmic_bg(width, height, nebula_colors):
-    nc1, nc2 = nebula_colors
-    img = Image.new("RGB", (width, height))
-    pixels = []
-    for y in range(height):
-        ty = y / height
-        for x in range(width):
-            tx = x / width
-            base = lerp_color(BG_VOID, BG_DEEP, ease_inout(ty))
-            dx1, dy1 = tx - 0.25, ty - 0.35
-            d1 = math.sqrt(dx1**2 * 0.6 + dy1**2) * 2.0
-            s1 = max(0.0, 1.0 - d1) ** 2.2 * 0.55
-            # Nebula glow where Five will stand (right side)
-            dx2, dy2 = tx - 0.82, ty - 0.58
-            d2 = math.sqrt(dx2**2 * 0.9 + dy2**2 * 0.6) * 2.3
-            s2 = max(0.0, 1.0 - d2) ** 2.5 * 0.38
-            nv = noise_val(tx * 4.3, ty * 3.1) * 0.12 + noise_val(tx * 7.1, ty * 5.3, 13) * 0.05
-            r = base[0] + clamp(nc1[0] * (s1 + nv)) + clamp(nc2[0] * s2 * 0.6)
-            g = base[1] + clamp(nc1[1] * (s1 + nv)) + clamp(nc2[1] * s2 * 0.6)
-            b = base[2] + clamp(nc1[2] * (s1 + nv)) + clamp(nc2[2] * s2 * 0.6)
-            pixels.append((clamp(r), clamp(g), clamp(b)))
-    img.putdata(pixels)
-    return img.filter(ImageFilter.GaussianBlur(radius=2))
-
-def draw_stars(draw, width, height, count=180, seed=42):
-    rng = random.Random(seed)
-    for _ in range(count):
-        x = rng.randint(0, width - 1)
-        y = rng.randint(0, height - 1)
-        size = rng.choices([0, 0, 1, 1, 1, 2], k=1)[0]
-        br = rng.randint(140, 255)
-        tint = rng.choice([(br, br, br), (br, int(br*.9), int(br*.7)), (int(br*.8), br, int(br*.95))])
-        if size == 0:
-            draw.point((x, y), fill=tint)
-        elif size == 1:
-            draw.ellipse([x, y, x+1, y+1], fill=tint)
-        else:
-            draw.ellipse([x-1, y-1, x+1, y+1], fill=tint)
-            draw.line([(x-2, y), (x+2, y)], fill=(*tint, 100), width=1)
-            draw.line([(x, y-2), (x, y+2)], fill=(*tint, 100), width=1)
-
-
-# ── Font helpers ───────────────────────────────────────────────────────────
-
-def find_qanelas(repo_root, weight="Bold"):
-    """Find Qanelas Soft font in the Layer5 repo."""
-    if repo_root:
-        font_dir = Path(repo_root).expanduser() / "static/fonts/qanelas-soft"
-        candidate = font_dir / f"QanelasSoft{weight}.otf"
-        if candidate.exists():
-            return str(candidate)
-    # System fallbacks
-    fallbacks = {
-        "Bold": [
-            "/System/Library/Fonts/Supplemental/Arial Bold.ttf",
-            "/Library/Fonts/Arial Bold.ttf",
-            "/System/Library/Fonts/Helvetica.ttc",
-            "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf",
-        ],
-        "Regular": [
-            "/System/Library/Fonts/Supplemental/Arial.ttf",
-            "/Library/Fonts/Arial.ttf",
-            "/System/Library/Fonts/Helvetica.ttc",
-            "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",
-        ],
-    }
-    for path in fallbacks.get(weight, fallbacks["Regular"]):
-        if Path(path).exists():
-            return path
-    return None
-
-def load_font(size, bold=False, repo_root=None):
-    weight = "Bold" if bold else "Regular"
-    path = find_qanelas(repo_root, weight)
-    if path:
-        try:
-            return ImageFont.truetype(path, size)
-        except (IOError, OSError):
-            pass
-    return ImageFont.load_default()
-
-def b64_font(repo_root, weight="Bold"):
-    path = find_qanelas(repo_root, weight)
-    if path:
-        return base64.b64encode(Path(path).read_bytes()).decode()
-    return None
-
-def text_dims(draw, text, font):
-    b = draw.textbbox((0, 0), text, font=font)
-    return b[2] - b[0], b[3] - b[1]
-
-def wrap_text(draw, text, font, max_w):
-    words, lines, line = text.split(), [], []
-    for word in words:
-        test = " ".join(line + [word])
-        w, _ = text_dims(draw, test, font)
-        if w <= max_w:
-            line.append(word)
-        else:
-            if line:
-                lines.append(" ".join(line))
-            line = [word]
-    if line:
-        lines.append(" ".join(line))
-    return lines
-
-
-# ── Five SVG helpers ───────────────────────────────────────────────────────
-
-def find_five_svg(repo_root, seed=None):
+def bg_blobs_svg(category, W, H):
     """
-    Pick one of the simple standalone Five pose SVGs from src/assets/images/five/SVG/.
+    Return (filter_def, background_svg) for the full-canvas freeform gradient.
 
-    Only the smaller numbered SVGs are used — these show Five as a clean standalone
-    stick figure against a plain background, suitable for hero image overlays.
-    The complex scene SVGs (vehicles, group scenes, environment props) are excluded
-    because they extend outside the composition frame and look odd when cropped.
+    filter_def       — goes inside the top-level <defs> block
+    background_svg   — the base rect + blurred color blobs
 
-    Returns the file path or None.
+    Blur stdDeviation scales with canvas width: ~10% of width for a
+    1200px canvas gives stdDeviation=120, matching the style guide reference.
     """
-    if not repo_root:
-        return None
-    five_dir = Path(repo_root).expanduser() / "src/assets/images/five/SVG"
+    composition = CATEGORY_COMPOSITION.get(category, CORNER_WARMTH)
+    blur_std = round(W * 0.10)
 
-    # Curated list: simple standalone poses only.
-    # Excluded: 1 (complex), 3 (scene), 4 (scene), 5 (car), 9 (scene),
-    #           10 (complex), 13 (scene), 15 (complex), 16 (scene)
-    SIMPLE_POSES = ["2", "6", "7", "8", "11", "12", "14", "17", "18", "19"]
-    candidates = [five_dir / f"{n}.svg" for n in SIMPLE_POSES
-                  if (five_dir / f"{n}.svg").exists()]
-    if not candidates:
-        # Fallback: any numbered SVG
-        candidates = sorted(five_dir.glob("[0-9]*.svg"))
-    if not candidates:
-        return None
-    rng = random.Random(seed)
-    return rng.choice(candidates)
+    filter_def = (
+        f'<filter id="bgBlur" x="-100%" y="-100%" width="300%" height="300%">\n'
+        f'      <feGaussianBlur stdDeviation="{blur_std}"/>\n'
+        f'    </filter>'
+    )
 
-def extract_five_inner(svg_text):
-    """
-    Extract the inner SVG content (everything inside <svg>...</svg>) so we can
-    inline it into our composite output SVG.
+    ellipses = []
+    for cx_f, cy_f, rx_f, ry_f, color, opacity in composition:
+        cx  = cx_f * W
+        cy  = cy_f * H
+        rx  = rx_f * W
+        ry  = ry_f * H
+        ellipses.append(
+            f'    <ellipse cx="{cx:.0f}" cy="{cy:.0f}" '
+            f'rx="{rx:.0f}" ry="{ry:.0f}" '
+            f'fill="{color}" opacity="{opacity}"/>'
+        )
 
-    Five's skeleton is always BLACK - never invert or recolor the figure.
-    High contrast is achieved by placing a bright white glow BEHIND Five
-    (see generate_hero_svg), not by changing Five's colors.
+    background_svg = (
+        f'<!-- Base background -->\n'
+        f'  <rect width="{W}" height="{H}" fill="{EERIE_BLACK}"/>\n'
+        f'  <!-- Freeform gradient blobs (all share heavy Gaussian blur) -->\n'
+        f'  <g filter="url(#bgBlur)" clip-path="url(#canvas)">\n'
+        + '\n'.join(ellipses)
+        + '\n  </g>'
+    )
 
-    Returns (viewBox, inner_xml_string).
-    """
-    # Get viewBox
-    vb_match = re.search(r'viewBox=["\']([^"\']+)["\']', svg_text)
-    viewbox = vb_match.group(1) if vb_match else "0 0 612 792"
-
-    # Strip the outer <svg> wrapper only - preserve all fills as original
-    inner = re.sub(r'<\?xml[^?]*\?>', '', svg_text)
-    inner = re.sub(r'<svg[^>]*>', '', inner, count=1)
-    inner = re.sub(r'</svg\s*>', '', inner)
-
-    return viewbox, inner.strip()
+    return filter_def, background_svg
 
 
-# ── Freeform glow ─────────────────────────────────────────────────────────
+# ── Close-range Five glow ─────────────────────────────────────────────────
 #
-# Layer5 brand palette used in the glow:
-#   #FFFFFF        white (core highlight)
-#   #E8F6F4        near-white with teal hint
-#   #B3E8E3        very light teal
-#   #71C6C1        medium-light teal
-#   #00D3A9        bright teal (lighter than brand primary)
-#   #00B39F        Layer5 primary teal
+# A second, tighter set of blobs sits between the background and Five.
+# These provide extra brightness immediately around the mascot so even
+# the finest black line art reads clearly. Same multi-blob technique,
+# smaller blur radius, centered on Five's body position.
 #
-# The technique mimics Adobe Illustrator's Freeform Gradient: multiple color
-# "point stops" placed at different positions in 2D space, each with its own
-# hue, and all blended together through a heavy Gaussian blur.  The result is
-# a complex, organic color field - not the uniform halo you get from a single
-# radial gradient.
+# Colors stay light — white, off-white, very light teal — so they
+# brighten the zone without introducing hue contrast that would clash
+# with Five's black skeleton.
 
-FREEFORM_BLOBS = [
-    # (rel_x, rel_y, rx_factor, ry_factor, color, opacity)
-    # Positions are relative to Five's visual center, scaled by the glow spread.
-    # A blob at (0, 0) sits exactly at the center; (-0.3, -0.4) is upper-left, etc.
-    (  0.00,  0.00, 1.00, 0.95, "#FFFFFF", 0.94),  # white core - main highlight
-    (  0.00, -0.30, 0.58, 0.50, "#FFFFFF", 0.80),  # upper-body bright white
-    (  0.00,  0.35, 0.62, 0.52, "#E8F6F4", 0.75),  # lower-body warm white
-    ( -0.28,  0.05, 0.48, 0.58, "#B3E8E3", 0.62),  # left shoulder teal hint
-    (  0.28, -0.18, 0.42, 0.42, "#71C6C1", 0.50),  # right upper mid-teal
-    ( -0.15,  0.42, 0.38, 0.38, "#00D3A9", 0.30),  # lower-left bright teal
-    (  0.22,  0.28, 0.34, 0.44, "#B3E8E3", 0.42),  # lower-right light teal
-    (  0.00, -0.55, 0.30, 0.30, "#E8F6F4", 0.55),  # top head glow
-    (  0.00,  0.00, 0.48, 0.58, "#FFFFFF", 0.50),  # secondary white center
-    ( -0.38, -0.25, 0.28, 0.30, "#00B39F", 0.22),  # far-left brand teal accent
-    (  0.38,  0.15, 0.26, 0.32, "#00D3A9", 0.22),  # far-right teal accent
+FIVE_CLOSE_BLOBS = [
+    # (rel_cx, rel_cy, rx_factor, ry_factor, color, opacity)
+    # Positions relative to Five's visual center; spread_x/y scale them.
+    ( 0.00,  0.00, 0.95, 0.90, OFF_WHITE,  0.92),  # bright near-white core
+    ( 0.00, -0.28, 0.55, 0.48, WHITE,      0.78),  # upper body brightness
+    ( 0.00,  0.33, 0.58, 0.50, OFF_WHITE,  0.72),  # lower body
+    (-0.26,  0.05, 0.44, 0.52, "#E8F6F4",  0.58),  # left — very light teal
+    ( 0.26, -0.16, 0.38, 0.40, "#B3E8E3",  0.44),  # right — light teal
+    ( 0.00,  0.00, 0.44, 0.54, WHITE,      0.48),  # secondary white core
 ]
 
 
-def build_freeform_glow(filter_id, cx, cy, spread_x, spread_y):
+def build_five_glow(filter_id, cx, cy, spread_x, spread_y):
     """
-    Return (filter_def_svg, glow_group_svg) for a freeform-gradient-style light
-    field behind Five.
-
-    filter_def_svg  -- goes inside the top-level <defs> block
-    glow_group_svg  -- goes into the SVG body, before the Five group
+    Return (filter_def, glow_group) for the close-range light field behind Five.
     """
-    blur_std = max(spread_x, spread_y) * 0.085  # proportional blur radius
+    blur_std = max(spread_x, spread_y) * 0.085
 
     filter_def = (
         f'<filter id="{filter_id}" x="-80%" y="-80%" width="260%" height="260%">\n'
@@ -289,11 +209,11 @@ def build_freeform_glow(filter_id, cx, cy, spread_x, spread_y):
     )
 
     ellipses = []
-    for rx_f, ry_f, rx2_f, ry2_f, color, opacity in FREEFORM_BLOBS:
-        bx   = cx + rx_f  * spread_x
-        by   = cy + ry_f  * spread_y
-        brx  = rx2_f * spread_x
-        bry  = ry2_f * spread_y
+    for rx_f, ry_f, rx2_f, ry2_f, color, opacity in FIVE_CLOSE_BLOBS:
+        bx  = cx + rx_f  * spread_x
+        by  = cy + ry_f  * spread_y
+        brx = rx2_f * spread_x
+        bry = ry2_f * spread_y
         ellipses.append(
             f'    <ellipse cx="{bx:.1f}" cy="{by:.1f}" '
             f'rx="{brx:.1f}" ry="{bry:.1f}" '
@@ -301,21 +221,87 @@ def build_freeform_glow(filter_id, cx, cy, spread_x, spread_y):
         )
 
     glow_group = (
-        f'<!-- Freeform gradient glow - white + Layer5 brand tones, Gaussian-blended -->\n'
+        f'<!-- Close-range glow behind Five — extra contrast for black line art -->\n'
         f'  <g filter="url(#{filter_id})">\n'
-        + "\n".join(ellipses)
-        + "\n  </g>"
+        + '\n'.join(ellipses)
+        + '\n  </g>'
     )
 
     return filter_def, glow_group
 
 
-# ── SVG hero image ─────────────────────────────────────────────────────────
+# ── Font helpers ───────────────────────────────────────────────────────────
+
+def find_qanelas(repo_root, weight="Bold"):
+    """Find Qanelas Soft OTF in the Layer5 repo, with system fallbacks."""
+    if repo_root:
+        font_dir = Path(repo_root).expanduser() / "static/fonts/qanelas-soft"
+        candidate = font_dir / f"QanelasSoft{weight}.otf"
+        if candidate.exists():
+            return str(candidate)
+    fallbacks = {
+        "Bold":    ["/System/Library/Fonts/Helvetica.ttc",
+                    "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"],
+        "Regular": ["/System/Library/Fonts/Helvetica.ttc",
+                    "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"],
+    }
+    for path in fallbacks.get(weight, fallbacks["Regular"]):
+        if Path(path).exists():
+            return path
+    return None
+
+
+def b64_font(repo_root, weight="Bold"):
+    """Return base64-encoded font bytes, or None if not found."""
+    path = find_qanelas(repo_root, weight)
+    if path:
+        return base64.b64encode(Path(path).read_bytes()).decode()
+    return None
+
+
+# ── Five SVG helpers ───────────────────────────────────────────────────────
+
+def find_five_svg(repo_root, seed=None):
+    """
+    Pick one of the curated standalone Five pose SVGs.
+
+    Only simple, standalone poses are included — no complex scenes with
+    vehicles, props, or group compositions that extend beyond the hero frame.
+    """
+    if not repo_root:
+        return None
+    five_dir = Path(repo_root).expanduser() / "src/assets/images/five/SVG"
+
+    # Curated list: clean standalone poses only.
+    # Excluded: 1, 3, 4, 5 (car), 9, 10, 13, 15, 16 — complex scenes.
+    SIMPLE_POSES = ["2", "6", "7", "8", "11", "12", "14", "17", "18", "19"]
+    candidates = [five_dir / f"{n}.svg" for n in SIMPLE_POSES
+                  if (five_dir / f"{n}.svg").exists()]
+    if not candidates:
+        candidates = sorted(five_dir.glob("[0-9]*.svg"))
+    if not candidates:
+        return None
+    return random.Random(seed).choice(candidates)
+
+
+def extract_five_inner(svg_text):
+    """
+    Strip the outer <svg> wrapper and return (viewBox, inner_xml).
+    Five's colors are never modified — black skeleton, teal (#00B39F) accents.
+    Contrast comes from the light zone placed behind Five, not color inversion.
+    """
+    vb_match = re.search(r'viewBox=["\']([^"\']+)["\']', svg_text)
+    viewbox  = vb_match.group(1) if vb_match else "0 0 612 792"
+    inner    = re.sub(r'<\?xml[^?]*\?>', '', svg_text)
+    inner    = re.sub(r'<svg[^>]*>',     '', inner, count=1)
+    inner    = re.sub(r'</svg\s*>',      '', inner)
+    return viewbox, inner.strip()
+
+
+# ── SVG text helpers ───────────────────────────────────────────────────────
 
 def wrap_svg_text(text, max_chars=24):
-    """Simple word-wrap for SVG text elements."""
-    words = text.split()
-    lines, line = [], []
+    words, lines, line = text.split(), [], []
     for word in words:
         if sum(len(w) + 1 for w in line) + len(word) <= max_chars:
             line.append(word)
@@ -327,20 +313,22 @@ def wrap_svg_text(text, max_chars=24):
         lines.append(" ".join(line))
     return lines
 
+
+# ── Main SVG generator ────────────────────────────────────────────────────
+
 def generate_hero_svg(title, subtitle, category, output_path, repo_root,
                       img_width=1200, img_height=630):
-    """Generate SVG hero image with embedded cosmic background and real Five SVG."""
-    nebula = NEBULA_PALETTES.get(category, DEFAULT_NEBULA)
+    """
+    Generate a 1200x630 SVG hero image following Layer5's illustration style.
 
-    # Background PNG in memory
-    bg_img = build_cosmic_bg(img_width, img_height, nebula)
-    bg_draw = ImageDraw.Draw(bg_img, "RGBA")
-    draw_stars(bg_draw, img_width, img_height)
-    buf = io.BytesIO()
-    bg_img.save(buf, "PNG")
-    bg_b64 = base64.b64encode(buf.getvalue()).decode()
+    Background: full-canvas freeform gradient (heavy-blurred color blobs).
+    Mascot: real Five SVG from the repo, at 95% image height, with a
+            close-range white/off-white glow for black-line-art contrast.
+    Typography: Qanelas Soft (base64-embedded from the repo).
+    """
+    W, H = img_width, img_height
 
-    # Qanelas font - embed as base64 so the SVG is portable
+    # ── Font embedding ────────────────────────────────────────────────────
     bold_b64 = b64_font(repo_root, "Bold") or b64_font(repo_root, "ExtraBold")
     reg_b64  = b64_font(repo_root, "Regular") or b64_font(repo_root, "Medium")
     font_face_bold = (
@@ -353,52 +341,46 @@ def generate_hero_svg(title, subtitle, category, output_path, repo_root,
     ) if reg_b64 else ""
     font_stack = "'QanelasSoft', 'Helvetica Neue', Arial, sans-serif"
 
-    # Five mascot SVG (random pose, seeded by title for reproducibility)
-    five_path = find_five_svg(repo_root, seed=hash(title))
+    # ── Background (freeform gradient) ───────────────────────────────────
+    bg_filter_def, bg_svg = bg_blobs_svg(category, W, H)
+
+    # ── Five mascot ───────────────────────────────────────────────────────
+    five_path      = find_five_svg(repo_root, seed=hash(title))
     five_group_svg = ""
-    freeform_filter_def = ""
-    freeform_glow_svg = ""
+    glow_filter_def = ""
+    glow_group_svg  = ""
 
     if five_path:
         try:
             viewbox, five_inner = extract_five_inner(five_path.read_text())
-            # Five SVG viewBox is typically 0 0 612 792
             vb_parts = [float(x) for x in viewbox.split()]
             vb_w = vb_parts[2] if len(vb_parts) >= 3 else 612
             vb_h = vb_parts[3] if len(vb_parts) >= 4 else 792
 
-            # Five is LARGE - 95% of image height, slightly clipped by canvas clipPath.
-            # This makes the mascot the dominant visual element in the composition.
-            target_h = img_height * 0.95
-            scale = target_h / vb_h
+            # Five at 95% image height — large and dominant.
+            target_h = H * 0.95
+            scale    = target_h / vb_h
             target_w = vb_w * scale
 
-            # Position Five in the right ~42% of the image, centered vertically.
-            right_zone_start = img_width * 0.57
-            right_zone_w = img_width - right_zone_start
+            # Position: right 42% of the image, vertically centered.
+            right_zone_start = W * 0.57
+            right_zone_w     = W - right_zone_start
             x_pos = right_zone_start + max(0, (right_zone_w - target_w) / 2)
-            y_pos = (img_height - target_h) / 2  # vertically centered (slight bleed ok)
+            y_pos = (H - target_h) / 2
 
-            # Five's visual body center in canvas coordinates.
-            # Horizontally: figures are near x=307 of the 612 viewBox.
-            # Vertically: body occupies ~y=165-600 of the 792 viewBox; center ~y=380.
+            # Five's visual body center in canvas coords.
             five_center_x = x_pos + (vb_w * 0.50) * scale
             five_center_y = y_pos + (vb_h * 0.48) * scale
+            spread_x      = target_w * 0.62
+            spread_y      = target_h * 0.52
 
-            # Glow spread - generous so blobs surround the full figure height
-            glow_spread_x = target_w * 0.65
-            glow_spread_y = target_h * 0.55
-
-            # Freeform gradient glow (multi-blob, Layer5 brand colors + white)
-            freeform_filter_def, freeform_glow_svg = build_freeform_glow(
-                "fiveGlowBlur",
-                five_center_x, five_center_y,
-                glow_spread_x, glow_spread_y,
+            glow_filter_def, glow_group_svg = build_five_glow(
+                "fiveGlowBlur", five_center_x, five_center_y, spread_x, spread_y
             )
 
             five_group_svg = (
-                f"<!-- Five mascot (Layer5 intergalactic Cloud Native Hero) -->\n"
-                f"  <!-- Source: {five_path.name} — colors preserved (black skeleton, teal accents) -->\n"
+                f"<!-- Five mascot — black skeleton, teal accents, colors preserved -->\n"
+                f"  <!-- Pose: {five_path.name} -->\n"
                 f"  <g transform=\"translate({x_pos:.1f},{y_pos:.1f}) scale({scale:.4f})\">\n"
                 f"    {five_inner}\n"
                 f"  </g>"
@@ -406,216 +388,119 @@ def generate_hero_svg(title, subtitle, category, output_path, repo_root,
         except Exception as e:
             five_group_svg = f"<!-- Five SVG error: {e} -->"
 
-    # Category pill
-    cat_label = category.upper() if category else "LAYER5"
-    margin = 52
-    pill_y = 44
-    pill_h = 28
+    # ── Text layout ───────────────────────────────────────────────────────
+    cat_label     = (category or "LAYER5").upper()
+    margin        = 52
+    pill_y        = 44
+    pill_h        = 28
 
-    # Title lines (heuristic wrap for SVG)
-    max_title_chars = 22  # at ~52px bold, fits ~680px
-    title_lines = wrap_svg_text(title, max_title_chars)[:3]
-    title_font_size = 52 if len(title_lines) <= 2 else 42
-
-    title_y_start = 140
-    line_height = title_font_size + 14
-    title_block_h = len(title_lines) * line_height
-    # Center vertically
-    text_block_h = title_block_h + (50 if subtitle else 0)
-    title_y_start = max(130, (img_height - text_block_h) // 2 - 10)
+    max_title_chars  = 22
+    title_lines      = wrap_svg_text(title, max_title_chars)[:3]
+    title_font_size  = 52 if len(title_lines) <= 2 else 42
+    line_height      = title_font_size + 14
+    title_block_h    = len(title_lines) * line_height
+    text_block_h     = title_block_h + (50 if subtitle else 0)
+    title_y_start    = max(130, (H - text_block_h) // 2 - 10)
 
     title_svg = ""
     for i, line in enumerate(title_lines):
         y = title_y_start + i * line_height + title_font_size
-        title_svg += f'\n  <text x="{margin}" y="{y}" font-family="{font_stack}" font-size="{title_font_size}" font-weight="bold" fill="{WHITE_HEX}">{line}</text>'
+        title_svg += (
+            f'\n  <text x="{margin}" y="{y}" font-family="{font_stack}" '
+            f'font-size="{title_font_size}" font-weight="bold" fill="{WHITE_HEX}">'
+            f'{line}</text>'
+        )
 
     subtitle_svg = ""
     if subtitle:
         sub_y = title_y_start + title_block_h + 28
         for i, sl in enumerate(wrap_svg_text(subtitle, 38)[:2]):
-            subtitle_svg += f'\n  <text x="{margin}" y="{sub_y + i*30}" font-family="{font_stack}" font-size="21" fill="{SUBTLE_HEX}">{sl}</text>'
+            subtitle_svg += (
+                f'\n  <text x="{margin}" y="{sub_y + i*30}" font-family="{font_stack}" '
+                f'font-size="21" fill="{SUBTLE_HEX}">{sl}</text>'
+            )
 
-    footer_y = img_height - 15
+    bar_top     = H - 50
     footer_text = "layer5.io  -  Making Engineers Expect More from Their Infrastructure"
-    bar_top = img_height - 50
 
-    # freeform_filter_def and freeform_glow_svg are already built above
-
+    # ── Compose SVG ───────────────────────────────────────────────────────
     svg_content = f"""<?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-     width="{img_width}" height="{img_height}" viewBox="0 0 {img_width} {img_height}">
+     width="{W}" height="{H}" viewBox="0 0 {W} {H}">
   <defs>
     <style>
       {font_face_bold}
       {font_face_reg}
     </style>
     <clipPath id="canvas">
-      <rect width="{img_width}" height="{img_height}"/>
+      <rect width="{W}" height="{H}"/>
     </clipPath>
-    {freeform_filter_def}
+    {bg_filter_def}
+    {glow_filter_def}
   </defs>
 
-  <!-- Cosmic background (Pillow-generated PNG) -->
-  <image x="0" y="0" width="{img_width}" height="{img_height}"
-         href="data:image/png;base64,{bg_b64}" clip-path="url(#canvas)"/>
+  {bg_svg}
 
-  <!-- Orbital ring decorations (upper right) -->
-  <ellipse cx="{img_width - 70}" cy="-50" rx="310" ry="310"
+  <!-- Orbital ring accent (upper right) -->
+  <ellipse cx="{W - 70}" cy="-50" rx="310" ry="310"
            fill="none" stroke="{TEAL_HEX}" stroke-opacity="0.07" stroke-width="1"/>
-  <ellipse cx="{img_width - 70}" cy="-50" rx="360" ry="360"
-           fill="none" stroke="{TEAL_HEX}" stroke-opacity="0.05" stroke-width="1"/>
-  <ellipse cx="{img_width - 70}" cy="-50" rx="410" ry="410"
-           fill="none" stroke="{TEAL_HEX}" stroke-opacity="0.03" stroke-width="1"/>
+  <ellipse cx="{W - 70}" cy="-50" rx="380" ry="380"
+           fill="none" stroke="{TEAL_HEX}" stroke-opacity="0.04" stroke-width="1"/>
 
-  <!-- Freeform gradient glow behind Five: multi-blob blend of white + Layer5 brand teal -->
-  {freeform_glow_svg}
+  {glow_group_svg}
 
-  <!-- Five mascot — black skeleton, teal accents, original colors preserved -->
   {five_group_svg}
 
   <!-- Left teal accent bar -->
-  <rect x="0" y="0" width="5" height="{img_height}" fill="{TEAL_HEX}" opacity="0.92"/>
+  <rect x="0" y="0" width="5" height="{H}" fill="{TEAL_HEX}" opacity="0.92"/>
 
   <!-- Category pill -->
   <rect x="{margin}" y="{pill_y}" width="140" height="{pill_h}" rx="4"
-        fill="{TEAL_HEX}" fill-opacity="0.14" stroke="{TEAL_HEX}" stroke-opacity="0.4" stroke-width="1"/>
+        fill="{TEAL_HEX}" fill-opacity="0.18" stroke="{TEAL_HEX}" stroke-opacity="0.45" stroke-width="1"/>
   <text x="{margin + 12}" y="{pill_y + pill_h - 8}"
         font-family="{font_stack}" font-size="13" font-weight="bold"
         letter-spacing="2" fill="{TEAL_HEX}">{cat_label}</text>
 
   <!-- Separator -->
   <rect x="{margin}" y="{pill_y + pill_h + 12}" width="260" height="1"
-        fill="{TEAL_HEX}" opacity="0.22"/>
+        fill="{TEAL_HEX}" opacity="0.25"/>
 
-  <!-- Title -->
   {title_svg}
-
-  <!-- Subtitle -->
   {subtitle_svg}
 
   <!-- Bottom bar -->
-  <rect x="0" y="{bar_top}" width="{img_width}" height="50" fill="#080A12"/>
-  <rect x="0" y="{bar_top}" width="{img_width}" height="2" fill="{TEAL_HEX}" opacity="0.65"/>
-  <text x="{margin}" y="{footer_y}"
-        font-family="{font_stack}" font-size="13" fill="{SUBTLE_HEX}" opacity="0.7">
-    {footer_text}
-  </text>
+  <rect x="0" y="{bar_top}" width="{W}" height="50" fill="{EERIE_BLACK}" opacity="0.85"/>
+  <rect x="0" y="{bar_top}" width="{W}" height="2" fill="{TEAL_HEX}" opacity="0.65"/>
+  <text x="{margin}" y="{H - 15}" font-family="{font_stack}" font-size="13"
+        fill="{SUBTLE_HEX}" opacity="0.8">{footer_text}</text>
+
 </svg>"""
 
-    out = Path(output_path).with_suffix(".svg")
+    out = Path(output_path)
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(svg_content, encoding="utf-8")
-    print(f"Hero image saved: {out}  ({img_width}x{img_height} SVG)")
-    return str(out)
+    print(f"Hero image saved: {out}  ({W}x{H} SVG)")
 
 
-# ── PNG fallback (no repo, no Five) ───────────────────────────────────────
-
-def generate_hero_png(title, subtitle, category, output_path, repo_root=None,
-                      img_width=1200, img_height=630):
-    """PNG-only fallback when repo_root is not available."""
-    nebula = NEBULA_PALETTES.get(category, DEFAULT_NEBULA)
-    img = build_cosmic_bg(img_width, img_height, nebula)
-    draw = ImageDraw.Draw(img, "RGBA")
-    draw_stars(draw, img_width, img_height)
-
-    # Teal left bar
-    draw.rectangle([0, 0, 5, img_height], fill=(*TEAL, 230))
-
-    # Orbital ring
-    cx, cy, cr = img_width - 70, -50, 310
-    for r_off, alpha in [(0, 18), (50, 12), (100, 7)]:
-        draw.ellipse([cx - cr - r_off, cy - cr - r_off, cx + cr + r_off, cy + cr + r_off],
-                     outline=(*TEAL, alpha), width=1)
-
-    margin, y = 52, 44
-    if category:
-        cat_font = load_font(15, bold=True, repo_root=repo_root)
-        label = category.upper()
-        lw, lh = text_dims(draw, label, cat_font)
-        px0, py0 = margin, y
-        px1, py1 = px0 + lw + 24, py0 + lh + 10
-        draw.rounded_rectangle([px0, py0, px1, py1], radius=5,
-                                fill=(*TEAL, 35), outline=(*TEAL, 100), width=1)
-        draw.text((px0 + 12, py0 + 5), label, font=cat_font, fill=(*TEAL, 230))
-        y = py1 + 16
-    else:
-        brand_font = load_font(18, bold=True, repo_root=repo_root)
-        draw.text((margin, y), "LAYER5", font=brand_font, fill=(*TEAL, 210))
-        y += 30
-
-    draw.rectangle([margin, y, margin + 260, y + 1], fill=(*TEAL, 55))
-    y += 18
-
-    max_w = int(img_width * 0.62) - margin - 20
-    title_font, title_lines = None, []
-    for sz in [54, 46, 38, 32, 27]:
-        title_font = load_font(sz, bold=True, repo_root=repo_root)
-        title_lines = wrap_text(draw, title, title_font, max_w)
-        if len(title_lines) <= 3:
-            break
-
-    _, lh = text_dims(draw, "Ag", title_font)
-    line_h = lh + 12
-    title_block_h = len(title_lines) * line_h
-    sub_block_h = (20 + 40) if subtitle else 0
-    title_y = max(y + 8, (img_height - title_block_h - sub_block_h) // 2 - 10)
-    for i, line in enumerate(title_lines):
-        draw.text((margin, title_y + i * line_h), line, font=title_font, fill=WHITE)
-    if subtitle:
-        sub_font = load_font(22, repo_root=repo_root)
-        sub_y = title_y + title_block_h + 20
-        for i, sl in enumerate(wrap_text(draw, subtitle, sub_font, max_w)[:2]):
-            draw.text((margin, sub_y + i * 32), sl, font=sub_font, fill=SUBTLE)
-
-    bar_h = 50
-    draw.rectangle([0, img_height - bar_h, img_width, img_height], fill=(8, 10, 18))
-    draw.rectangle([0, img_height - bar_h, img_width, img_height - bar_h + 2],
-                   fill=(*TEAL, 160))
-    footer_font = load_font(14, repo_root=repo_root)
-    footer = "layer5.io  -  Making Engineers Expect More from Their Infrastructure"
-    draw.text((margin, img_height - bar_h + 16), footer, font=footer_font, fill=(*SUBTLE, 170))
-
-    out = Path(output_path)
-    if out.suffix.lower() == ".svg":
-        out = out.with_suffix(".png")
-    out.parent.mkdir(parents=True, exist_ok=True)
-    img.save(str(out), "PNG", optimize=True)
-    print(f"Hero image saved (PNG fallback): {out}  ({img_width}x{img_height}px)")
-    return str(out)
-
-
-# ── Entry point ────────────────────────────────────────────────────────────
-
-def generate_hero_image(title, subtitle=None, category=None,
-                        output_path="./hero-image.svg",
-                        repo_root=None,
-                        img_width=1200, img_height=630):
-    """
-    Main entry point. Uses SVG output with embedded Five mascot when repo_root
-    is provided (recommended). Falls back to PNG if repo_root is absent.
-    """
-    if repo_root and Path(repo_root).expanduser().exists():
-        return generate_hero_svg(title, subtitle, category, output_path,
-                                 repo_root, img_width, img_height)
-    else:
-        return generate_hero_png(title, subtitle, category, output_path,
-                                 repo_root, img_width, img_height)
-
+# ── CLI ────────────────────────────────────────────────────────────────────
 
 def main():
-    p = argparse.ArgumentParser(description="Layer5 blog hero image generator")
-    p.add_argument("--title",     required=True, help="Blog post title")
-    p.add_argument("--subtitle",  default=None,  help="Optional subtitle")
-    p.add_argument("--category",  default=None,  help="Category (affects nebula color)")
-    p.add_argument("--output",    default="./hero-image.svg", help="Output path")
-    p.add_argument("--repo-root", default=None,
-                   help="Path to Layer5 repo root (enables Five mascot + Qanelas font)")
-    p.add_argument("--width",     type=int, default=1200)
-    p.add_argument("--height",    type=int, default=630)
-    args = p.parse_args()
-    generate_hero_image(args.title, args.subtitle, args.category,
-                        args.output, args.repo_root, args.width, args.height)
+    parser = argparse.ArgumentParser(description="Layer5 blog hero image generator")
+    parser.add_argument("--title",      required=True,  help="Post title")
+    parser.add_argument("--subtitle",   default="",     help="Optional subtitle")
+    parser.add_argument("--category",   default="",     help="Post category (used for color palette)")
+    parser.add_argument("--output",     required=True,  help="Output SVG path")
+    parser.add_argument("--repo-root",  default=None,   help="Layer5 repo root (for Five SVG + Qanelas font)")
+    args = parser.parse_args()
+
+    generate_hero_svg(
+        title       = args.title,
+        subtitle    = args.subtitle,
+        category    = args.category,
+        output_path = args.output,
+        repo_root   = args.repo_root,
+    )
+
 
 if __name__ == "__main__":
     main()

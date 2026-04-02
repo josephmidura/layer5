@@ -17,19 +17,27 @@ Layer5's tagline: **"Making Engineers Expect More from Their Infrastructure."**
 
 Write like an experienced engineer talking to peers. The voice is:
 
-- **Confident but not arrogant.** "Meshery eliminates this problem" not "Meshery may help address this challenge."
-- **Warm, even playful when the topic allows.** Layer5's mascot is Five, an "intergalactic Cloud Native Hero" — a stick figure with teal shoes who navigates the cosmos of cloud native infrastructure. A dash of that personality belongs in blog posts.
-- **Problem-first.** Open with the pain your audience lives. Never open with "In this blog post, we will…"
-- **Concrete.** Real commands, real configs, real numbers. Platform engineers hate vague.
-- **Second person, active voice.** "You can configure…" not passive constructions.
-- **American English.** color, analyze, recognize.
-- **Hyphens only, never em dashes.** Use `-` wherever you'd be tempted to use `—`. Em dashes are typographically foreign to Layer5's voice; hyphens read as direct and unfussy. This applies everywhere: prose, titles, subtitles, callouts.
+- **Confident but not arrogant.** "Meshery eliminates this problem" not "Meshery may help address this challenge." Don't hedge unnecessarily.
+- **Warm, even playful when the topic allows.** Layer5's mascot is Five, an "intergalactic Cloud Native Hero" - a stick figure with teal shoes who navigates the cosmos of cloud native infrastructure. A dash of that personality belongs in blog posts. Not every post, but the door is open.
+- **Problem-first.** Open with the pain your audience lives every day. Never open with "In this blog post, we will..." or "Today we're excited to announce..." - those are press-release openers, not engineering blog openers.
+- **Concrete.** Real commands, real configs, real numbers. Platform engineers hate vague. "reduces operational overhead" means nothing; "eliminates the 45-minute manual rotation cycle" means everything.
+- **Second person, active voice.** "You deploy Meshery in under five minutes" not "Meshery can be deployed by users in a relatively short time frame."
+- **Short paragraphs.** 3-5 sentences max. Engineers scan before they read - give them a reason to slow down.
+- **Sections as signposts.** Every H2 should make sense as a standalone entry in a table of contents. If a heading only makes sense in context ("And Then..."), rewrite it.
+- **American English.** color, analyze, recognize, center.
+- **Hyphens only, never em dashes.** Use `-` wherever you'd be tempted to use `—`. Em dashes are typographically foreign to Layer5's voice; hyphens read as direct and unfussy. This applies everywhere: prose, titles, subtitles, callouts, code comments.
 
-Cut: buzzword soup, passive voice, filler transitions, press-release prose.
+**Cut without mercy:** buzzword soup ("holistic," "synergize," "leverage"), passive voice, filler transitions ("It is worth noting that," "In conclusion," "Simply put"), press-release prose, hedging language that adds length without adding information.
+
+**Open strong.** The first paragraph is a hook. Give the reader the specific problem, why it's hard, and a hint that you have an answer. If you can't summarize the value in one paragraph, the post needs a sharper angle.
 
 ## Audience
 
-Platform engineers, DevOps engineers, SREs, Kubernetes operators, cloud native developers, open source contributors. They're technical and impatient with fluff. Give them the insight or command they need in the first paragraph.
+Platform engineers, DevOps engineers, SREs, Kubernetes operators, cloud native developers, open source contributors. They manage production clusters. They've been paged at 2am by a config error. They maintain internal developer platforms. They evaluate open source tools with a skeptical eye.
+
+They are **technical and impatient with fluff.** Give them the insight or command they need in the first paragraph. They already know what Kubernetes is - don't define it. They already know why GitOps matters - don't evangelise. Get to the specific thing this post teaches them.
+
+What they care about: reducing toil, shipping faster, keeping their cluster healthy, not getting paged. Frame the post around one of these. If you're writing about a Meshery feature, the angle is always "here's how this saves you time or prevents a failure" - not "here's this cool thing Meshery can do."
 
 ## Workflow
 
@@ -87,20 +95,24 @@ python3 "<skill_dir>/scripts/generate_hero_image.py" \
   --repo-root /path/to/layer5/repo
 ```
 
-Requires Pillow (`pip install Pillow`). Produces a 1200x630 SVG that:
+Produces a fully SVG-native 1200x630 image that:
 
-- Generates a cosmic dark-gradient PNG background with nebula glows and teal star fields, color-keyed by `--category`
-- Overlays a real Five mascot SVG from the repo (curated standalone poses only - no complex scenes)
+- Generates a **full-canvas freeform gradient background** using the complete Layer5 brand palette: Eerie Black (#1E2117), Charcoal (#3C494F), Steel Teal (#477E96), Keppel/Teal (#00B39F), Caribbean Green (#00D3A9), Saffron (#EBC017), Banana Mania (#FFF3C5)
+- Uses 7 overlapping colored ellipses, each heavily Gaussian-blurred (stdDeviation ~120px on a 1200px canvas), composited without symmetry - mimicking the Freeform Gradient tool in Adobe Illustrator
+- Selects a composition preset by `--category`: **Corner Warmth** (gold upper-left, teal right, dark lower-left, off-white subject halo where Five stands) or **Deep Space** (dark dominant, luminous central clearing)
+- Overlays a real Five mascot SVG at ~95% image height (large, prominent) from a curated set of standalone poses
 - Embeds Qanelas Soft font (from `static/fonts/qanelas-soft/`) for brand-accurate typography
-- Renders a freeform-gradient light field behind Five using white and Layer5 brand teal tones, blended organically via Gaussian blur - consistent with the visual treatment used in Layer5's Adventures of Five artwork
+- Adds an off-center white/off-white glow close behind Five so the black skeleton reads clearly - this is NOT a centered radial spotlight
 
-**Five mascot rules (enforced by the script):**
+**Five mascot rules:**
 
-- Uses real SVG assets from `src/assets/images/five/SVG/`
+- Uses real SVG assets from `src/assets/images/five/SVG/` - curated standalone poses only (no scenes with vehicles, furniture, or complex props)
 - Five's colors are never modified: black skeleton, teal (#00B39F) shoes and hands
-- A multi-point freeform glow (white + brand teal blends) is placed behind Five so the black skeleton reads clearly on the dark background
+- Five appears large (occupying the right ~42% of the frame, nearly full height) - not a small decorative accent
 
-Pass `--repo-root` as the absolute path to the Layer5 repo root. Without it, the script outputs a PNG-only background with no mascot or brand font.
+Pass `--repo-root` as the absolute path to the Layer5 repo root (use `git rev-parse --show-toplevel` from inside the repo). Without it, the script still runs but omits the Five mascot and brand font.
+
+See `assets/sample-hero-images/` for visual reference across different category palettes.
 
 Update frontmatter:
 
@@ -130,5 +142,5 @@ darkthumbnail: ./hero-image.svg
 - **`references/blog-structure.md`** — Complete MDX format, frontmatter fields, all component patterns including `<MesheryDesignEmbed>` with the full table of available designs. Read before writing.
 - **`references/tags-categories.md`** — Approved tags and categories.
 - **`references/docs-sources.md`** — Local doc repo paths, URL mappings, and grep patterns for fact-checking.
-- **`scripts/generate_hero_image.py`** — Cosmic-style hero image generator.
-- **`assets/sample-hero-images/`** — Four canonical hero image examples showing the visual style, Five mascot treatment, and freeform glow across different category palettes (Kubernetes, Observability, Platform Engineering, Community). Use these as visual reference when deciding if an output looks right.
+- **`scripts/generate_hero_image.py`** — Fully SVG-native hero image generator using Layer5's freeform gradient background style and full brand palette.
+- **`assets/sample-hero-images/`** — Four canonical hero image examples showing the visual style, Five mascot treatment, freeform gradient composition, and full brand palette across different category palettes (Kubernetes, Observability, Platform Engineering, Community). Read these before generating an image to calibrate visual expectations.
