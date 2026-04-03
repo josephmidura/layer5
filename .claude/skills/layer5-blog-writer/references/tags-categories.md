@@ -40,7 +40,7 @@ Always prefer existing values. Introduce a new one only if nothing fits.
 - `Meshery` — anything involving the Meshery platform
 - `Community` — events, contributor stories, programs
 - `Kubernetes` — Kubernetes tutorials, operations
-- `ai` — AI/ML topics, LLMs, AI tools (**lowercase** - this is intentional and matches the existing codebase convention; do NOT use `AI` or `Ai`)
+- `ai` - AI/ML topics, LLMs, AI tools (**lowercase** - this is intentional and matches the existing codebase convention; do NOT use `AI` or `Ai`)
 - `Meet The Maintainer` — interview series
 - `docker` — containers, Docker ecosystem
 - `Service Mesh` — service mesh topics
