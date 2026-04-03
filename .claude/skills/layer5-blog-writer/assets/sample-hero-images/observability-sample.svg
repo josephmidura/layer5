@@ -28,13 +28,14 @@
   <!-- Freeform gradient blobs (all share heavy Gaussian blur) -->
   <g filter="url(#bgBlur)" clip-path="url(#canvas)">
     <ellipse cx="48" cy="38" rx="336" ry="189" fill="#3C494F" opacity="0.95"/>
-    <ellipse cx="1152" cy="38" rx="288" ry="176" fill="#3C494F" opacity="0.9"/>
-    <ellipse cx="48" cy="592" rx="288" ry="139" fill="#3C494F" opacity="0.88"/>
-    <ellipse cx="120" cy="504" rx="336" ry="164" fill="#EBC017" opacity="0.72"/>
-    <ellipse cx="600" cy="113" rx="744" ry="277" fill="#477E96" opacity="0.85"/>
-    <ellipse cx="216" cy="328" rx="360" ry="239" fill="#477E96" opacity="0.68"/>
+    <ellipse cx="48" cy="592" rx="312" ry="151" fill="#3C494F" opacity="0.92"/>
+    <ellipse cx="1152" cy="592" rx="264" ry="126" fill="#3C494F" opacity="0.85"/>
+    <ellipse cx="1056" cy="63" rx="360" ry="176" fill="#EBC017" opacity="0.62"/>
+    <ellipse cx="864" cy="50" rx="288" ry="139" fill="#FFF3C5" opacity="0.45"/>
+    <ellipse cx="552" cy="113" rx="744" ry="277" fill="#477E96" opacity="0.85"/>
+    <ellipse cx="192" cy="315" rx="360" ry="252" fill="#477E96" opacity="0.7"/>
     <ellipse cx="720" cy="290" rx="552" ry="353" fill="#FFFFFF" opacity="0.94"/>
-    <ellipse cx="792" cy="265" rx="264" ry="176" fill="#F8FFFC" opacity="0.88"/>
+    <ellipse cx="780" cy="265" rx="264" ry="176" fill="#F8FFFC" opacity="0.88"/>
   </g>
 
   <!-- Orbital ring accent (upper right) -->

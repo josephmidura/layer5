@@ -97,19 +97,22 @@ CORNER_WARMTH = [
 ]
 
 DEEP_SPACE = [
-    # Night sky: deep Charcoal pushed to all four corners, Steel Teal dominates
-    # the upper canvas as the night-sky blue, vivid Saffron at lower-left for
-    # a horizon glow, large luminous white clearing where Five stands.
-    # Reference: Layer5 Marketing/People/instructions.ai, downhill.ai
+    # Night sky: Charcoal at three corners for deep space darkness,
+    # Steel Teal dominates the upper-left sky, Saffron gold accent sits in the
+    # upper-RIGHT corner (not lower-left) — matching the "Meet Five" reference
+    # where gold appears as a distant warm star on the opposite side from the dark.
+    # Reference: Layer5 Marketing/People/instructions.ai, downhill.ai,
+    #            "Meet Five our intergalactic Cloud Native Hero" illustration
     (0.04,  0.06, 0.28, 0.30, CHARCOAL,    0.95),   # very dark — upper-left corner
-    (0.96,  0.06, 0.24, 0.28, CHARCOAL,    0.90),   # very dark — upper-right corner
-    (0.04,  0.94, 0.24, 0.22, CHARCOAL,    0.88),   # very dark — lower-left corner
-    (0.10,  0.80, 0.28, 0.26, SAFFRON,     0.72),   # vivid gold — lower-left horizon glow
-    (0.50,  0.18, 0.62, 0.44, STEEL_TEAL,  0.85),   # steel teal — large upper-sky sweep
-    (0.18,  0.52, 0.30, 0.38, STEEL_TEAL,  0.68),   # steel teal — mid-left depth layer
-    # Large luminous clearing — generous, center-weighted
+    (0.04,  0.94, 0.26, 0.24, CHARCOAL,    0.92),   # very dark — lower-left corner
+    (0.96,  0.94, 0.22, 0.20, CHARCOAL,    0.85),   # very dark — lower-right corner
+    (0.88,  0.10, 0.30, 0.28, SAFFRON,     0.62),   # gold — upper-RIGHT accent (distant star)
+    (0.72,  0.08, 0.24, 0.22, BANANA,      0.45),   # banana — soft halo around the gold
+    (0.46,  0.18, 0.62, 0.44, STEEL_TEAL,  0.85),   # steel teal — large upper-sky sweep
+    (0.16,  0.50, 0.30, 0.40, STEEL_TEAL,  0.70),   # steel teal — mid-left depth layer
+    # Large luminous clearing — generous, center-weighted where Five stands
     (0.60,  0.46, 0.46, 0.56, WHITE,       0.94),
-    (0.66,  0.42, 0.22, 0.28, OFF_WHITE,   0.88),   # bright core
+    (0.65,  0.42, 0.22, 0.28, OFF_WHITE,   0.88),   # bright core
 ]
 
 # Map category → composition. Corner Warmth is the warmer, more energetic look;
