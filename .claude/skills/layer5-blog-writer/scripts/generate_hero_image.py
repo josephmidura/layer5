@@ -393,6 +393,9 @@ def generate_hero_svg(title, subtitle, category, output_path, repo_root,
     margin        = 52
     pill_y        = 44
     pill_h        = 28
+    pill_pad_x    = 14   # horizontal padding each side inside the pill
+    # Estimate rendered width: bold caps at font-size 12 ≈ 7.2px/char + 2px letter-spacing
+    pill_w        = int(len(cat_label) * 9.5) + pill_pad_x * 2
 
     max_title_chars  = 22
     title_lines      = wrap_svg_text(title, max_title_chars)[:3]
@@ -467,15 +470,16 @@ def generate_hero_svg(title, subtitle, category, output_path, repo_root,
   <rect x="0" y="0" width="8" height="{H}" fill="{TEAL_HEX}" opacity="0.95"/>
 
   <!-- Category pill — solid teal background, white text for maximum contrast -->
-  <rect x="{margin}" y="{pill_y}" width="150" height="{pill_h}" rx="4"
+  <rect x="{margin}" y="{pill_y}" width="{pill_w}" height="{pill_h}" rx="4"
         fill="{TEAL_HEX}" fill-opacity="1"/>
-  <text x="{margin + 12}" y="{pill_y + pill_h - 8}"
+  <text x="{margin + pill_pad_x}" y="{pill_y + pill_h // 2}"
+        dominant-baseline="middle"
         font-family="{font_stack}" font-size="12" font-weight="bold"
         letter-spacing="2" fill="{WHITE_HEX}">{cat_label}</text>
 
-  <!-- Separator -->
-  <rect x="{margin}" y="{pill_y + pill_h + 12}" width="260" height="1"
-        fill="{WHITE_HEX}" opacity="0.20"/>
+  <!-- Separator — teal to match the pill above, same width as the pill -->
+  <rect x="{margin}" y="{pill_y + pill_h + 12}" width="{pill_w}" height="1"
+        fill="{TEAL_HEX}" opacity="0.55"/>
 
   {title_svg}
   {subtitle_svg}

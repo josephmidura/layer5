@@ -65,15 +65,16 @@
   <rect x="0" y="0" width="8" height="630" fill="#00B39F" opacity="0.95"/>
 
   <!-- Category pill — solid teal background, white text for maximum contrast -->
-  <rect x="52" y="44" width="150" height="28" rx="4"
+  <rect x="52" y="44" width="218" height="28" rx="4"
         fill="#00B39F" fill-opacity="1"/>
-  <text x="64" y="64"
+  <text x="66" y="58"
+        dominant-baseline="middle"
         font-family="'QanelasSoft', 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="bold"
         letter-spacing="2" fill="#FFFFFF">PLATFORM ENGINEERING</text>
 
-  <!-- Separator -->
-  <rect x="52" y="84" width="260" height="1"
-        fill="#FFFFFF" opacity="0.20"/>
+  <!-- Separator — teal to match the pill above, same width as the pill -->
+  <rect x="52" y="84" width="218" height="1"
+        fill="#00B39F" opacity="0.55"/>
 
   
   <text x="52" y="266" font-family="'QanelasSoft', 'Helvetica Neue', Arial, sans-serif" font-size="52" font-weight="bold" fill="#FFFFFF">Building Internal</text>
