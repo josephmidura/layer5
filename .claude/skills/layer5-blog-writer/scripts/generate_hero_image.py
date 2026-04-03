@@ -85,7 +85,7 @@ CORNER_WARMTH = [
     (0.82,  0.18, 0.32, 0.38, TEAL,        0.78),   # teal — upper right
     (0.88,  0.80, 0.28, 0.32, TEAL_LIGHT,  0.62),   # light teal — lower right
     (0.08,  0.72, 0.30, 0.30, CHARCOAL,    0.90),   # dark — lower left corner
-    (0.50,  0.48, 0.42, 0.38, STEEL_TEAL,  0.38),   # steel teal — midfield cool
+    (0.42,  0.62, 0.38, 0.34, STEEL_TEAL,  0.68),   # steel teal — lower-center band
     # White subject halo — where Five stands (right portion, center-height)
     # Off-center, elongated vertically, feathered edges via the shared blur
     (0.74,  0.46, 0.30, 0.44, OFF_WHITE,   0.96),
@@ -96,7 +96,7 @@ DEEP_SPACE = [
     (0.90,  0.15, 0.24, 0.26, TEAL,        0.72),   # teal — upper right
     (0.14,  0.85, 0.28, 0.24, SAFFRON,     0.65),   # gold — lower left
     (0.88,  0.82, 0.24, 0.28, TEAL_LIGHT,  0.58),   # light teal — lower right
-    (0.50,  0.50, 0.22, 0.26, STEEL_TEAL,  0.45),   # steel teal — mid accent
+    (0.34,  0.30, 0.30, 0.32, STEEL_TEAL,  0.72),   # steel teal — upper-center sweep
     # Large luminous opening (the "clearing in the nebula")
     (0.60,  0.46, 0.36, 0.46, WHITE,       0.90),
     (0.68,  0.44, 0.18, 0.22, OFF_WHITE,   0.82),   # extra bright core
