@@ -81,32 +81,35 @@ SUBTITLE_HEX    = "#C8DDD9"   # near-white with a slight teal tint — readable 
 CORNER_WARMTH = [
     # cx,   cy,   rx,   ry,   color,       opacity
     #
-    # Daytime: Saffron sun tight in upper-left, Keppel + Caribbean Green
-    # pooling across the bottom, Steel Teal bridging mid-sky, dark shadow
-    # anchoring the lower-left corner behind the text area.
-    (0.06,  0.07, 0.30, 0.26, SAFFRON,     0.95),   # deep saffron — upper-left sun
-    (0.18,  0.14, 0.26, 0.22, BANANA,      0.75),   # banana mania — warm halo around sun
-    (0.08,  0.84, 0.26, 0.22, TEAL,        0.82),   # keppel — bottom-left anchor
-    (0.38,  0.92, 0.40, 0.24, TEAL,        0.88),   # keppel — bottom center-left
-    (0.80,  0.90, 0.36, 0.24, TEAL_LIGHT,  0.82),   # caribbean green — bottom right
-    (0.46,  0.54, 0.38, 0.32, STEEL_TEAL,  0.62),   # steel teal — mid-sky bridge
-    # White subject halo — where Five stands (right portion, center-height)
-    (0.74,  0.46, 0.30, 0.44, OFF_WHITE,   0.96),
+    # Daytime: deep Saffron packed tight into the upper-left corner like a sun,
+    # Keppel + Caribbean Green saturating the entire bottom edge,
+    # Steel Teal bridging the mid-sky, large luminous white clearing center-right.
+    # Reference: Layer5 Marketing/People/legos.ai, worship.ai, internships-open.ai
+    (0.05,  0.06, 0.32, 0.28, SAFFRON,     0.98),   # deep saffron — tight upper-left sun
+    (0.20,  0.16, 0.28, 0.24, BANANA,      0.80),   # banana mania — warm glow off the sun
+    (0.08,  0.86, 0.30, 0.26, TEAL,        0.90),   # keppel — bottom-left, strong
+    (0.45,  0.94, 0.46, 0.22, TEAL,        0.92),   # keppel — bottom center, wide band
+    (0.88,  0.88, 0.38, 0.26, TEAL_LIGHT,  0.90),   # caribbean green — bottom-right, strong
+    (0.44,  0.50, 0.36, 0.30, STEEL_TEAL,  0.60),   # steel teal — mid-sky transition
+    # Large luminous white clearing — center-right, generous size so Five
+    # reads clearly and the transition from color edges feels spacious
+    (0.66,  0.44, 0.46, 0.58, WHITE,       0.97),
 ]
 
 DEEP_SPACE = [
-    # Night sky: Steel Teal sweeps the upper portion as the dominant blue,
-    # Charcoal anchors extreme corners for depth, faint Saffron at lower-left
-    # hints at a distant horizon, luminous clearing where Five stands.
-    (0.06,  0.08, 0.26, 0.28, CHARCOAL,    0.92),   # very dark — upper-left corner
-    (0.94,  0.10, 0.22, 0.24, CHARCOAL,    0.85),   # very dark — upper-right corner
-    (0.08,  0.88, 0.22, 0.20, SAFFRON,     0.48),   # faint gold — lower-left horizon
-    (0.90,  0.82, 0.22, 0.24, TEAL,        0.58),   # keppel — lower-right
-    (0.48,  0.20, 0.58, 0.42, STEEL_TEAL,  0.82),   # steel teal — large upper-sky sweep
-    (0.22,  0.58, 0.32, 0.36, STEEL_TEAL,  0.65),   # steel teal — mid-left depth layer
-    # Large luminous opening (the "clearing in the nebula")
-    (0.60,  0.46, 0.36, 0.46, WHITE,       0.90),
-    (0.68,  0.44, 0.18, 0.22, OFF_WHITE,   0.82),   # bright core
+    # Night sky: deep Charcoal pushed to all four corners, Steel Teal dominates
+    # the upper canvas as the night-sky blue, vivid Saffron at lower-left for
+    # a horizon glow, large luminous white clearing where Five stands.
+    # Reference: Layer5 Marketing/People/instructions.ai, downhill.ai
+    (0.04,  0.06, 0.28, 0.30, CHARCOAL,    0.95),   # very dark — upper-left corner
+    (0.96,  0.06, 0.24, 0.28, CHARCOAL,    0.90),   # very dark — upper-right corner
+    (0.04,  0.94, 0.24, 0.22, CHARCOAL,    0.88),   # very dark — lower-left corner
+    (0.10,  0.80, 0.28, 0.26, SAFFRON,     0.72),   # vivid gold — lower-left horizon glow
+    (0.50,  0.18, 0.62, 0.44, STEEL_TEAL,  0.85),   # steel teal — large upper-sky sweep
+    (0.18,  0.52, 0.30, 0.38, STEEL_TEAL,  0.68),   # steel teal — mid-left depth layer
+    # Large luminous clearing — generous, center-weighted
+    (0.60,  0.46, 0.46, 0.56, WHITE,       0.94),
+    (0.66,  0.42, 0.22, 0.28, OFF_WHITE,   0.88),   # bright core
 ]
 
 # Map category → composition. Corner Warmth is the warmer, more energetic look;
@@ -148,7 +151,7 @@ def bg_blobs_svg(category, W, H):
     1200px canvas gives stdDeviation=120, matching the style guide reference.
     """
     composition = CATEGORY_COMPOSITION.get(category, CORNER_WARMTH)
-    blur_std = round(W * 0.10)
+    blur_std = round(W * 0.08)   # 96px at 1200px canvas — slightly crisper zone edges
 
     filter_def = (
         f'<filter id="bgBlur" x="-100%" y="-100%" width="300%" height="300%">\n'
