@@ -51,9 +51,9 @@ OFF_WHITE    = "#F8FFFC"   # Slight cool tint; more natural than pure white for 
 WHITE        = "#FFFFFF"   # Subject contrast zone (critical for black stick figures)
 
 # SVG text colors
-TEAL_HEX     = "#00B39F"
-WHITE_HEX    = "#FFFFFF"
-SUBTLE_HEX   = "#8C94A8"
+TEAL_HEX        = "#00B39F"
+WHITE_HEX       = "#FFFFFF"
+SUBTITLE_HEX    = "#C8DDD9"   # near-white with a slight teal tint — readable on dark scrim
 
 
 # ── Freeform Background Compositions ──────────────────────────────────────
@@ -417,11 +417,14 @@ def generate_hero_svg(title, subtitle, category, output_path, repo_root,
         for i, sl in enumerate(wrap_svg_text(subtitle, 38)[:2]):
             subtitle_svg += (
                 f'\n  <text x="{margin}" y="{sub_y + i*30}" font-family="{font_stack}" '
-                f'font-size="21" fill="{SUBTLE_HEX}">{sl}</text>'
+                f'font-size="21" fill="{SUBTITLE_HEX}">{sl}</text>'
             )
 
     bar_top     = H - 50
     footer_text = "layer5.io  -  Making Engineers Expect More from Their Infrastructure"
+
+    # ── Text-side scrim width (left 58% of canvas) ───────────────────────
+    scrim_w = int(W * 0.58)
 
     # ── Compose SVG ───────────────────────────────────────────────────────
     svg_content = f"""<?xml version="1.0" encoding="UTF-8"?>
@@ -435,6 +438,12 @@ def generate_hero_svg(title, subtitle, category, output_path, repo_root,
     <clipPath id="canvas">
       <rect width="{W}" height="{H}"/>
     </clipPath>
+    <!-- Left-to-right dark scrim — guarantees text contrast on any background composition -->
+    <linearGradient id="textScrim" x1="0" x2="1" y1="0" y2="0">
+      <stop offset="0%"   stop-color="{EERIE_BLACK}" stop-opacity="0.72"/>
+      <stop offset="65%"  stop-color="{EERIE_BLACK}" stop-opacity="0.45"/>
+      <stop offset="100%" stop-color="{EERIE_BLACK}" stop-opacity="0"/>
+    </linearGradient>
     {bg_filter_def}
     {glow_filter_def}
   </defs>
@@ -451,28 +460,31 @@ def generate_hero_svg(title, subtitle, category, output_path, repo_root,
 
   {five_group_svg}
 
-  <!-- Left teal accent bar -->
-  <rect x="0" y="0" width="5" height="{H}" fill="{TEAL_HEX}" opacity="0.92"/>
+  <!-- Text-side scrim: dark left-to-right gradient so text is always legible -->
+  <rect x="0" y="0" width="{scrim_w}" height="{H}" fill="url(#textScrim)"/>
 
-  <!-- Category pill -->
-  <rect x="{margin}" y="{pill_y}" width="140" height="{pill_h}" rx="4"
-        fill="{TEAL_HEX}" fill-opacity="0.18" stroke="{TEAL_HEX}" stroke-opacity="0.45" stroke-width="1"/>
+  <!-- Left teal accent bar -->
+  <rect x="0" y="0" width="8" height="{H}" fill="{TEAL_HEX}" opacity="0.95"/>
+
+  <!-- Category pill — solid teal background, white text for maximum contrast -->
+  <rect x="{margin}" y="{pill_y}" width="150" height="{pill_h}" rx="4"
+        fill="{TEAL_HEX}" fill-opacity="1"/>
   <text x="{margin + 12}" y="{pill_y + pill_h - 8}"
-        font-family="{font_stack}" font-size="13" font-weight="bold"
-        letter-spacing="2" fill="{TEAL_HEX}">{cat_label}</text>
+        font-family="{font_stack}" font-size="12" font-weight="bold"
+        letter-spacing="2" fill="{WHITE_HEX}">{cat_label}</text>
 
   <!-- Separator -->
   <rect x="{margin}" y="{pill_y + pill_h + 12}" width="260" height="1"
-        fill="{TEAL_HEX}" opacity="0.25"/>
+        fill="{WHITE_HEX}" opacity="0.20"/>
 
   {title_svg}
   {subtitle_svg}
 
   <!-- Bottom bar -->
-  <rect x="0" y="{bar_top}" width="{W}" height="50" fill="{EERIE_BLACK}" opacity="0.85"/>
-  <rect x="0" y="{bar_top}" width="{W}" height="2" fill="{TEAL_HEX}" opacity="0.65"/>
+  <rect x="0" y="{bar_top}" width="{W}" height="50" fill="{EERIE_BLACK}" opacity="0.88"/>
+  <rect x="0" y="{bar_top}" width="{W}" height="4" fill="{TEAL_HEX}" opacity="0.90"/>
   <text x="{margin}" y="{H - 15}" font-family="{font_stack}" font-size="13"
-        fill="{SUBTLE_HEX}" opacity="0.8">{footer_text}</text>
+        fill="{SUBTITLE_HEX}" opacity="0.7">{footer_text}</text>
 
 </svg>"""
 

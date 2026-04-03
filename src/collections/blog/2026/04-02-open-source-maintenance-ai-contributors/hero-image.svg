@@ -69,17 +69,17 @@
         fill="#00B39F" fill-opacity="1"/>
   <text x="64" y="64"
         font-family="'QanelasSoft', 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="bold"
-        letter-spacing="2" fill="#FFFFFF">PLATFORM ENGINEERING</text>
+        letter-spacing="2" fill="#FFFFFF">OPEN SOURCE</text>
 
   <!-- Separator -->
   <rect x="52" y="84" width="260" height="1"
         fill="#FFFFFF" opacity="0.20"/>
 
   
-  <text x="52" y="266" font-family="'QanelasSoft', 'Helvetica Neue', Arial, sans-serif" font-size="52" font-weight="bold" fill="#FFFFFF">Building Internal</text>
-  <text x="52" y="332" font-family="'QanelasSoft', 'Helvetica Neue', Arial, sans-serif" font-size="52" font-weight="bold" fill="#FFFFFF">Developer Platforms</text>
+  <text x="52" y="266" font-family="'QanelasSoft', 'Helvetica Neue', Arial, sans-serif" font-size="52" font-weight="bold" fill="#FFFFFF">Open Source in the Age</text>
+  <text x="52" y="332" font-family="'QanelasSoft', 'Helvetica Neue', Arial, sans-serif" font-size="52" font-weight="bold" fill="#FFFFFF">of AI Contributors</text>
   
-  <text x="52" y="374" font-family="'QanelasSoft', 'Helvetica Neue', Arial, sans-serif" font-size="21" fill="#C8DDD9">Platform engineering with Kanvas</text>
+  <text x="52" y="374" font-family="'QanelasSoft', 'Helvetica Neue', Arial, sans-serif" font-size="21" fill="#C8DDD9">A maintainer's field guide</text>
 
   <!-- Bottom bar -->
   <rect x="0" y="580" width="1200" height="50" fill="#1E2117" opacity="0.88"/>
