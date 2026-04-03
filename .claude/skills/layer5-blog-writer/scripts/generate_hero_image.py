@@ -81,38 +81,40 @@ SUBTITLE_HEX    = "#C8DDD9"   # near-white with a slight teal tint — readable 
 CORNER_WARMTH = [
     # cx,   cy,   rx,   ry,   color,       opacity
     #
-    # Daytime: deep Saffron packed tight into the upper-left corner like a sun,
-    # Keppel + Caribbean Green saturating the entire bottom edge,
-    # Steel Teal bridging the mid-sky, large luminous white clearing center-right.
-    # Reference: Layer5 Marketing/People/legos.ai, worship.ai, internships-open.ai
-    (0.05,  0.06, 0.32, 0.28, SAFFRON,     0.98),   # deep saffron — tight upper-left sun
-    (0.20,  0.16, 0.28, 0.24, BANANA,      0.80),   # banana mania — warm glow off the sun
-    (0.08,  0.86, 0.30, 0.26, TEAL,        0.90),   # keppel — bottom-left, strong
-    (0.45,  0.94, 0.46, 0.22, TEAL,        0.92),   # keppel — bottom center, wide band
-    (0.88,  0.88, 0.38, 0.26, TEAL_LIGHT,  0.90),   # caribbean green — bottom-right, strong
-    (0.44,  0.50, 0.36, 0.30, STEEL_TEAL,  0.60),   # steel teal — mid-sky transition
-    # Large luminous white clearing — center-right, generous size so Five
-    # reads clearly and the transition from color edges feels spacious
-    (0.66,  0.44, 0.46, 0.58, WHITE,       0.97),
+    # Daytime: Saffron sun packed into upper-left corner, Steel Teal sweeping the
+    # upper-right sky (prominent blue sky field — matching "Twitter post 2.ai" / Kubernetes
+    # signpost reference), Keppel + Caribbean Green saturating the entire bottom edge,
+    # large luminous white clearing center-right where Five stands.
+    # Reference: Layer5 "Twitter post 2.ai" (Kubernetes signpost), "legos.ai", "worship.ai"
+    (0.05,  0.06, 0.36, 0.30, SAFFRON,     1.00),   # deep saffron — upper-left sun, full
+    (0.22,  0.14, 0.30, 0.26, BANANA,      0.90),   # banana mania — warm halo off the sun
+    (0.82,  0.06, 0.46, 0.38, STEEL_TEAL,  0.92),   # steel teal — upper-right sky, prominent
+    (0.08,  0.86, 0.32, 0.28, TEAL,        0.96),   # keppel — bottom-left, vivid
+    (0.45,  0.94, 0.50, 0.24, TEAL,        0.98),   # keppel — bottom center, full-width band
+    (0.88,  0.88, 0.42, 0.28, TEAL_LIGHT,  0.96),   # caribbean green — bottom-right, vivid
+    (0.44,  0.36, 0.36, 0.30, STEEL_TEAL,  0.68),   # steel teal — mid-sky transition
+    # Large luminous white clearing — center-right, where Five stands
+    (0.66,  0.44, 0.54, 0.68, WHITE,       0.97),
 ]
 
 DEEP_SPACE = [
-    # Night sky: Charcoal at three corners for deep space darkness,
-    # Steel Teal dominates the upper-left sky, Saffron gold accent sits in the
-    # upper-RIGHT corner (not lower-left) — matching the "Meet Five" reference
-    # where gold appears as a distant warm star on the opposite side from the dark.
-    # Reference: Layer5 Marketing/People/instructions.ai, downhill.ai,
+    # Night sky: Charcoal anchors three corners for deep space darkness,
+    # Steel Teal dominates the upper sky sweep, Saffron in upper-RIGHT as a
+    # LARGE vivid color field (not just a corner dot) — matching "Bi-Weekly Meshery
+    # Build & Release" where saffron occupies 40%+ of the canvas right side, and
+    # "Newcomers Meeting" where saffron/gold is a dominant warm presence.
+    # Reference: "Bi-Weekly Meshery Build & Release.ai", "Newcomers Meeting.ai",
     #            "Meet Five our intergalactic Cloud Native Hero" illustration
-    (0.04,  0.06, 0.28, 0.30, CHARCOAL,    0.95),   # very dark — upper-left corner
-    (0.04,  0.94, 0.26, 0.24, CHARCOAL,    0.92),   # very dark — lower-left corner
-    (0.96,  0.94, 0.22, 0.20, CHARCOAL,    0.85),   # very dark — lower-right corner
-    (0.88,  0.10, 0.30, 0.28, SAFFRON,     0.62),   # gold — upper-RIGHT accent (distant star)
-    (0.72,  0.08, 0.24, 0.22, BANANA,      0.45),   # banana — soft halo around the gold
-    (0.46,  0.18, 0.62, 0.44, STEEL_TEAL,  0.85),   # steel teal — large upper-sky sweep
-    (0.16,  0.50, 0.30, 0.40, STEEL_TEAL,  0.70),   # steel teal — mid-left depth layer
+    (0.04,  0.06, 0.28, 0.30, CHARCOAL,    0.98),   # very dark — upper-left corner
+    (0.04,  0.94, 0.26, 0.24, CHARCOAL,    0.95),   # very dark — lower-left corner
+    (0.96,  0.94, 0.22, 0.20, CHARCOAL,    0.90),   # very dark — lower-right corner
+    (0.88,  0.10, 0.46, 0.44, SAFFRON,     0.90),   # gold — upper-RIGHT, large vivid field
+    (0.76,  0.08, 0.32, 0.28, BANANA,      0.68),   # banana — warm halo around the gold
+    (0.44,  0.18, 0.70, 0.52, STEEL_TEAL,  0.90),   # steel teal — large upper-sky sweep
+    (0.16,  0.52, 0.34, 0.46, STEEL_TEAL,  0.80),   # steel teal — mid-left depth layer
     # Large luminous clearing — generous, center-weighted where Five stands
-    (0.60,  0.46, 0.46, 0.56, WHITE,       0.94),
-    (0.65,  0.42, 0.22, 0.28, OFF_WHITE,   0.88),   # bright core
+    (0.60,  0.46, 0.54, 0.66, WHITE,       0.95),
+    (0.65,  0.42, 0.24, 0.30, OFF_WHITE,   0.90),   # bright core
 ]
 
 # Map category → composition. Corner Warmth is the warmer, more energetic look;
@@ -154,7 +156,7 @@ def bg_blobs_svg(category, W, H):
     1200px canvas gives stdDeviation=120, matching the style guide reference.
     """
     composition = CATEGORY_COMPOSITION.get(category, CORNER_WARMTH)
-    blur_std = round(W * 0.08)   # 96px at 1200px canvas — slightly crisper zone edges
+    blur_std = round(W * 0.10)   # 120px at 1200px canvas — wide, smooth color transitions
 
     filter_def = (
         f'<filter id="bgBlur" x="-100%" y="-100%" width="300%" height="300%">\n'
@@ -440,7 +442,7 @@ def generate_hero_svg(title, subtitle, category, output_path, repo_root,
     footer_text = "layer5.io  -  Making Engineers Expect More from Their Infrastructure"
 
     # ── Text-side scrim width (left 58% of canvas) ───────────────────────
-    scrim_w = int(W * 0.58)
+    scrim_w = int(W * 0.52)
 
     # ── Compose SVG ───────────────────────────────────────────────────────
     svg_content = f"""<?xml version="1.0" encoding="UTF-8"?>
@@ -454,10 +456,10 @@ def generate_hero_svg(title, subtitle, category, output_path, repo_root,
     <clipPath id="canvas">
       <rect width="{W}" height="{H}"/>
     </clipPath>
-    <!-- Left-to-right dark scrim — guarantees text contrast on any background composition -->
+    <!-- Left-to-right dark scrim — text contrast without killing color vibrancy -->
     <linearGradient id="textScrim" x1="0" x2="1" y1="0" y2="0">
-      <stop offset="0%"   stop-color="{EERIE_BLACK}" stop-opacity="0.72"/>
-      <stop offset="65%"  stop-color="{EERIE_BLACK}" stop-opacity="0.45"/>
+      <stop offset="0%"   stop-color="{EERIE_BLACK}" stop-opacity="0.48"/>
+      <stop offset="55%"  stop-color="{EERIE_BLACK}" stop-opacity="0.22"/>
       <stop offset="100%" stop-color="{EERIE_BLACK}" stop-opacity="0"/>
     </linearGradient>
     {bg_filter_def}
