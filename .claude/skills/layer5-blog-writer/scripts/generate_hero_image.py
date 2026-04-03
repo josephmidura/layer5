@@ -635,9 +635,9 @@ def generate_hero_svg(title, subtitle, category, output_path, repo_root,
       <stop offset="55%"  stop-color="{EERIE_BLACK}" stop-opacity="0.22"/>
       <stop offset="100%" stop-color="{EERIE_BLACK}" stop-opacity="0"/>
     </linearGradient>
-    {bg_filter_def}
+    {bg_gradient_defs}
     {glow_filter_def}
-    <!-- Note: bg_filter_def now contains gradient definitions, not a blur filter -->
+    <!-- Note: bg_gradient_defs contains background gradient definitions -->
   </defs>
 
   {bg_svg}
