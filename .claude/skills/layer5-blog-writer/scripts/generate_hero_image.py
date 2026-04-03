@@ -80,26 +80,33 @@ SUBTITLE_HEX    = "#C8DDD9"   # near-white with a slight teal tint — readable 
 
 CORNER_WARMTH = [
     # cx,   cy,   rx,   ry,   color,       opacity
-    (0.13,  0.12, 0.40, 0.35, SAFFRON,     0.85),   # gold — upper left
-    (0.22,  0.90, 0.30, 0.28, BANANA,      0.60),   # pale yellow — lower left warmth
-    (0.82,  0.18, 0.32, 0.38, TEAL,        0.78),   # teal — upper right
-    (0.88,  0.80, 0.28, 0.32, TEAL_LIGHT,  0.62),   # light teal — lower right
-    (0.08,  0.72, 0.30, 0.30, CHARCOAL,    0.90),   # dark — lower left corner
-    (0.42,  0.62, 0.38, 0.34, STEEL_TEAL,  0.68),   # steel teal — lower-center band
+    #
+    # Daytime: Saffron sun tight in upper-left, Keppel + Caribbean Green
+    # pooling across the bottom, Steel Teal bridging mid-sky, dark shadow
+    # anchoring the lower-left corner behind the text area.
+    (0.06,  0.07, 0.30, 0.26, SAFFRON,     0.95),   # deep saffron — upper-left sun
+    (0.18,  0.14, 0.26, 0.22, BANANA,      0.75),   # banana mania — warm halo around sun
+    (0.08,  0.84, 0.26, 0.22, TEAL,        0.82),   # keppel — bottom-left anchor
+    (0.38,  0.92, 0.40, 0.24, TEAL,        0.88),   # keppel — bottom center-left
+    (0.80,  0.90, 0.36, 0.24, TEAL_LIGHT,  0.82),   # caribbean green — bottom right
+    (0.46,  0.54, 0.38, 0.32, STEEL_TEAL,  0.62),   # steel teal — mid-sky bridge
     # White subject halo — where Five stands (right portion, center-height)
-    # Off-center, elongated vertically, feathered edges via the shared blur
     (0.74,  0.46, 0.30, 0.44, OFF_WHITE,   0.96),
 ]
 
 DEEP_SPACE = [
-    (0.10,  0.10, 0.28, 0.28, CHARCOAL,    0.95),   # dark — upper left
-    (0.90,  0.15, 0.24, 0.26, TEAL,        0.72),   # teal — upper right
-    (0.14,  0.85, 0.28, 0.24, SAFFRON,     0.65),   # gold — lower left
-    (0.88,  0.82, 0.24, 0.28, TEAL_LIGHT,  0.58),   # light teal — lower right
-    (0.34,  0.30, 0.30, 0.32, STEEL_TEAL,  0.72),   # steel teal — upper-center sweep
+    # Night sky: Steel Teal sweeps the upper portion as the dominant blue,
+    # Charcoal anchors extreme corners for depth, faint Saffron at lower-left
+    # hints at a distant horizon, luminous clearing where Five stands.
+    (0.06,  0.08, 0.26, 0.28, CHARCOAL,    0.92),   # very dark — upper-left corner
+    (0.94,  0.10, 0.22, 0.24, CHARCOAL,    0.85),   # very dark — upper-right corner
+    (0.08,  0.88, 0.22, 0.20, SAFFRON,     0.48),   # faint gold — lower-left horizon
+    (0.90,  0.82, 0.22, 0.24, TEAL,        0.58),   # keppel — lower-right
+    (0.48,  0.20, 0.58, 0.42, STEEL_TEAL,  0.82),   # steel teal — large upper-sky sweep
+    (0.22,  0.58, 0.32, 0.36, STEEL_TEAL,  0.65),   # steel teal — mid-left depth layer
     # Large luminous opening (the "clearing in the nebula")
     (0.60,  0.46, 0.36, 0.46, WHITE,       0.90),
-    (0.68,  0.44, 0.18, 0.22, OFF_WHITE,   0.82),   # extra bright core
+    (0.68,  0.44, 0.18, 0.22, OFF_WHITE,   0.82),   # bright core
 ]
 
 # Map category → composition. Corner Warmth is the warmer, more energetic look;
