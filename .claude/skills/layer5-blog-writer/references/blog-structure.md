@@ -278,7 +278,40 @@ The closing section wrapper. Visually distinct from `intro` - solid teal top/bot
 </div>
 ```
 
-The `outro` style is defined in `Blog.style.js` alongside `intro`. Both use the teal brand color from `theme.primaryLightColor`, but `intro` uses dashed borders with an italic voice while `outro` uses solid borders with a direct, action-forward tone.
+The `outro` style is defined in `Blog.style.js` alongside `intro`. Key differences from `intro`:
+
+| Property     | `div.intro`                | `div.outro`            |
+| ------------ | -------------------------- | ---------------------- |
+| Border style | `1px dashed` (teal)        | `1px solid` (teal)     |
+| Font style   | `italic`                   | Normal (not italic)    |
+| Font size    | `0.8rem`                   | `1rem`                 |
+| Padding L/R  | `3rem`                     | `1rem`                 |
+| Tone         | Reflective, sets the scene | Direct, action-forward |
+
+**Do not** copy intro's padding or font-size values for outro. The outro is a call to action, not a lede - it should feel normal-weight and not cramped on mobile.
+
+## Code Examples and CLI Commands
+
+When a post includes shell commands, `kubectl` invocations, Helm installs, or any executable steps:
+
+**Pin versions.** Every install command must reference an explicit version number. Never use `releases/latest`, `:latest`, or an unversioned URL. Examples:
+
+```bash
+# WRONG - breaks when upstream ships a new version
+kubectl apply -f https://github.com/cert-manager/cert-manager/releases/latest/download/cert-manager.yaml
+
+# RIGHT - reproducible for readers months later
+kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.14.4/cert-manager.yaml
+```
+
+**Verify internal consistency.** Read every command in the post top-to-bottom as if executing on a fresh cluster. Check:
+
+- If a Helm `--set` flag disables a component (e.g. `--set query.enabled=false`), no later command can reference that component (e.g. `kubectl port-forward svc/jaeger-query` would fail)
+- Namespaces must match across install and access commands
+- Service names in `port-forward`, `get`, and `logs` commands must match what the install actually creates
+- If the post uses a custom release name (`helm install my-release ...`), subsequent references must use that name, not the chart default
+
+**Show expected output where helpful.** For commands where success isn't obvious (e.g. `kubectl get pods`), show a brief expected output block so readers can verify they're on track.
 
 ## Writing Style
 
