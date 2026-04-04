@@ -97,10 +97,14 @@ python3 "<skill_dir>/scripts/generate_hero_image.py" \
 
 Produces a fully SVG-native 1200x630 image that:
 
-- Generates a **full-canvas freeform gradient background** using the complete Layer5 brand palette: Eerie Black (#1E2117), Charcoal (#3C494F), Steel Teal (#477E96), Keppel/Teal (#00B39F), Caribbean Green (#00D3A9), Saffron (#EBC017), Banana Mania (#FFF3C5)
-- Uses 7 overlapping colored ellipses, each heavily Gaussian-blurred (stdDeviation ~120px on a 1200px canvas), composited without symmetry - mimicking the Freeform Gradient tool in Adobe Illustrator
-- Selects a composition preset by `--category`: **Corner Warmth** (gold upper-left, teal right, dark lower-left, off-white subject halo where Five stands) or **Deep Space** (dark dominant, luminous central clearing)
-- Overlays a real Five mascot SVG at ~95% image height (large, prominent) from a curated set of standalone poses
+- Generates a **multi-stop gradient background** matching Layer5's official illustration technique (extracted from Artboard 1.svg and chs-2-intro.svg reference files). Uses overlapping full-canvas rectangles with 10-16 stop linear/radial gradients and `stop-opacity` for compositing - NOT blurred ellipses.
+- The signature Layer5 gradient ramp has 16 stops transitioning from Dark Jungle Green (#1E2117) through Charcoal (#3C494F), six intermediate blue-greens (#375154, #305D5D, #266E6A, #1A847B, #0B9E8F), Keppel (#00B39F), to Caribbean Green (#00D3A9). Equivalent ramps exist for Saffron and Steel Teal. These intermediate colors create the rich, deep transitions characteristic of Layer5 illustrations.
+- Full brand palette: Eerie Black (#1E2117), Charcoal (#3C494F), Steel Teal (#477E96), Keppel (#00B39F), Caribbean Green (#00D3A9), Saffron (#EBC017), Banana Mania (#FFF3C5)
+- White clearing uses the exact radial gradient from chs-2-intro.svg: white at center through #F7FCFC, #E2F6F4, #BFEBE7, #8FDDD4, #52CBBE, #12B8A6 to Keppel at edge
+- Selects a composition preset by `--category`:
+  - **Corner Warmth** (daytime): Saffron upper-left sun, Keppel/Caribbean Green at right edge and bottom, Dark Jungle Green base at lower-left, massive white clearing center-right. NO Steel Teal or Charcoal. Reference: "4000 members", "Recognition Program", "layer5-hero.webp"
+  - **Deep Space** (night): Steel Teal dominates upper sky, Charcoal at lower corners with extra diagonal darkness, Saffron warm star upper-right, tighter white clearing. Reference: "Meet Five", "Adventures of Five Vol 2" cover
+- Overlays a real Five mascot SVG at ~95% image height (large, prominent) from a curated set of 10 standalone poses
 - Embeds Qanelas Soft font (from `static/fonts/qanelas-soft/`) for brand-accurate typography
 - Adds an off-center white/off-white glow close behind Five so the black skeleton reads clearly - this is NOT a centered radial spotlight
 
