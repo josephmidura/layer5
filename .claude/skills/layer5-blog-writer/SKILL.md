@@ -27,6 +27,8 @@ Write like an experienced engineer talking to peers. The voice is:
 - **American English.** color, analyze, recognize, center.
 - **Hyphens only, never em dashes.** Use `-` wherever you'd be tempted to use `—`. Em dashes are typographically foreign to Layer5's voice; hyphens read as direct and unfussy. This applies everywhere: prose, titles, subtitles, callouts, code comments.
 
+**Brand names are case-sensitive.** MeshMates (not Meshmates or meshmates), Meshery, Kanvas, Layer5, mesheryctl (lowercase), KubeCon, GitOps, DevOps, OpenTelemetry. When in doubt, grep the codebase for the canonical spelling. Getting these wrong looks careless to the community.
+
 **Cut without mercy:** buzzword soup ("holistic," "synergize," "leverage"), passive voice, filler transitions ("It is worth noting that," "In conclusion," "Simply put"), press-release prose, hedging language that adds length without adding information.
 
 **Open strong.** The first paragraph is a hook. Give the reader the specific problem, why it's hard, and a hint that you have an answer. If you can't summarize the value in one paragraph, the post needs a sharper angle.
@@ -58,7 +60,11 @@ grep -r "YOUR_TOPIC" ~/code/docs/content/en/ --include="*.md" -l | head -8
 
 See `references/docs-sources.md` for the full path-to-URL mapping and search patterns.
 
-**Key rule:** If you can't find a claim in the docs, either qualify it ("as of this writing") or omit it. Blog posts extend the docs — they don't contradict them.
+**Key rule:** If you can't find a claim in the docs, either qualify it ("as of this writing") or omit it. Blog posts extend the docs - they don't contradict them.
+
+**Verify every command sequence end-to-end.** Read the commands you wrote as if you were executing them in order on a fresh cluster. If step 2 disables a component, step 5 cannot reference that component. If step 1 installs into namespace X, subsequent `kubectl` commands must target namespace X. Contradictory commands (e.g. `--set query.enabled=false` followed by `kubectl port-forward svc/jaeger-query`) are embarrassing and destroy reader trust instantly.
+
+**Pin versions in install commands.** Never use `releases/latest`, `:latest` tags, or unversioned URLs in tutorials. Pin to a specific release (e.g. `v0.104.0`, `v1.23.0`). Unpinned commands break silently weeks later when upstream ships a breaking change, and the reader blames the blog post. If you don't know the current version, grep the docs or check the project's GitHub releases page and use the latest stable version explicitly.
 
 ### Step 3 — Plan the post
 
@@ -127,8 +133,11 @@ darkthumbnail: ./hero-image.svg
 
 ### Step 6 — Final quality check
 
-- [ ] All frontmatter fields present
+**Structure and components:**
+
+- [ ] All frontmatter fields present (see `references/blog-structure.md` for the complete list)
 - [ ] `published: true` (or `false` for draft)
+- [ ] Date format exactly: `YYYY-MM-DD HH:MM:SS +/-HHMM` (quoted in frontmatter)
 - [ ] At least one image with descriptive alt text
 - [ ] At least one `<CTA_FullWidth>` or `<KanvasCTA>`
 - [ ] At least one `<Blockquote>` for emphasis
@@ -139,7 +148,21 @@ darkthumbnail: ./hero-image.svg
 - [ ] Opening lede wrapped in `<div className="intro">`
 - [ ] Closing next-steps wrapped in `<div className="outro">`
 - [ ] Technical posts: consider `resource: true`
-- [ ] Tags and categories from the approved list
+- [ ] Tags and categories from the approved list (see `references/tags-categories.md`)
+
+**Technical accuracy (tutorials and how-to posts):**
+
+- [ ] Every shell command sequence is internally consistent - read them top to bottom as if executing on a fresh cluster. If step N disables or skips a component, no later step can reference that component
+- [ ] Install commands pin explicit versions (`v0.104.0`, not `releases/latest` or `:latest`)
+- [ ] Namespace, service name, and label selectors are consistent across all commands
+- [ ] `kubectl port-forward`, `kubectl get`, and `kubectl logs` commands reference resources that were actually created by preceding steps
+- [ ] If the post references a Meshery or Kanvas feature, grep the docs repos to confirm the feature name and CLI flags are current
+
+**Brand and taxonomy:**
+
+- [ ] Brand names use exact capitalization: MeshMates, Meshery, mesheryctl, Kanvas, Layer5, KubeCon, GitOps, DevOps, OpenTelemetry
+- [ ] Tags match the approved list casing exactly (e.g. `ai` is lowercase, `Open Source` is title case) - see `references/tags-categories.md`
+- [ ] Category is exactly one from the approved list
 
 ## Reference files
 
