@@ -56,65 +56,207 @@ WHITE_HEX       = "#FFFFFF"
 SUBTITLE_HEX    = "#C8DDD9"   # near-white with a slight teal tint — readable on dark scrim
 
 
-# ── Freeform Background Compositions ──────────────────────────────────────
+# ── Multi-Stop Gradient Background ────────────────────────────────────────
 #
-# Each composition is a list of blob descriptors:
-#   (cx_frac, cy_frac, rx_frac, ry_frac, color, opacity)
-# Fractions are relative to canvas width/height (0.0–1.0).
-# All blobs share a single heavy Gaussian blur filter.
+# Technique extracted from Layer5 reference SVGs (Artboard 1.svg):
+#   - Overlapping full-canvas rectangles with multi-stop linear gradients
+#   - 10-16 gradient stops per layer for rich, deep color transitions
+#   - stop-opacity controls where each layer is visible vs transparent,
+#     allowing underlying layers to show through
+#   - Radial gradient for the white subject clearing (from chs-2-intro.svg)
+#   - No blur filter needed — the many intermediate color stops create
+#     smooth transitions naturally
 #
-# Three canonical patterns (from the style guide):
+# The signature Layer5 gradient ramp (from Artboard 1.svg) has 16 stops
+# transitioning from Dark Jungle Green through Charcoal, six intermediate
+# blue-greens, Keppel, to Caribbean Green — then back to Charcoal.
 #
-#   CORNER_WARMTH — Gold upper-left, teal right edge/bottom-right, dark
-#                   bottom-left, white center-to-upper-center. Creates a
-#                   sunrise or atmospheric glow effect.
-#
-#   DEEP_SPACE    — Dark blue-black majority, teal and gold accents pushed
-#                   to corners, bright white-to-light zone at mid-canvas.
-#                   Like looking through a clearing in a nebula.
-#
-# The white subject halo is always the LAST blob added (on top), positioned
-# where Five will be composed (right 40% of the image, centered vertically).
-# It is deliberately off-center and non-circular to feel organic, not like
-# a spotlight.
+# Each composition layer dict:
+#   type: "linear" or "radial"
+#   For linear: x1, y1, x2, y2 (fractions of canvas W,H)
+#   For radial: cx, cy (fractions), r (fraction of max(W,H))
+#   stops: [(offset, color, stop_opacity), ...] — stop_opacity optional (default 1.0)
 
 CORNER_WARMTH = [
-    # cx,   cy,   rx,   ry,   color,       opacity
-    #
-    # Daytime: Saffron sun packed into upper-left corner, Steel Teal sweeping the
-    # upper-right sky (prominent blue sky field — matching "Twitter post 2.ai" / Kubernetes
-    # signpost reference), Keppel + Caribbean Green saturating the entire bottom edge,
-    # large luminous white clearing center-right where Five stands.
-    # Reference: Layer5 "Twitter post 2.ai" (Kubernetes signpost), "legos.ai", "worship.ai"
-    (0.05,  0.06, 0.36, 0.30, SAFFRON,     1.00),   # deep saffron — upper-left sun, full
-    (0.22,  0.14, 0.30, 0.26, BANANA,      0.90),   # banana mania — warm halo off the sun
-    (0.82,  0.06, 0.46, 0.38, STEEL_TEAL,  0.92),   # steel teal — upper-right sky, prominent
-    (0.08,  0.86, 0.32, 0.28, TEAL,        0.96),   # keppel — bottom-left, vivid
-    (0.45,  0.94, 0.50, 0.24, TEAL,        0.98),   # keppel — bottom center, full-width band
-    (0.88,  0.88, 0.42, 0.28, TEAL_LIGHT,  0.96),   # caribbean green — bottom-right, vivid
-    (0.44,  0.36, 0.36, 0.30, STEEL_TEAL,  0.68),   # steel teal — mid-sky transition
-    # Large luminous white clearing — center-right, where Five stands
-    (0.66,  0.44, 0.54, 0.68, WHITE,       0.97),
+    # Daytime: Saffron upper-left (sun), Keppel/Caribbean Green at right + bottom,
+    # Dark Jungle Green base at lower-left, MASSIVE white clearing center-right.
+    # Reference: "4000 members", "Recognition Program", "layer5-hero.webp"
+
+    # Layer 1: Teal from the RIGHT — Keppel/Caribbean Green builds from right edge
+    {"type": "linear",
+     "x1": 0.0, "y1": 0.5, "x2": 1.0, "y2": 0.5,
+     "stops": [
+         (0.00, "#1E2117", 0.0),
+         (0.20, "#1E2117", 0.0),
+         (0.35, "#262C27", 0.15),
+         (0.45, "#323B3B", 0.35),
+         (0.52, "#3C494E", 0.50),
+         (0.58, "#375154", 0.60),
+         (0.63, "#305D5D", 0.70),
+         (0.68, "#266E6A", 0.80),
+         (0.73, "#1A847B", 0.88),
+         (0.78, "#0B9E8F", 0.92),
+         (0.82, "#00B39F", 0.96),
+         (0.86, "#00B59F", 0.98),
+         (0.89, "#00BDA2", 1.00),
+         (0.92, "#00CAA6", 1.00),
+         (0.95, "#00D3A9", 1.00),
+         (1.00, "#3C494E", 0.90),
+     ]},
+
+    # Layer 2: Teal from the BOTTOM — ground plane
+    {"type": "linear",
+     "x1": 0.5, "y1": 0.0, "x2": 0.5, "y2": 1.0,
+     "stops": [
+         (0.00, "#1E2117", 0.0),
+         (0.30, "#1E2117", 0.0),
+         (0.45, "#262C27", 0.10),
+         (0.55, "#323B3B", 0.25),
+         (0.62, "#3C494E", 0.40),
+         (0.68, "#375154", 0.55),
+         (0.73, "#305D5D", 0.65),
+         (0.78, "#266E6A", 0.75),
+         (0.82, "#1A847B", 0.85),
+         (0.86, "#0B9E8F", 0.90),
+         (0.90, "#00B39F", 0.95),
+         (0.93, "#00BDA2", 1.00),
+         (0.96, "#00D3A9", 1.00),
+         (1.00, "#3C494E", 0.85),
+     ]},
+
+    # Layer 3: Saffron from UPPER-LEFT — sun warmth
+    {"type": "linear",
+     "x1": -0.05, "y1": -0.05, "x2": 0.75, "y2": 0.75,
+     "stops": [
+         (0.00, "#FFF3C5", 0.92),
+         (0.05, "#FAE6A0", 0.95),
+         (0.10, "#F5D875", 0.95),
+         (0.16, "#F0CB45", 0.95),
+         (0.22, "#EBC017", 1.00),
+         (0.28, "#D4AD15", 0.95),
+         (0.34, "#BFA012", 0.88),
+         (0.40, "#A5870E", 0.78),
+         (0.46, "#886F0C", 0.65),
+         (0.52, "#6D5B0D", 0.50),
+         (0.58, "#56490E", 0.35),
+         (0.64, "#45390F", 0.22),
+         (0.70, "#352E11", 0.12),
+         (0.78, "#2A2613", 0.05),
+         (0.85, "#1E2117", 0.0),
+     ]},
+
+    # Layer 4: White clearing — radial, center-right where Five stands
+    # Exact ramp from chs-2-intro.svg radialGradient (white→keppel halo)
+    {"type": "radial", "cx": 0.58, "cy": 0.46, "r": 0.52,
+     "stops": [
+         (0.22, "#FFFFFF", 0.97),
+         (0.32, "#F7FCFC", 0.92),
+         (0.40, "#E2F6F4", 0.82),
+         (0.48, "#BFEBE7", 0.68),
+         (0.56, "#8FDDD4", 0.50),
+         (0.64, "#52CBBE", 0.32),
+         (0.74, "#12B8A6", 0.14),
+         (0.85, "#00B39F", 0.05),
+         (1.00, "#00B39F", 0.0),
+     ]},
 ]
 
 DEEP_SPACE = [
-    # Night sky: Charcoal anchors three corners for deep space darkness,
-    # Steel Teal dominates the upper sky sweep, Saffron in upper-RIGHT as a
-    # LARGE vivid color field (not just a corner dot) — matching "Bi-Weekly Meshery
-    # Build & Release" where saffron occupies 40%+ of the canvas right side, and
-    # "Newcomers Meeting" where saffron/gold is a dominant warm presence.
-    # Reference: "Bi-Weekly Meshery Build & Release.ai", "Newcomers Meeting.ai",
-    #            "Meet Five our intergalactic Cloud Native Hero" illustration
-    (0.04,  0.06, 0.28, 0.30, CHARCOAL,    0.98),   # very dark — upper-left corner
-    (0.04,  0.94, 0.26, 0.24, CHARCOAL,    0.95),   # very dark — lower-left corner
-    (0.96,  0.94, 0.22, 0.20, CHARCOAL,    0.90),   # very dark — lower-right corner
-    (0.88,  0.10, 0.46, 0.44, SAFFRON,     0.90),   # gold — upper-RIGHT, large vivid field
-    (0.76,  0.08, 0.32, 0.28, BANANA,      0.68),   # banana — warm halo around the gold
-    (0.44,  0.18, 0.70, 0.52, STEEL_TEAL,  0.90),   # steel teal — large upper-sky sweep
-    (0.16,  0.52, 0.34, 0.46, STEEL_TEAL,  0.80),   # steel teal — mid-left depth layer
-    # Large luminous clearing — generous, center-weighted where Five stands
-    (0.60,  0.46, 0.54, 0.66, WHITE,       0.95),
-    (0.65,  0.42, 0.24, 0.30, OFF_WHITE,   0.90),   # bright core
+    # Night sky: darker overall. Steel Teal concentrated at upper edge,
+    # fades quickly. Charcoal dominates lower 60%. Saffron accent upper-RIGHT.
+    # White clearing is tighter — more dark space visible around it.
+    # Reference: "Meet Five", "Adventures of Five Vol 2" cover
+
+    # Layer 1: Steel Teal from the TOP — pulled back, fades by mid-canvas
+    {"type": "linear",
+     "x1": 0.5, "y1": -0.1, "x2": 0.5, "y2": 0.8,
+     "stops": [
+         (0.00, "#477E96", 1.00),
+         (0.05, "#477E96", 1.00),
+         (0.10, "#457A8E", 0.95),
+         (0.16, "#436F82", 0.88),
+         (0.22, "#406D7F", 0.78),
+         (0.28, "#3C5F6D", 0.65),
+         (0.35, "#375360", 0.50),
+         (0.42, "#324854", 0.36),
+         (0.50, "#2D3E49", 0.24),
+         (0.58, "#29353E", 0.14),
+         (0.68, "#252D33", 0.06),
+         (0.80, "#1E2117", 0.0),
+     ]},
+
+    # Layer 2: Steel Teal from LEFT edge — subtle, fades quickly
+    {"type": "linear",
+     "x1": -0.1, "y1": 0.4, "x2": 0.8, "y2": 0.4,
+     "stops": [
+         (0.00, "#477E96", 0.75),
+         (0.06, "#457A8E", 0.65),
+         (0.14, "#406D7F", 0.50),
+         (0.22, "#3C5F6D", 0.36),
+         (0.30, "#375360", 0.24),
+         (0.38, "#324854", 0.14),
+         (0.48, "#2D3E49", 0.06),
+         (0.60, "#1E2117", 0.0),
+     ]},
+
+    # Layer 3: Charcoal reinforcement — darker overall, starts earlier
+    {"type": "linear",
+     "x1": 0.5, "y1": 0.0, "x2": 0.5, "y2": 1.0,
+     "stops": [
+         (0.00, "#3C494F", 0.0),
+         (0.25, "#3C494F", 0.10),
+         (0.40, "#3C494F", 0.30),
+         (0.50, "#3C494F", 0.55),
+         (0.60, "#3C494F", 0.75),
+         (0.72, "#3C494F", 0.90),
+         (0.85, "#3C494F", 0.96),
+         (1.00, "#3C494F", 1.00),
+     ]},
+
+    # Layer 4: Extra darkness from lower-left corner diagonal
+    {"type": "linear",
+     "x1": 0.9, "y1": -0.1, "x2": -0.1, "y2": 1.1,
+     "stops": [
+         (0.00, "#1E2117", 0.0),
+         (0.35, "#1E2117", 0.0),
+         (0.50, "#1E2117", 0.25),
+         (0.65, "#1E2117", 0.55),
+         (0.80, "#1E2117", 0.80),
+         (1.00, "#1E2117", 0.95),
+     ]},
+
+    # Layer 5: Saffron star UPPER-RIGHT — warm accent
+    {"type": "linear",
+     "x1": 0.15, "y1": 0.80, "x2": 1.05, "y2": -0.10,
+     "stops": [
+         (0.00, "#1E2117", 0.0),
+         (0.40, "#1E2117", 0.0),
+         (0.50, "#45390F", 0.10),
+         (0.56, "#6D5B0D", 0.25),
+         (0.62, "#886F0C", 0.40),
+         (0.68, "#A5870E", 0.58),
+         (0.74, "#BFA012", 0.72),
+         (0.80, "#D4AD15", 0.84),
+         (0.85, "#EBC017", 0.94),
+         (0.90, "#F0CB45", 0.96),
+         (0.94, "#F5D875", 0.92),
+         (0.97, "#FFF3C5", 0.85),
+         (1.00, "#3C494E", 0.60),
+     ]},
+
+    # Layer 6: White clearing — tighter radius, less reach
+    {"type": "radial", "cx": 0.56, "cy": 0.46, "r": 0.46,
+     "stops": [
+         (0.18, "#FFFFFF", 0.96),
+         (0.28, "#F7FCFC", 0.88),
+         (0.36, "#E2F6F4", 0.74),
+         (0.44, "#BFEBE7", 0.56),
+         (0.52, "#8FDDD4", 0.38),
+         (0.62, "#52CBBE", 0.20),
+         (0.72, "#12B8A6", 0.08),
+         (0.84, "#00B39F", 0.02),
+         (1.00, "#00B39F", 0.0),
+     ]},
 ]
 
 # Map category → composition. Corner Warmth is the warmer, more energetic look;
@@ -147,45 +289,76 @@ CATEGORY_COMPOSITION = {
 
 def bg_blobs_svg(category, W, H):
     """
-    Return (filter_def, background_svg) for the full-canvas freeform gradient.
+    Return (defs_block, background_svg) for the multi-stop gradient background.
 
-    filter_def       — goes inside the top-level <defs> block
-    background_svg   — the base rect + blurred color blobs
+    Uses the same technique as Layer5's official illustrations (Artboard 1.svg):
+    overlapping layers with multi-stop gradients (10-16 stops per layer) and
+    stop-opacity for compositing. No blur filter needed — the many intermediate
+    color stops create smooth, rich transitions naturally.
 
-    Blur stdDeviation scales with canvas width: ~10% of width for a
-    1200px canvas gives stdDeviation=120, matching the style guide reference.
+    defs_block     — gradient definitions, goes inside the top-level <defs>
+    background_svg — the base rect + gradient layers
     """
     composition = CATEGORY_COMPOSITION.get(category, CORNER_WARMTH)
-    blur_std = round(W * 0.10)   # 120px at 1200px canvas — wide, smooth color transitions
 
-    filter_def = (
-        f'<filter id="bgBlur" x="-100%" y="-100%" width="300%" height="300%">\n'
-        f'      <feGaussianBlur stdDeviation="{blur_std}"/>\n'
-        f'    </filter>'
-    )
+    gradient_defs = []
+    layer_rects = []
 
-    ellipses = []
-    for cx_f, cy_f, rx_f, ry_f, color, opacity in composition:
-        cx  = cx_f * W
-        cy  = cy_f * H
-        rx  = rx_f * W
-        ry  = ry_f * H
-        ellipses.append(
-            f'    <ellipse cx="{cx:.0f}" cy="{cy:.0f}" '
-            f'rx="{rx:.0f}" ry="{ry:.0f}" '
-            f'fill="{color}" opacity="{opacity}"/>'
+    for i, layer in enumerate(composition):
+        grad_id = f"bgGrad{i}"
+
+        # Build stop elements
+        stop_lines = []
+        for s in layer["stops"]:
+            offset, color = s[0], s[1]
+            opacity_attr = ""
+            if len(s) > 2 and s[2] < 1.0:
+                opacity_attr = f' stop-opacity="{s[2]}"'
+            stop_lines.append(
+                f'      <stop offset="{offset}" stop-color="{color}"{opacity_attr}/>'
+            )
+        stops_xml = "\n".join(stop_lines)
+
+        if layer["type"] == "linear":
+            x1 = layer["x1"] * W
+            y1 = layer["y1"] * H
+            x2 = layer["x2"] * W
+            y2 = layer["y2"] * H
+            gradient_defs.append(
+                f'    <linearGradient id="{grad_id}" '
+                f'gradientUnits="userSpaceOnUse" '
+                f'x1="{x1:.0f}" y1="{y1:.0f}" x2="{x2:.0f}" y2="{y2:.0f}">\n'
+                f'{stops_xml}\n'
+                f'    </linearGradient>'
+            )
+        elif layer["type"] == "radial":
+            cx = layer["cx"] * W
+            cy = layer["cy"] * H
+            r = layer["r"] * max(W, H)
+            gradient_defs.append(
+                f'    <radialGradient id="{grad_id}" '
+                f'gradientUnits="userSpaceOnUse" '
+                f'cx="{cx:.0f}" cy="{cy:.0f}" r="{r:.0f}">\n'
+                f'{stops_xml}\n'
+                f'    </radialGradient>'
+            )
+
+        layer_rects.append(
+            f'    <rect width="{W}" height="{H}" fill="url(#{grad_id})"/>'
         )
+
+    defs_block = "\n".join(gradient_defs)
 
     background_svg = (
         f'<!-- Base background -->\n'
         f'  <rect width="{W}" height="{H}" fill="{EERIE_BLACK}"/>\n'
-        f'  <!-- Freeform gradient blobs (all share heavy Gaussian blur) -->\n'
-        f'  <g filter="url(#bgBlur)" clip-path="url(#canvas)">\n'
-        + '\n'.join(ellipses)
+        f'  <!-- Multi-stop gradient layers (Layer5 illustration technique) -->\n'
+        f'  <g clip-path="url(#canvas)">\n'
+        + '\n'.join(layer_rects)
         + '\n  </g>'
     )
 
-    return filter_def, background_svg
+    return defs_block, background_svg
 
 
 # ── Close-range Five glow ─────────────────────────────────────────────────
@@ -462,8 +635,9 @@ def generate_hero_svg(title, subtitle, category, output_path, repo_root,
       <stop offset="55%"  stop-color="{EERIE_BLACK}" stop-opacity="0.22"/>
       <stop offset="100%" stop-color="{EERIE_BLACK}" stop-opacity="0"/>
     </linearGradient>
-    {bg_filter_def}
+    {bg_gradient_defs}
     {glow_filter_def}
+    <!-- Note: bg_gradient_defs contains background gradient definitions -->
   </defs>
 
   {bg_svg}

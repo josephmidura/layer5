@@ -2,6 +2,8 @@
 
 Always prefer existing values. Introduce a new one only if nothing fits.
 
+**Casing matters.** Tags and categories must match the exact casing shown below. Inconsistent casing (e.g. `AI` vs `ai`, `Opensource` vs `Open Source`) fragments the taxonomy and breaks tag-based filtering on the site. Copy the tag string exactly as listed.
+
 ## Categories (exactly one per post)
 
 | Category             | Use for                                                      |
@@ -38,7 +40,7 @@ Always prefer existing values. Introduce a new one only if nothing fits.
 - `Meshery` — anything involving the Meshery platform
 - `Community` — events, contributor stories, programs
 - `Kubernetes` — Kubernetes tutorials, operations
-- `ai` — AI/ML topics, LLMs, AI tools (lowercase — matches codebase convention)
+- `ai` - AI/ML topics, LLMs, AI tools (**lowercase** - this is intentional and matches the existing codebase convention; do NOT use `AI` or `Ai`)
 - `Meet The Maintainer` — interview series
 - `docker` — containers, Docker ecosystem
 - `Service Mesh` — service mesh topics
