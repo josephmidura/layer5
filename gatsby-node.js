@@ -15,9 +15,6 @@ const {
   getExcludedCollections,
   isFullSiteBuild,
 } = require("./src/utils/build-collections");
-const {
-  componentsData,
-} = require("./src/sections/Projects/Sistent/components/content");
 
 const shouldBuildFullSite = isFullSiteBuild();
 const excludedCollections = new Set(
@@ -149,6 +146,9 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
         }
       ) {
         nodes {
+          frontmatter {
+            category
+          }
           fields {
             slug
           }
@@ -261,7 +261,7 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
         }
       }
       ${
-        isFullSiteBuild
+        shouldBuildFullSite
           ? `memberPosts: allMdx(
         filter: {
           fields: { collection: { eq: "members" } }
@@ -358,6 +358,25 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
           }
         }
       }
+      sistentComponents: allMdx(
+        filter: { 
+          fields: { collection: { eq: "sistent" } }
+        }
+      ) {
+        group(field: { fields: { componentName: SELECT } }) {
+          fieldValue
+          nodes {
+            fields {
+              slug
+              componentName
+              pageType
+            }
+            internal {
+              contentFilePath
+            }
+          }
+        }
+      }
     }
   `);
 
@@ -370,6 +389,22 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
   const blogs = res.data.blogPosts.nodes;
   const resources = res.data.resourcePosts.nodes;
   const news = res.data.newsPosts.nodes;
+
+  const VALID_NEWS_CATEGORIES = new Set(["Coverage", "Press Release"]);
+  const invalidNewsItems = news.filter(
+    ({ frontmatter }) => !VALID_NEWS_CATEGORIES.has(frontmatter.category),
+  );
+  if (invalidNewsItems.length > 0) {
+    invalidNewsItems.forEach(({ frontmatter, internal }) => {
+      reporter.error(
+        `Invalid news category "${frontmatter.category}" in ${internal.contentFilePath}. Must be one of: ${[...VALID_NEWS_CATEGORIES].join(", ")}.`,
+      );
+    });
+    reporter.panicOnBuild(
+      "News category validation failed. Fix the categories listed above.",
+    );
+    return;
+  }
   const books = res.data.bookPosts.nodes;
   const events = res.data.eventPosts.nodes;
   const programs = res.data.programPosts.nodes;
@@ -497,7 +532,7 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
     });
   });
 
-  if (isFullSiteBuild) {
+  if (shouldBuildFullSite) {
     members.forEach((member) => {
       envCreatePage({
         path: member.fields.slug,
@@ -510,7 +545,7 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
   }
 
   const MemberBio = res.data.memberBio?.nodes || [];
-  if (isFullSiteBuild) {
+  if (shouldBuildFullSite) {
     MemberBio.forEach((memberbio) => {
       envCreatePage({
         path: `${memberbio.fields.slug}/bio`,
@@ -542,7 +577,7 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
     });
   });
 
-  if (isFullSiteBuild) {
+  if (shouldBuildFullSite) {
     integrations.forEach((integration) => {
       envCreatePage({
         path: `/cloud-native-management/meshery${integration.fields.slug}`,
@@ -565,17 +600,31 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
     });
   });
 
+  const latestProgramsBySlug = new Map();
   programs.forEach((program) => {
+    const slug = program.frontmatter.programSlug;
+    if (!latestProgramsBySlug.has(slug)) {
+      latestProgramsBySlug.set(slug, program);
+    } else {
+      const currentLatest = latestProgramsBySlug.get(slug);
+      if ((program.fields?.slug || "") > (currentLatest.fields?.slug || "")) {
+        latestProgramsBySlug.set(slug, program);
+      }
+    }
+  });
+
+  latestProgramsBySlug.forEach((program, slug) => {
     envCreatePage({
-      path: `/programs/${program.frontmatter.programSlug}`,
+      path: `/programs/${slug}`,
       component: `${MultiProgramPostTemplate}?__contentFilePath=${program.internal.contentFilePath}`,
       context: {
         program: program.frontmatter.program,
+        slug: program.fields?.slug,
       },
     });
   });
 
-  if (!isFullSiteBuild) {
+  if (!shouldBuildFullSite) {
     const litePlaceholderPages = [
       {
         collection: "members",
@@ -712,39 +761,29 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
     }
   });
 
-  const components = componentsData.map((component) =>
-    component.src.replace("/", ""),
-  );
-  const createComponentPages = (createPage, components) => {
-    const pageTypes = [
-      { suffix: "", file: "index.js" },
-      { suffix: "/guidance", file: "guidance.js" },
-      { suffix: "/code", file: "code.js" },
-    ];
+  // Create Sistent component pages dynamically from MDX
+  // Use grouping to identify which sub-pages (Tabs) exist for each component
+  const sistentGroups = res.data.sistentComponents.group;
+  const sistentTemplate = path.resolve("src/templates/sistent-component.js");
 
-    components.forEach((name) => {
-      pageTypes.forEach(({ suffix, file }) => {
-        const pagePath = `/projects/sistent/components/${name}${suffix}`;
-        const componentPath = `./src/sections/Projects/Sistent/components/${name}/${file}`;
-        if (fs.existsSync(path.resolve(componentPath))) {
-          try {
-            createPage({
-              path: pagePath,
-              component: require.resolve(componentPath),
-            });
-          } catch (error) {
-            console.error(`Error creating page for "${pagePath}":`, error);
-          }
-        } else {
-          console.info(
-            `Skipping creating page "${pagePath}" - file not found: "${componentPath}"`,
-          );
-        }
+  sistentGroups.forEach((group) => {
+    const componentName = group.fieldValue;
+    // content-learn uses different fields, sistent uses componentName.
+
+    const availablePages = group.nodes.map((node) => node.fields.pageType);
+
+    group.nodes.forEach((node) => {
+      createPage({
+        path: node.fields.slug,
+        component: `${sistentTemplate}?__contentFilePath=${node.internal.contentFilePath}`,
+        context: {
+          slug: node.fields.slug,
+          componentName: componentName,
+          availablePages: availablePages,
+        },
       });
     });
-  };
-
-  createComponentPages(createPage, components);
+  });
 };
 
 // slug starts and ends with '/' so parts[0] and parts[-1] will be empty
@@ -831,18 +870,31 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
   const parent = getNode(node.parent);
   let collection = parent.sourceInstanceName;
 
-  // --- CHANGED: Consolidated Source Logic ---
   // If the source is "collections", we determine the actual collection
   // from the parent directory name (e.g., "blog", "news", etc.)
   if (collection === "collections") {
     collection = parent.relativeDirectory.split("/")[0];
   }
-  // ------------------------------------------
 
   createNodeField({
     name: "collection",
     node,
     value: collection,
+  });
+
+  let dateForSort = "1970-01-01T00:00:00.000Z";
+  if (node.frontmatter?.date != null) {
+    try {
+      const parsed = new Date(node.frontmatter.date).toISOString();
+      if (!Number.isNaN(Date.parse(parsed))) dateForSort = parsed;
+    } catch {
+      // Keep fallback.
+    }
+  }
+  createNodeField({
+    name: "dateForSort",
+    node,
+    value: dateForSort,
   });
 
   if (collection !== "content-learn") {
@@ -882,6 +934,29 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
           if (node.frontmatter.title)
             slug = `/community/events/${slugify(node.frontmatter.title)}`;
           break;
+        case "sistent": {
+          // For sistent components, create slug from directory structure
+          const componentSlug = parent.relativeDirectory.split("/").pop();
+          const fileName = parent.name;
+          const suffix = fileName === "index" ? "" : `/${fileName}`;
+
+          slug = `/projects/sistent/components/${componentSlug}${suffix}`;
+
+          createNodeField({
+            name: "componentName",
+            node,
+            value: componentSlug,
+          });
+
+          // "index" -> "overview", others match filename
+          const pageType = fileName === "index" ? "overview" : fileName;
+          createNodeField({
+            name: "pageType",
+            node,
+            value: pageType,
+          });
+          break;
+        }
         default:
           slug = `/${collection}/${slugify(node.frontmatter.title)}`;
       }
